@@ -1,0 +1,210 @@
+<section id="decks">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="">
+        <div class="card-content">
+          <div class="px-3">
+            <div class="form-body">
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group row last">
+                    <!-- <label class="col-md-3 label-control" for="userinput3"
+                        >Username</label -->
+
+                    <div class="col-md-12">
+                      <ng-select
+                        [items]="categories"
+                        name="categorie"
+                        bindLabel="name"
+                        bindValue="_id"
+                        placeholder="Afficher tout"
+                        [(ngModel)]="catalogue.categories"
+                      >
+                        <ng-template ng-label-tmp let-item="item">
+                          <img height="25" width="25" src="{{apiUrl}}Categories/{{item?.photo}}" />
+                          <b style="color: black">{{ item?.name }}</b>
+                        </ng-template>
+                        <ng-template
+                          ng-option-tmp
+                          let-item="item"
+                          let-index="index"
+                        >
+                          <img height="25" width="25" src="{{apiUrl}}Categories/{{item?.photo}}" />
+                          <b style="color: black">{{ item?.name }}</b>
+                        </ng-template>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="form-group row ">
+                    <!-- <label class="col-md-1 label-control">Etat</label> -->
+                    <div class="col-md-10 d-inline-block">
+                      <div class="input-group col-md-9">
+                        <div class="custom-control custom-radio d-inline-block">
+                          <input
+                            [(ngModel)]="catalogue.etat"
+                            type="radio"
+                            value="done"
+                            id="done"
+                            name="done"
+                            class="custom-control-input"
+                          />
+                          <label class="custom-control-label danger" style="color:rgb(207, 28, 28) !important;font-style: inherit;font-weight: 300;" for="done"
+                            >Passé</label
+                          >
+                        </div>
+                        <div
+                          class="custom-control custom-radio d-inline-block ml-1"
+                        >
+                          <input style="color:red !important;"
+                            type="radio"
+                            id="now"
+                            checked
+                            name="now"
+                            class="custom-control-input danger"
+                            [(ngModel)]="catalogue.etat"
+                            value="now"
+                          />
+                          <label class="custom-control-label" 
+                          style="color:rgb(228, 231, 31) !important;font-style: inherit;font-weight: 300;" for="now"
+                            >En cours</label
+                          >
+                        </div>
+                        <div
+                          class="custom-control custom-radio d-inline-block ml-1"
+                        >
+                          <input
+                            type="radio"
+                            [(ngModel)]="catalogue.etat"
+                            value="todo"
+                            id="todo"
+                            checked
+                            name="todo"
+                            class="custom-control-input"
+                          />
+                          <label class="custom-control-label" style="color:rgb(22, 235, 15) !important;font-style: inherit;font-weight: 300;" for="todo"
+                            >Futur</label
+                          >
+                        </div>
+                        <div
+                          class="custom-control custom-radio d-inline-block ml-1"
+                        >
+                          <input
+                            type="radio"
+                            [(ngModel)]="catalogue.etat"
+                            value="tout"
+                            id="tout"
+                            checked
+                            name="tout"
+                            class="custom-control-input"
+                          />
+                          <label class="custom-control-label"  for="tout"
+                            >Afficher tout</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-actions right">
+                    <button
+                      type="button"
+                      class="btn btn-raised btn-primary"
+                      (click)="onChange()"
+                    >
+                      <i class="fa fa-check-square-o"></i> Rechercher
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-xs-12 col-lg-12" *ngIf="!catalogues">
+      <label for="">Veuillez ajouter quelque catalogues</label>
+      <div class="form-actions right">
+        <button
+          type="button"
+          class="btn btn-raised btn-primary"
+          [routerLink]="['/catalogues/add/']"
+        >
+          <i class="fa fa-check-square-o"></i> Ajouter un catalogue
+        </button>
+      </div>
+    </div>
+    <div class="col-md-3 col-xs-4 col-lg-3 col-sm-3 " *ngFor="let item of catalogues | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+      <div class="card-deck-wrapper"  *ngIf="catalogues">
+        <div class="card-deck">
+          <div class="card">
+            <div class="card-header" style="
+            padding: 0;
+            height: 300px;">
+              <img  style="
+              height: 100%;"
+              class="card-img-top img-fluid" 
+              src="{{ apiUrl }}Catalogues/{{ item?.photo }}"
+              alt="Card image cap"
+            />
+            </div>
+            
+              <div class="card-body">
+                <h4 class="card-title">{{ item?.name }}</h4>
+                <!-- <h5 class="card-title">{{ item.pdf | lowercase }}</h5> -->
+                <p class="card-text">{{ item?.description | slice: 0:20 }}</p>
+              </div>
+          
+            <div class="card-footer">
+              <p class="card-text">
+                <small class="text-muted"
+                  >{{ item?.dateDebut | date: "dd/MM/yyyy" }} à
+                  {{ item?.dateDebut | date: "HH:mm" }}</small
+                >
+
+                <small class="actions text-muted float-right">
+                  <i
+                    class="ft-bell cursor-pointer mr-1 success"
+                    (click)="sendNotif(item)"
+                  ></i>
+                  <i
+                    class="ft-edit cursor-pointer mr-1 warning"
+                    [routerLink]="['/catalogues/edit/' + item?._id]"
+                    routerLinkActive="router-link-active"
+                  ></i>
+                  <i
+                    class="ft-trash cursor-pointer mr-1 danger"
+                    (click)="deleteCatalogue(item?._id)"
+                  ></i>
+                </small>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="col-md-3 col-xs-4 col-lg-3 text-right float-right"
+    style="padding: 10px"
+    
+  >
+    <ngb-pagination [disabled]="disable"
+      [collectionSize]="catalogues.length"
+      [(page)]="page"
+      [maxSize]="5"
+      [rotate]="true"
+      [ellipses]="false"
+      [boundaryLinks]="true"
+      
+    >
+    
+    </ngb-pagination>
+  </div>
+</section>

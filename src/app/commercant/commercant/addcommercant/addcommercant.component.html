@@ -1,0 +1,456 @@
+<!-- Striped row layout section start -->
+<section id="striped-row-form-layouts" *ngIf="!idUpdate">
+  <div class="row text-left">
+    <div class="col-sm-12">
+      <div class="content-header">Ajouter un commercant</div>
+    </div>
+  </div>
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <!-- <div class="card-header">
+          <h4 class="card-title" id="striped-row-layout-basic">Project Info</h4>
+          <p class="mb-0">
+            Add <code>.striped-rows</code>
+            to form tag to add striped rows. In this example
+            <code>.form-horizontal</code>
+            and
+            <code>.form-bordered</code> is used to show the striped rows
+            functionality.
+          </p>
+        </div> -->
+        <div class="card-content" *ngIf="!idUpdate">
+          <div class="px-3">
+            <form
+              enctype="multipart/form-data"
+              class="form form-horizontal striped-rows form-bordered"
+              (ngSubmit)="onAddcommercant()"
+            >
+              <div class="form-body">
+                <h4 class="form-section"><i class="ft-user"></i> commercant</h4>
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Nom</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Nom"
+                        name="nom"
+                        [(ngModel)]="user.name"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Prénom</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Prénom"
+                        name="prenom"
+                        [(ngModel)]="user.prenom"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>E-mail</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="E-mail"
+                        name="email"
+                        [(ngModel)]="user.email"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="password">Mot de passe</label>
+                      <input
+                      id="password"
+                        type="password"
+                        autocomplete="off"
+                        class="form-control"
+                        placeholder="Votre mot de passe"
+                        name="password"
+                        [(ngModel)]="user.password"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="confirmpassword"
+                        >Confirmer votre mot de passe</label
+                      >
+                      <input
+                        type="password"
+                        autocomplete="off"
+                        id="confirmpassword"
+                        class="form-control"
+                        placeholder="Confirmer votre mot de passe"
+                        name="passwordconfirm"
+                        [(ngModel)]="user.passwordConfirm"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Adresse</label>
+                      <textarea
+                        type="textarea"
+                        class="form-control"
+                        placeholder="adresse"
+                        name="adresse"
+                        [(ngModel)]="user.adresse"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <!-- <div class="col-6">
+                    <div class="form-group">
+                      <label>Code postale</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        placeholder="Code postale"
+                        name="codepostale"
+                        [(ngModel)]="user.codepostale"
+                      />
+                    </div>
+                  </div> -->
+                
+                  <!-- <div class="col-6">
+                    <div class="form-group">
+                      <label for="projectinput5">Fax</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        placeholder="Fax"
+                        name="fax"
+                        [(ngModel)]="commercant.fax"
+                      />
+                    </div>
+                  </div> -->
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="phone">Téléphone</label>
+                      <input
+                        type="number"
+                        id="phone"
+                        class="form-control"
+                        placeholder="Téléphone"
+                        name="phone"
+                        [(ngModel)]="user.phone"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Type de commerçant</label>
+                      <div class="input-group col-md-9">
+                        <div
+                          class="custom-control custom-radio d-inline-block ml-1"
+                        >
+                          <input
+                            type="radio"
+                            id="customRadioInline2"
+                            (change)="onchange($event.target.value)"
+                            [(ngModel)]="commercant.type"
+                            name="independant"
+                            value="independant"
+                            class="custom-control-input"
+                          />
+                          <label
+                            class="custom-control-label"
+                            for="customRadioInline2"
+                            >Indépendant</label
+                          >
+                        </div>
+                        <div class="custom-control custom-radio d-inline-block">
+                          <input
+                            type="radio"
+                            id="independant"
+                            name="groupe"
+                            value="groupe"
+                            [(ngModel)]="commercant.type"
+                            class="custom-control-input"
+                            (change)="onchange($event.target.value)"
+                          />
+                          <label
+                            class="custom-control-label"
+                            for="independant"
+                            >Groupe</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row last" *ngIf="groupe">
+                  <div class="col-md-6">
+                    <div class="form-group last">
+                      <label>Enseigne </label>
+
+                      <ng-select
+                        [items]="enseignes"
+                        name="enseignes"
+                        bindLabel="name"
+                        bindValue="_id"
+                        (change)="getEnseigneByid($event)"
+                        placeholder="Choisissez"
+                        [(ngModel)]="commercant.enseigne"
+                      >
+                        <ng-template ng-label-tmp let-item="item">
+                          <img height="15" width="15" [src]="item.avatar" />
+                          <b style="color: black">{{ item.name }}</b>
+                        </ng-template>
+                        <ng-template
+                          ng-option-tmp
+                          let-item="item"
+                          let-index="index"
+                        >
+                          <img height="15" width="15" [src]="item.avatar" />
+                          <b style="color: black">{{ item.name }}</b>
+                        </ng-template>
+                      </ng-select>
+                    </div>
+                  </div>
+                  <div class="col-6" *ngIf="groupe">
+                    <div class="form-group">
+                      <label>Point de vente </label>
+                      <select
+                        id="pointvente" [(ngModel)]="commercant.pointVente"
+                        name="interested" multiple
+                        class="form-control"
+                      >
+                        <option value="none" selected="" disabled="">
+                          Interested in
+                        </option>
+                        <option [value]="item._id" *ngFor="let item of pointventes">
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row last" *ngIf="independant">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label>Enseigne </label>
+
+                      <ng-select
+                        [items]="enseignes"
+                        name="enseignes"
+                        bindLabel="name"
+                        bindValue="_id"
+                        (change)="getEnseigneByid($event)"
+                        placeholder="Choisissez"
+                        [(ngModel)]="commercant.enseigne"
+                      >
+                        <ng-template ng-label-tmp let-item="item">
+                          
+                          <b style="color: black">{{ item.name }}</b>
+                        </ng-template>
+                        <ng-template
+                          ng-option-tmp
+                          let-item="item"
+                          let-index="index"
+                        >
+                          
+                          <b style="color: black">{{ item.name }}</b>
+                        </ng-template>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="button" routerLink="/commercants/show" class="btn btn-raised btn-warning mr-1">
+                  <i class="ft-x"></i> Annuler
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="fa fa-check-square-o"></i> Confirmer
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+</section>
+<!---------------------------------- modifier ---------------------------->
+<section id="striped-row-form-layouts" *ngIf="idUpdate">
+  <div class="row text-left">
+    <div class="col-sm-12">
+      <div class="content-header">Modifier un commercant</div>
+    </div>
+  </div>
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+
+        <div class="card-content">
+          <div class="px-3">
+            <form enctype="multipart/form-data" class="form form-horizontal striped-rows form-bordered"
+              (ngSubmit)="onEditcommercant()">
+              <div class="form-body">
+                <h4 class="form-section"><i class="ft-user"></i> commercant</h4>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label>Nom</label>
+                      <input type="text" class="form-control" placeholder="Nom" name="nom" [(ngModel)]="user.name" />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label>Prénom</label>
+                      <input type="text" class="form-control" placeholder="Prénom" name="prenom"
+                        [(ngModel)]="user.prenom" />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label>E-mail</label>
+                      <input type="text" class="form-control" placeholder="E-mail" name="email"
+                        [(ngModel)]="user.email" />
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="projectinput5">Mot de passe</label>
+                      <input type="password" autocomplete="on" class="form-control" placeholder="Votre mot de passe"
+                        name="password" [(ngModel)]="user.password" />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="projectinput5">Confirmer votre mot de passe</label>
+                      <input type="password" autocomplete="on" class="form-control"
+                        placeholder="Confirmer votre mot de passe" name="passwordconfirm"
+                        [(ngModel)]="user.passwordConfirm" />
+                    </div>
+                  </div>
+                </div> -->
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label>Adresse</label>
+                      <textarea type="textarea" class="form-control" placeholder="adresse" name="adresse"
+                        [(ngModel)]="user.adresse"></textarea>
+                    </div>
+                  </div>
+                  
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="phone">Téléphone</label>
+                      <input type="number" id="phone" class="form-control" placeholder="Téléphone" name="phone"
+                        [(ngModel)]="user.phone" />
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label>Type de commerçant</label>
+                      <div class="input-group col-md-9">
+                        <div class="custom-control custom-radio d-inline-block ml-1">
+                          <input type="radio" id="customRadioInline2" (change)="onchange($event.target.value)"
+                            [(ngModel)]="commercant.type" name="independant" [value]="commercant.type"
+                            class="custom-control-input" />
+                          <label class="custom-control-label" for="customRadioInline2">Indépendant</label>
+                        </div>
+                        <div class="custom-control custom-radio d-inline-block">
+                          <input type="radio" id="customRadioInline1" name="groupe" [value]="commercant.type"
+                            [(ngModel)]="commercant.type" class="custom-control-input"
+                            (change)="onchange($event.target.value)" />
+                          <label class="custom-control-label" for="customRadioInline1">Groupe</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div class="row" *ngIf="groupe">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label>Enseigne </label>
+
+                      <ng-select [items]="enseignes" name="enseignes" bindLabel="name" bindValue="_id"
+                        (change)="getEnseigneByid($event)" placeholder="Choisissez" [(ngModel)]="commercant.enseigne">
+                        <ng-template ng-label-tmp let-item="item">
+                          <img height="15" width="15" [src]="item.avatar" />
+                          <b style="color: black">{{ item.name }}</b>
+                        </ng-template>
+                        <ng-template ng-option-tmp let-item="item" let-index="index">
+                          <img height="15" width="15" src="{{apiUrl}} /item.avatar" />
+                          <b style="color: black">{{ item.name }}</b>
+                        </ng-template>
+                      </ng-select>
+                    </div>
+                  </div>
+                  <div class="col-6" *ngIf="groupe">
+                    <div class="form-group">
+                      <label>Point de vente </label>
+                      <select id="projectinput6" [(ngModel)]="commercant.pointVente" name="interested"
+                        class="form-control">
+                        <option value="none" selected="" disabled="">
+                          Interested in
+                        </option>
+                        <option [value]="item._id" *ngFor="let item of pointventes">
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div class="row" *ngIf="independant">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label>Enseigne </label>
+
+                      <ng-select [items]="enseignes" name="enseignes" bindLabel="name" bindValue="_id"
+                        (change)="getEnseigneByid($event)" placeholder="Choisissez" [(ngModel)]="commercant.enseigne">
+                        <ng-template ng-label-tmp let-item="item">
+                          <img height="15" width="15" [src]="item.avatar" />
+                          <b style="color: black">{{ item.name }}</b>
+                        </ng-template>
+                        <ng-template ng-option-tmp let-item="item" let-index="index">
+                          <img height="15" width="15" [src]="item.avatar" />
+                          <b style="color: black">{{ item.name }}</b>
+                        </ng-template>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+              <div class="form-actions">
+                <button type="button" routerLink="/commercants/show" class="btn btn-raised btn-warning mr-1">
+                  <i class="ft-x"></i> Annuler
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="fa fa-edit"></i> Modifier
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

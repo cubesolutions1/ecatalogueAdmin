@@ -1,0 +1,90 @@
+<!--Extended Table starts-->
+<div class="row text-left">
+  <div class="col-12">
+    <div class="content-header">Listes des commerçants</div>
+
+  </div>
+</div>
+
+<!--Extended Table Ends-->
+<!--Shopping cart starts-->
+<section id="shopping-cart">
+  <div class="row text-left">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Commercants</h4>
+          
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+            <table class="table table-responsive-md text-center">
+              <thead>
+                <tr>
+                  <th>Logo</th>
+                  <th>Nom et prénom</th>
+                  <th>E-mail</th>
+                  <!-- <th>photo</th> -->
+                  <th>Adresse</th>
+                  <th>Téléphone</th>
+                  <th>Administration Enseigne</th>
+
+                  <th>Etat</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let item of users | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                <tr >
+                  
+                  <!-- <div > -->
+                    <td >
+                      <!-- <img #myImage [hidden]="apiUrl Enseignes/item.photo?.url" (error)="myImage.isBugged = true"
+                      class="media-object round-media"
+                      src="{{ apiUrl }}" (error)="setDefaultPic()"
+                      alt="Generic placeholder image"
+                      style="height: 40px"
+                      
+                    /> -->
+                      <img class="media-object round-media" src="{{apiUrl}}Enseignes/{{item?.enseigne?.photo}}"
+                        alt="Generic placeholder image" style="height: 40px" />
+                    </td>
+                    <td >{{ item?.user?.name }} {{ item?.user?.prenom }}</td>
+                    <td >{{ item?.user?.email }} </td>
+                    <!-- <td >{{ item?.user?.photo }} </td> -->
+                    <td >{{ item?.user?.adresse }} {{ item?.user?.codepostale }}</td>
+                    <td >{{ item?.user?.phone }}</td>
+                    <td >{{ item?.enseigne.name }}</td>
+
+                    <!-- <td>
+                      <a *ngIf="!item?.user?.active" href="javascript:void(0)" class="btn btn-outline-primary mr-1"
+                        (click)="onActiveAdmin(item?.user?._id)">Activer</a>
+                      <a *ngIf="item?.user?.active" href="javascript:void(0)" class="btn btn-outline-danger mr-1"
+                        (click)="onBloqueAdmin(item?.user?._id)">Bloquer</a>
+
+                    </td> -->
+                    <td>
+                      <a class="danger" (click)="onDeleteConfirm(item.id)" data-original-title="" title="">
+                        <i class="ft-trash font-medium-3"></i>
+                      </a>
+                      <a class="warning" data-original-title="" title="" [routerLink]="['/commercants/edit/'+ item._id]"
+                        routerLinkActive="router-link-active">
+                        <i class="ft-edit font-medium-3"></i>
+                      </a>
+                    </td>
+                  <!-- </div> -->
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-3 col-xs-4 col-lg-3 text-right float-left" style="padding: 10px">
+            <ngb-pagination [collectionSize]="users.length" [(page)]="page" [maxSize]="3" [rotate]="true" [ellipses]="false"
+              [boundaryLinks]="true" >
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Shopping cart ends-->

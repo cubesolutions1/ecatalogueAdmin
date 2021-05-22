@@ -1,0 +1,106 @@
+<!--Gallery Hover Effect Starts-->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="content-header">Liste des Slides & Bannières </div>
+    <!-- <p class="content-sub-header">Image gallery grid with 30 subtle hover effect. Try to hover below demo images to show
+      each hover effect.</p>-->
+  </div>
+</div>
+<section id="hover-effects" class="card" *ngFor="let item of [1]">
+  <div class="card-content">
+    <div class="card-body my-gallery" itemscope itemtype="http://schema.org/ImageGallery"
+      >
+      <div class="grid-hover">
+        <!-- <h5 class="text-bold-400 text-uppercase">Slider 1</h5>-->
+        <div class="row">
+          <div class="col-md-6 col-12" >
+            <figure class="effect-zoe">
+              <img src="{{apiUrl}}Banniere/{{slider1[0]?.photo}}" alt="{{slider1[0]?.name}}" class="imgsize" />
+              <figcaption>
+                <h2>Slider 
+                  <span>Un</span>
+                </h2>
+                <p class="icon-links">
+
+                  <a class="mr-1"><i class="ft-trash" (click)="deletebanniere(slider1[0]?._id)"></i></a>
+                  <a class="mr-1"><i class="ft-edit" [routerLink]="['/bannieres/edit/'+slider1[0]?._id+'/slider1']"
+                      routerLinkActive="router-link-active"></i></a>
+                </p>
+                <p class="description"></p>
+              </figcaption>
+            </figure>
+          </div>
+          <div class="col-md-6 col-12">
+            <figure class="effect-zoe">
+              <img src="{{apiUrl}}Banniere/{{slider2[0]?.photo}}" alt="{{slider2[0]?.name}}" class="imgsize" />
+              <figcaption>
+                <h2>Slider
+                  <span>deux</span>
+                </h2>
+                <p class="icon-links">
+
+                  <a class="mr-1"><i class="ft-trash" (click)="deletebanniere(slider2[0]?._id)"></i></a>
+                  <a class="mr-1"><i class="ft-edit" [routerLink]="['/bannieres/edit/'+slider2[0]?._id+'/slider2']"></i></a>
+                </p>
+                <p class="description"></p>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <figure class="effect-zoe">
+              <img src="{{apiUrl}}Banniere/{{slider3[0]?.photo}}" alt="{{slider3[0]?.name}}" class="imgsize" />
+              <figcaption>
+                <h2>Slider
+                  <span>trois</span>
+                </h2>
+                <p class="icon-links">
+
+                  <a class="mr-1"><i class="ft-trash" (click)="deletebanniere(slider3[0]?._id)"></i></a>
+                  <a class="mr-1"><i class="ft-edit" [routerLink]="['/bannieres/edit/'+slider3[0]?._id+'/slider3']"></i></a>
+                </p>
+                <p class="description"></p>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <figure class="effect-zoe">
+              <img src="{{apiUrl}}Banniere/{{banniere1[0]?.photo}}" alt="{{banniere1[0]?.name}}" class="imgsize" />
+              <figcaption>
+                <h2>
+                  <span>Bannière à gauche </span>
+                </h2>
+                <p class="icon-links">
+
+                  <a class="mr-1"><i class="ft-trash" (click)="deletebanniere(banniere1[0]?._id)"></i></a>
+                  <a class="mr-1"><i class="ft-edit" [routerLink]="['/bannieres/edit/'+banniere1[0]?._id+'/banniere1']"></i></a>
+                </p>
+                <p class="description"></p>
+              </figcaption>
+            </figure>
+          </div>
+          <div class="col-md-6 col-12">
+            <figure class="effect-zoe">
+              <img src="{{apiUrl}}Banniere/{{banniere2[0]?.photo}}" alt="{{banniere2[0]?.name}}" class="imgsize" />
+              <figcaption>
+                <h2>
+                  <span>Bannière à droite</span>
+                </h2>
+                <p class="icon-links">
+
+                  <a class="mr-1"><i class="ft-trash" (click)="deletebanniere(banniere2[0]?._id)"></i></a>
+                  <a class="mr-1"><i class="ft-edit" [routerLink]="['/bannieres/edit/'+banniere2[0]?._id+'/banniere2']"></i></a>
+                </p>
+                <p class="description"></p>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Gallery Hover Effect Starts-->

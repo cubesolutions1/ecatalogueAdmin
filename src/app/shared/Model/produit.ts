@@ -1,0 +1,19 @@
+export class Produit {
+    name:string;
+    description:string;
+    materiaux:string;
+    photo:string;
+    type:string;
+    dateDebut:string;
+    heureDebut:string;
+    dateFin:string;
+    heureFin:string;
+    categories:string;
+    commercant:string;
+    typecompagne:string;
+    etat:string;
+    prix:number;
+    prixNv:number;
+    reduction:number;
+    constructor(){}
+}

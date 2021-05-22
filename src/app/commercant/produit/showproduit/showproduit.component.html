@@ -1,0 +1,306 @@
+<!-- <section id="decks">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="">
+        <div class="card-content">
+          <div class="px-3">
+            <div class="form-body">
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group row last">
+                    <label class="col-md-3 label-control" for="userinput3"
+                        >Username</label>
+
+                    <div class="col-md-12">
+                      <ng-select [items]="categories" name="categorie" bindLabel="name" bindValue="_id"
+                        placeholder="Afficher tout" [(ngModel)]="produit.categories">
+                        <ng-template ng-label-tmp let-item="item">
+                          <img height="25" width="25" src="{{ apiUrl }}categories/{{ item.photo }}" />
+                          <b style="color: black">{{ item.name }}</b>
+                        </ng-template>
+                        <ng-template ng-option-tmp let-item="item" let-index="index">
+                          <img height="25" width="25" src="{{ apiUrl }}categories/{{ item.photo }}" />
+                          <b style="color: black">{{ item.name }}</b>
+                        </ng-template>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="form-group row">
+                    <label class="col-md-1 label-control">Etat</label>
+                    <div class="col-md-10">
+                      <div class="input-group col-md-9">
+                        <div class="custom-control custom-radio d-inline-block">
+                          <input [(ngModel)]="produit.etat" type="radio" value="done" id="done" name="done"
+                            class="custom-control-input" />
+                          <label class="custom-control-label danger"
+                            style="color:rgb(207, 28, 28) !important;font-style: inherit;font-weight: 300;"
+                            for="done">Passé</label>
+                        </div>
+                        <div class="custom-control custom-radio d-inline-block ml-1">
+                          <input style="color: red !important" type="radio" id="now" checked name="now"
+                            class="custom-control-input danger" [(ngModel)]="produit.etat" value="now" />
+                          <label class="custom-control-label"
+                            style="color:rgb(228, 231, 31) !important;font-style: inherit;font-weight: 300;"
+                            for="now">En cours</label>
+                        </div>
+                        <div class="custom-control custom-radio d-inline-block ml-1">
+                          <input type="radio" [(ngModel)]="produit.etat" value="todo" id="todo" checked name="todo"
+                            class="custom-control-input" />
+                          <label class="custom-control-label"
+                            style="color:rgb(22, 235, 15) !important;font-style: inherit;font-weight: 300;"
+                            for="todo">Futur</label>
+                        </div>
+                        <div class="custom-control custom-radio d-inline-block ml-1">
+                          <input type="radio" [(ngModel)]="produit.etat" value="tout" id="tout" checked name="tout"
+                            class="custom-control-input" />
+                          <label class="custom-control-label" for="tout">Afficher tout</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-actions right">
+                    <button type="button" class="btn btn-raised btn-primary" (click)="onChange()">
+                      <i class="fa fa-check-square-o"></i> Rechercher
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-xs-12 col-lg-12" *ngIf="!produits">
+      <label for="">Veuillez ajouter quelque produits</label>
+      <div class="form-actions right">
+        <button type="button" class="btn btn-raised btn-primary" [routerLink]="['/produits/add/']">
+          <i class="fa fa-check-square-o"></i> Ajouter un produit
+        </button>
+      </div>
+    </div>
+    <div class="col-md-3 col-xs-4 col-lg-3" *ngFor="let item of produits">
+      <div class="card-deck-wrapper" *ngIf="produits">
+        <div class="card-deck">
+          <div class="card">
+            <div class="card-content">
+              <img class="card-img-top img-fluid" style="width:360px;height:250px;"
+                src="{{ apiUrl }}Produit/{{ item.photo }}" alt="Card image cap" />
+              <div class="card-body">
+                <h4 class="card-title" style="color:rgb(22, 235, 15) !important;font-style: inherit;font-weight: 300;"
+                  *ngIf="item.etat==='todo'">{{ item.name }}</h4>
+                <h4 class="card-title" style="color:rgb(207, 28, 28) !important;font-style: inherit;font-weight: 300;"
+                  *ngIf="item.etat==='now'">{{ item.name }}</h4>
+                <h4 class="card-title" style="color:rgb(228, 231, 31) !important;font-style: inherit;font-weight: 300;"
+                  *ngIf="item.etat==='done'">{{ item.name }}</h4>
+                <p class="card-text">{{ item.description | slice: 0:20 }}</p>
+                <small class="actions text-muted">
+                  <i class="cursor-pointer mr-1 text-success"><del> {{ item.prix }} €</del>
+                  </i>
+                  <i class="cursor-pointer mr-1 bg-warning">{{ item.reduction }} %</i>
+                </small>
+                <small class="text-bold-600 text-success">
+                  <i class="cursor-pointer mr-1 text-danger float-right">
+                    <h3>{{ item.prixNv }} €</h3>
+                  </i>
+                </small>
+              </div>
+            </div>
+            <div class="card-footer">
+              <p class="card-text">
+                <small class="text-muted">{{ item.dateDebut | date: "dd/MM/yyyy" }} à
+                  {{ item.dateDebut | date: "HH:mm" }}</small>
+
+                <small class="actions text-muted float-right">
+                  <i class="ft-bell cursor-pointer mr-1 success" (click)="sendNotif()"></i>
+                  <i class="ft-edit cursor-pointer mr-1 warning" [routerLink]="['/produits/edit/' + item._id]"
+                    routerLinkActive="router-link-active"></i>
+                  <i class="ft-trash cursor-pointer mr-1 danger" (click)="deleteproduit(item._id)"></i>
+                </small>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-xs-4 col-lg-3 text-right float-right" style="padding: 10px" >
+    <ngb-pagination [disabled]="disable" [collectionSize]="120" [(page)]="page" [maxSize]="5"
+      [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (click)="getproduits()">
+    </ngb-pagination>
+  </div>
+</section> -->
+
+
+
+<!--Extended Table starts-->
+<!-- <div class="row text-left">
+  <div class="col-12">
+    <div class="content-header">Liste des Catégories</div>
+    <p class="content-sub-header">Tables with some actions and with more feathers.</p>
+  </div>
+</div> -->
+
+<!--Extended Table Ends-->
+<!--Shopping cart starts-->
+<section id="decks">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="">
+        <div class="card-content">
+          <div class="px-3">
+            <div class="form-body">
+              <div class="row">
+                <div class="col-xl-2 col-lg-4 col-md-12 col-12">
+                  <div class="form-group row last">
+                    <!-- <label class="col-md-3 label-control" for="userinput3"
+                        >Username</label -->
+
+                    <div class="col-md-12">
+                      <ng-select [items]="categories" name="categorie" bindLabel="name" bindValue="_id"
+                        placeholder="Afficher tout" [(ngModel)]="produit.categories">
+                        <ng-template ng-label-tmp let-item="item">
+                          <img height="25" width="25" src="{{ apiUrl }}Categories/{{ item.photo }}" />
+                          <b style="color: black;vertical-align: middle;">{{ item.name }}</b>
+                        </ng-template>
+                        <ng-template ng-option-tmp let-item="item" let-index="index">
+                          <img height="25" width="25" src="{{ apiUrl }}Categories/{{ item.photo }}" />
+                          <b style="color: black;vertical-align: middle;">{{ item.name }}</b>
+                        </ng-template>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-7 col-lg-8 col-md-12 col-12">
+                  <div class="form-group row">
+                    <label class="col-md-1 label-control">Etat</label>
+                    <div class="col-md-10">
+                      <div class="input-group ">
+                        <div class="custom-control custom-radio d-inline-block">
+                          <input [(ngModel)]="produit.etat" type="radio" value="done" id="done" name="done"
+                            class="custom-control-input" />
+                          <label class="custom-control-label danger"
+                            style="color:rgb(207, 28, 28) !important;font-style: inherit;font-weight: 300;"
+                            for="done">Passé</label>
+                        </div>
+                        <div class="custom-control custom-radio d-inline-block ml-1">
+                          <input style="color: red !important" type="radio" id="now" checked name="now"
+                            class="custom-control-input danger" [(ngModel)]="produit.etat" value="now" />
+                          <label class="custom-control-label"
+                            style="color:rgb(228, 231, 31) !important;font-style: inherit;font-weight: 300;"
+                            for="now">En cours</label>
+                        </div>
+                        <div class="custom-control custom-radio d-inline-block ml-1">
+                          <input type="radio" [(ngModel)]="produit.etat" value="todo" id="todo" checked name="todo"
+                            class="custom-control-input" />
+                          <label class="custom-control-label"
+                            style="color:rgb(22, 235, 15) !important;font-style: inherit;font-weight: 300;"
+                            for="todo">Futur</label>
+                        </div>
+                        <div class="custom-control custom-radio d-inline-block ml-1">
+                          <input type="radio" [(ngModel)]="produit.etat" value="tout" id="tout" checked name="tout"
+                            class="custom-control-input" />
+                          <label class="custom-control-label" for="tout">Afficher tout</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-3 col-lg-3 col-md-12 col-12">
+                  <div class="form-actions right">
+                    <button type="button" class="btn btn-raised btn-primary" (click)="onChange()">
+                      <i class="fa fa-check-square-o"></i> Rechercher
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row text-left">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Liste des produits </h4>
+
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+            <table class="table table-responsive-md text-center">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Nom</th>
+                  <th>Description</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of produits | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                  <td>
+                    <img class="media-object round-media" src="{{ apiUrl }}Produit/{{ item.photo }}"
+                      alt="Generic placeholder image" style="height: 80px; vertical-align:middle;" />
+                  </td>
+                  <!-- <td>{{ item.name }}</td> -->
+                  <td
+                    style="color:rgb(22, 235, 15) !important;font-style: inherit;font-weight: 300; 
+                    vertical-align:middle;"
+                    *ngIf="item.etat==='todo'">{{ item.name }}</td>
+                  <td
+                    style="color:rgb(207, 28, 28) !important;font-style: inherit;font-weight: 300; 
+                    vertical-align:middle;"
+                    *ngIf="item.etat==='done'">{{ item.name }}</td>
+                  <td
+                    style="color:rgb(228, 231, 31) !important;font-style: inherit;font-weight: 300;
+                     vertical-align:middle;"
+                    *ngIf="item.etat==='now'">{{ item.name }}</td>
+                  <td>{{ item.description | slice: 0:30 }}...</td>
+                  <!-- <td>$9.97</td>
+                <td>
+                  2
+                  <div class="btn-group ml-1">
+                    <a class="bg-info px-1 py-1 white font-medium-5" href="javascript:void(0)">-</a>
+                    <a class="bg-info px-1 py-1 white font-medium-5" href="javascript:void(0)">+</a>
+                  </div>
+                </td>
+                <td>$19.94</td> -->
+                  <td style=" vertical-align:middle;">
+                    <a href="" class="info"><i class="ft-bell cursor-pointer mr-1 success"
+                        (click)="sendNotif()"></i></a>
+                    <a class="danger" (click)="deleteproduit(item._id)" data-original-title="" title="">
+                      <i class="ft-trash font-medium-3"></i>
+                    </a>
+                    <a class="warning" data-original-title="" title="" [routerLink]="['/produits/edit/' + item._id]"
+                      routerLinkActive="router-link-active">
+                      <i class="ft-edit font-medium-3"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- right -->
+        <div class="col-md-3 col-xs-4 col-lg-3 text-right float-left" style="padding: 10px">
+          <ngb-pagination [collectionSize]="produits.length" [(page)]="page" [maxSize]="3" [rotate]="true"
+            [ellipses]="false" [boundaryLinks]="true">
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+    <!-- left -->
+  </div>
+</section>
+<!--Shopping cart ends-->

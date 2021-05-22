@@ -1,0 +1,348 @@
+<!-- Striped row layout section start -->
+<section id="striped-row-form-layouts">
+  <div class="row text-left">
+    <div class="col-sm-12" *ngIf="!idUpdate">
+      <div class="content-header">Ajouter un administrateur</div>
+    </div>
+    <div class="col-sm-12" *ngIf="idUpdate">
+      <div class="content-header">Modifier un administrateur</div>
+    </div>
+  </div>
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <!-- <div class="card-header">
+          <h4 class="card-title" id="striped-row-layout-basic">Project Info</h4>
+          <p class="mb-0">
+            Add <code>.striped-rows</code>
+            to form tag to add striped rows. In this example
+            <code>.form-horizontal</code>
+            and
+            <code>.form-bordered</code> is used to show the striped rows
+            functionality.
+          </p>
+        </div> -->
+        <div class="card-content" *ngIf="!idUpdate">
+          <div class="px-3">
+            <form
+              enctype="multipart/form-data"
+              class="form form-horizontal striped-rows form-bordered"
+              (ngSubmit)="onAddadmin()"
+            >
+              <div class="form-body">
+                <h4 class="form-section">Administrateur</h4>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label>Nom*</label>
+                      <input
+                        type="text" 
+                        id="projectinput1"
+                        class="form-control"
+                        autocomplete="off"
+                        placeholder="Nom"
+                        name="nom"
+                        [(ngModel)]="admin.name"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label>Prénom*</label>
+                      <input
+                        type="text" autocomplete="off"
+                        id="projectinput5"
+                        class="form-control"
+                        placeholder="Prénom"
+                        name="prenom"
+                        [(ngModel)]="admin.prenom"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label>Adresse*</label>
+                      <textarea
+                        type="textarea"
+                        id="projectinput5"
+                        class="form-control"
+                        placeholder="adresse"
+                        name="adresse"
+                        [(ngModel)]="admin.adresse"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label >Sexe*</label>
+
+                      <select
+                        id="projectinput6" [(ngModel)]="admin.sexe"
+                        name="sexe" 
+                        class="form-control"
+                      >
+                        <option value="femme"  >
+                          Femme
+                        </option>
+                        <option value="homme"  >
+                          Homme
+                        </option>
+                        
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label>E-mail*</label>
+                      <input
+                        type="text" autocomplete="off"
+                        id="projectinput5"
+                        class="form-control"
+                        placeholder="E-mail"
+                        name="email"
+                        [(ngModel)]="admin.email"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="projectinput5">Fax</label>
+                      <input
+                        type="number"
+                        id="projectinput5"
+                        class="form-control"
+                        placeholder="Fax"
+                        name="fax"
+                        [(ngModel)]="admin.fax"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="projectinput5">Téléphone*</label>
+                      <input
+                        type="number"
+                        id="projectinput5"
+                        class="form-control"
+                        placeholder="Téléphone"
+                        name="phone"
+                        [(ngModel)]="admin.phone"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="projectinput5">Mot de passe*</label>
+                      <input
+                        type="password"
+                        id="projectinput5"
+                        class="form-control"
+                        placeholder="Votre mot de passe"
+                        name="password"
+                        [(ngModel)]="admin.password"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="projectinput5"
+                        >Confirmer votre mot de passe*</label
+                      >
+                      <input
+                        type="password"
+                        id="projectinput5"
+                        class="form-control"
+                        placeholder="Confirmer votre mot de passe"
+                        name="passwordconfirm"
+                        [(ngModel)]="admin.passwordConfirm"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput5"
+                    >Photo*</label
+                  >
+                  <div class="col-md-6">
+                    <input
+                      type="file"
+                      [(ngModel)]="admin.photo"
+                      ng2FileSelect
+                      [uploader]="uploader"
+                      name="file"
+                      id="file"
+                      (change)="fileChangeEvent($event)"
+                      accept="image/x-png,image/gif,image/jpeg"
+                    />
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" [routerLink]="['/admins/show']" class="btn btn-raised btn-warning mr-1">
+                  <i class="ft-x"></i> Annuler
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="fa fa-check-square-o"></i> Confirmer
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- ---------------------------------------------------------- Modifier ---------------------------------------- -->
+        <div class="card-content" *ngIf="idUpdate">
+          <div class="px-3">
+            <form
+              enctype="multipart/form-data"
+              class="form form-horizontal striped-rows form-bordered"
+              (ngSubmit)="onEditadmin()"
+            >
+              <div class="form-body">
+                <h4 class="form-section"><i class="ft-user"></i> admin</h4>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label>Nom</label>
+                      <input
+                        type="text" autocomplete="off"
+                        id="projectinput1"
+                        class="form-control"
+                        placeholder="Nom"
+                        name="nom"
+                        [(ngModel)]="admin.name"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label>Prénom</label>
+                      <input
+                        type="text" autocomplete="off"
+                        id="projectinput5"
+                        class="form-control"
+                        placeholder="Prénom"
+                        name="prenom"
+                        [(ngModel)]="admin.prenom"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label>Adresse</label>
+                      <textarea
+                        type="textarea"
+                        id="projectinput5"
+                        class="form-control"
+                        placeholder="adresse"
+                        name="adresse"
+                        [(ngModel)]="admin.adresse"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label>Code postale</label>
+                      <input
+                        type="number"
+                        id="projectinput5"
+                        class="form-control"
+                        placeholder="Code postale"
+                        name="codepostale"
+                        [(ngModel)]="admin.codepostale"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label>E-mail</label>
+                      <input
+                        type="text" autocomplete="off"
+                        id="projectinput5"
+                        class="form-control"
+                        placeholder="E-mail"
+                        name="email"
+                        [(ngModel)]="admin.email"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="projectinput5">Fax</label>
+                      <input
+                        type="number"
+                        id="projectinput5"
+                        class="form-control"
+                        placeholder="Fax"
+                        name="fax"
+                        [(ngModel)]="admin.fax"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="projectinput5">Téléphone</label>
+                      <input
+                        type="number"
+                        id="projectinput5"
+                        class="form-control"
+                        placeholder="Téléphone"
+                        name="phone"
+                        [(ngModel)]="admin.phone"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="projectinput5"
+                      >Photo</label
+                    >
+                    <div class="col-md-6">
+                      <input
+                        type="file"
+                        [(ngModel)]="admin.photo"
+                        ng2FileSelect
+                        [uploader]="uploader"
+                        name="file"
+                        id="file"
+                        (change)="fileChangeEvent($event)"
+                        accept="image/x-png,image/gif,image/jpeg"
+                      />
+                      <span class="custom-file-control"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" routerLink="/admins/show" class="btn btn-raised btn-warning mr-1">
+                  <i class="ft-x"></i> Annuler
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="fa fa-check-square-o"></i> Modifier
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--File Upload Starts-->
+<!--File Upload Starts-->
+
+<!--File Upload Ends-->

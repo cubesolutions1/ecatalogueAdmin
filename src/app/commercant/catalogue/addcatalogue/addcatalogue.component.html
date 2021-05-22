@@ -1,0 +1,447 @@
+<!-- Striped row layout section start -->
+<section id="striped-row-form-layouts">
+  <div class="row text-left">
+    <div class="col-sm-12" *ngIf="!idUpdate">
+      <div class="content-header">Ajouter un catalogue</div>
+    </div>
+    <div class="col-sm-12" *ngIf="idUpdate">
+      <div class="content-header">Modifier un catalogue</div>
+    </div>
+  </div>
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+
+        <div class="card-content" *ngIf="!idUpdate">
+          <div class="px-3">
+            <form #vform="ngForm" enctype="multipart/form-data" class="form form-horizontal striped-rows form-bordered"
+              (ngSubmit)="onAddcatalogues(customContent)">
+              <div class="form-body">
+                <h4 class="form-section"><i class="ft-book"></i> Catalogue</h4>
+
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput1">Nom</label>
+                  <div class="col-md-6">
+                    <input type="text" id="projectinput1" class="form-control" placeholder="Nom" ngModel required
+                      #required="ngModel" name="nom" [(ngModel)]="catalogues.name" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Description</label>
+                  <div class="col-md-6">
+                    <textarea type="textarea" id="projectinput5" class="form-control" autocomplete="on"
+                      placeholder="Décrire briévement votre catalogue" name="description" [(ngModel)]="catalogues.description"></textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Mot clé</label>
+                  <div class="col-md-6">
+                    <tag-input [(ngModel)]="catalogues.tags" name="tags" [onAdding]="transform" 
+                    (change)="onChange()" 
+                    [placeholder]="'mot clé'"
+                     (onSelect)="onSelect($event)" [modelAsStrings]="true">
+                    </tag-input>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Catégories</label>
+                  <div class="col-md-6">
+                    <ng-select [items]="categories" name="categories" bindLabel="name" bindValue="id"
+                      placeholder="Choisissez" [(ngModel)]="catalogues.categories">
+                      <ng-template ng-label-tmp let-item="item">
+                        <img height="25" width="25" src="{{apiUrl}}Categories/{{item.photo}}" />
+                        <b style="color: black">{{ item.name }}</b>
+                      </ng-template>
+                      <ng-template ng-option-tmp let-item="item" let-index="index">
+                        <img height="25" width="25" src="{{apiUrl}}Categories/{{item.photo}}" />
+                        <b style="color: black">{{ item.name }}</b>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="typecompagne">Type compagne</label>
+                  <div class="col-md-6">
+                    <input type="text" id="typecompagne" class="form-control" placeholder="Promotion" ngModel required
+                      value="promo" disabled style="color: #000;background-color: aliceblue;" #required="ngModel"
+                      name="typecompagne" [(ngModel)]="catalogues.typecompagne" />
+                    <!--<select disabled
+                      id="projectinput6"
+                      [(ngModel)]="catalogues.typecompagne"
+                      name="interested"
+                      class="form-control"
+                      placeholder="Promotion"
+                    >
+                      <option value="none" selected="" disabled="">
+                        Promotion
+                      </option>
+                      <option
+                        value="promo"
+                        *ngFor="let item of typecompagne"
+                      >
+                        Promotion
+                      </option>
+                    </select>-->
+                  </div>
+                </div>
+                <!--Date début-->
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="timesheetinput3">Date début</label>
+                  <div class="col-md-4">
+                    <div class="position-relative has-icon-left">
+                      <input type="date" class="form-control" ngModel name="maxDate" [(ngModel)]="catalogues.dateDebut"
+                        #maxDate="ngModel" placeholder="maxDate 2019-11-11" />
+                      <!-- <small
+                        class="form-text text-muted danger"
+                        *ngIf="minDate.errors?.minDate"
+                        >Veuillez ajouter une date début valide?</small
+                      > -->
+                      <div class="form-control-position">
+                        <i class="ft-message-square"></i>
+                      </div>
+                    </div>
+                  </div>
+
+                  <label class="col-md-2 label-control" for="timesheetinput5">Heure début
+                  </label>
+                  <div class="col-md-4">
+                    <div class="position-relative has-icon-left">
+                      <input type="time" id="timesheetinput5" class="form-control" name="starttime"
+                        [(ngModel)]="catalogues.heureDebut" />
+                      <div class="form-control-position">
+                        <i class="ft-clock"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--Date fin-->
+
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="timesheetinput3">Date fin
+                  </label>
+                  <div class="col-md-4">
+                    <div class="position-relative has-icon-left">
+                      <input type="date" class="form-control" ngModel name="minDate" [(ngModel)]="catalogues.dateFin"
+                        #minDate="ngModel" placeholder="maxDate 2019-11-11" minDate="{{catalogues.dateDebut}}" />
+
+                      <small class="form-text text-muted danger" *ngIf="minDate.errors?.minDate">Veuillez ajouter une
+                        date de fin valide?</small>
+
+                      <div class="form-control-position">
+                        <i class="ft-message-square"></i>
+                      </div>
+                    </div>
+                  </div>
+
+                  <label class="col-md-2 label-control" for="timesheetinput6">Heure fin</label>
+                  <div class="col-md-4">
+                    <div class="position-relative has-icon-left">
+                      <input type="time" id="timesheetinput6" class="form-control" name="endtime"
+                        [(ngModel)]="catalogues.heureFin" />
+                      <div class="form-control-position">
+                        <i class="ft-clock"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Photo de couverture (280px X 380px)</label>
+                  <div class="col-md-6">
+                    <input type="file"  ng2FileSelect [uploader]="uploader" name="photo"
+                      id="photo" (change)="photoChangeEvent($event)" accept="image/x-png,image/gif,image/jpeg,image/png" />
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Catalogue</label>
+                  <div class="col-md-6">
+                    <input type="file"  ng2FileSelect [uploader]="uploader" name="pdf"
+                      id="pdf" (change)="pdfChangeEvent($event)" accept=".pdf"/>
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" routerLink="/catalogues/show" class="btn btn-raised btn-danger mr-1">
+                  <i class="ft-x"></i> Annuler
+                </button>
+                <button type="submit" class="btn btn-raised btn-success mr-1">
+                  <div class="spinner-border" role="status" *ngIf="isLoading">
+                  </div>
+                  <i class="ft-eye" *ngIf="!isLoading"></i> Prévisualiser 
+                </button>
+                <button type="button" (click)="onConfirm()"  class="btn btn-raised btn-primary">
+                  <i class="fa fa-check-square-o"></i> Confirmer
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!--Modification-->
+        <div class="card-content" *ngIf="idUpdate">
+          <div class="px-3">
+            <form #vform="ngForm" enctype="multipart/form-data" class="form form-horizontal striped-rows form-bordered"
+              (ngSubmit)="onEditcatalogues()">
+              <div class="form-body">
+                <h4 class="form-section"><i class="ft-book"></i> Catalogue</h4>
+
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput1">Nom</label>
+                  <div class="col-md-6">
+                    <input type="text" id="projectinput1" class="form-control" placeholder="Nom" ngModel required
+                      #required="ngModel" name="nom" [(ngModel)]="catalogues.name" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Description</label>
+                  <div class="col-md-6">
+                    <textarea type="textarea" id="projectinput5" class="form-control" autocomplete="on"
+                      placeholder="Description" name="description" [(ngModel)]="catalogues.description"></textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Mot clé</label>
+                  <div class="col-md-6">
+                    Mot clé selectionnée: {{items}}
+
+                    <tag-input [(ngModel)]="items" name="items"
+                     [onAdding]="transform" (change)="onChange()" (onSelect)="onSelect($event)" [modelAsStrings]="true">
+                    </tag-input>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Catégories </label>
+                  <div class="col-md-6">
+                    <ng-select [items]="categories" name="categories" bindLabel="name" bindValue="id"
+                      placeholder="Choissisez une autre catégorie" [(ngModel)]="catalogues.categories">
+                      <ng-template ng-label-tmp let-item="item">
+                        <img height="25" width="25" src="{{apiUrl}}Categories/{{item.photo}}" />
+                        <b style="color: black">{{item.name }}</b>
+                      </ng-template>
+                      <ng-template ng-option-tmp let-item="item" let-index="index">
+                        <img height="25" width="25" src="{{apiUrl}}Categories/{{item.photo}}" />
+                        <b style="color: black">{{ item.name }}</b>
+                      </ng-template>
+                    </ng-select>
+                     <p *ngIf="catalogues.categories">
+                      Catégorie selectionnée: {{catalogues.categories.name}}
+                    </p> 
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="typecompagne">Type de compagne</label>
+                  <div class="col-md-6">
+                    <input type="text" id="typecompagne" class="form-control" placeholder="Promotion" ngModel required
+                      value="promo" disabled style="color: #000;background-color: aliceblue;" #required="ngModel"
+                      name="typecompagne" [(ngModel)]="catalogues.typecompagne" />
+                    <!--<select disabled
+                      id="projectinput6"
+                      [(ngModel)]="catalogues.typecompagne"
+                      name="interested"
+                      class="form-control"
+                      placeholder="Promotion"
+                    >
+                      <option value="none" selected="" disabled="">
+                        Promotion
+                      </option>
+                      <option
+                        value="promo"
+                        *ngFor="let item of typecompagne"
+                      >
+                        Promotion
+                      </option>
+                    </select>-->
+                  </div>
+                </div>
+                <!--Date début-->
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="timesheetinput3">Date début</label>
+                  <div class="col-md-4">
+                    <div class="position-relative has-icon-left">
+                      <input type="datetime-local" class="form-control"  ngModel value="{{catalogues.dateDebut}}" name="maxDate" [(ngModel)]="catalogues.dateDebut"
+                        #maxDate="ngModel" placeholder="maxDate 2019-11-11" />
+                        <small class="form-text text-muted success" >{{catalogues.dateDebut | date:'d/M/yy, h:mm a'}}</small>
+                      <!-- <small
+                        class="form-text text-muted danger"
+                        *ngIf="minDate.errors?.minDate"
+                        >Veuillez ajouter un date début valide?</small
+                      > -->
+                      <div class="form-control-position">
+                        <i class="ft-message-square"></i>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- <label class="col-md-2 label-control" for="timesheetinput5">Heure début
+                  </label> -->
+                  <!-- <div class="col-md-4">
+                    <div class="position-relative has-icon-left">
+                      <input type="time" id="timesheetinput5" class="form-control" name="starttime"
+                        [(ngModel)]="catalogues.heureDebut" />
+                      <div class="form-control-position">
+                        <i class="ft-clock"></i>
+                      </div>
+                    </div>
+                  </div> -->
+                </div>
+                <!--Date fin-->
+
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="timesheetinput3">Date fin
+                  </label>
+                  <div class="col-md-4">
+                    <div class="position-relative has-icon-left">
+                      <input type="datetime-local" class="form-control" ngModel name="minDate" [(ngModel)]="catalogues.dateFin"
+                        #minDate="ngModel" placeholder="maxDate 2019-11-11" minDate="{{catalogues.dateDebut}}" />
+
+                      <small class="form-text text-muted success" >{{catalogues.dateFin | date:'d/M/yy, h:mm a'}}</small>
+                      <small class="form-text text-muted danger" *ngIf="minDate.errors?.minDate">Veuillez ajouter une
+                        date de fin valide?</small>
+
+                      <div class="form-control-position">
+                        <i class="ft-message-square"></i>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- <label class="col-md-2 label-control" for="timesheetinput6">Heure fin</label> -->
+                  <!-- <div class="col-md-4">
+                    <div class="position-relative has-icon-left">
+                      <input type="time" id="timesheetinput6" class="form-control" name="endtime"
+                        [(ngModel)]="catalogues.heureFin" />
+                        
+                      <div class="form-control-position">
+                        <i class="ft-clock"></i>
+                      </div>
+                    </div>
+                  </div> -->
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Photo de couverture</label>
+                  <div class="col-md-6">
+                    <input type="file"  ng2FileSelect [uploader]="uploader" name="photo"
+                      id="photo" (change)="photoChangeEvent($event)" value="catalogues.photo" accept="image/x-png,image/gif,image/jpeg" />
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Catalogue</label>
+                  <div class="col-md-6">
+                    <input type="file"  value="catalogues.pdf" ng2FileSelect [uploader]="uploader" name="pdf"
+                      id="pdf" (change)="pdfChangeEvent($event)" accept=".pdf" />
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" routerLink="/catalogues/show" class="btn btn-raised btn-danger mr-1">
+                  <i class="ft-x"></i> Annuler
+                </button>
+                <button type="submit"  class="btn btn-raised btn-success mr-1">
+                  <i class="ft-eye"></i> Prévisualiser
+                </button>
+                <button type="button" (click)="onConfirm()"  class="btn btn-raised btn-primary">
+                  <i class="fa fa-check-square-o"></i> Confirmer
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<section id="modals">
+  <div class="row text-left">
+    <!-- <div class="col-sm-12">
+      <div class="content-header">Modals</div>
+    </div> -->
+  </div>
+  <div class="row text-left" matchHeight="card">
+    <!--Modal with Default options starts-->
+    
+    <!--Modal with Default options ends-->
+
+    <!--Components as content starts-->
+    
+    <!--Components as content ends-->
+
+    <!--Modal with custom class starts-->
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <!-- <div class="card"> -->
+        <!-- <div class="card-header">
+          <h4 class="card-title">Modal with custom class</h4>
+          <p>With some style and dark window modal.</p>
+        </div> -->
+        <div class="card-content">
+          <div class="card-body">
+            <ng-template #customContent let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <!-- <h4 class="modal-title">Modal title</h4> -->
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <!-- catalogue show -->
+                <div class="col-md-12 col-xs-12 col-lg-12" >
+                  <div class="card-deck-wrapper" >
+                    <div class="card-deck">
+                      <div class="card">
+                        <div class="card-content">
+                          <img
+                            class="card-img-top img-fluid" style="width:450px;height:520px;"
+                            src="{{ apiUrl }}Catalogues/{{ catalogues.photo }}"  (error)="img.src = '../../../../assets/img/attente.jpg'" #img
+                            alt="Card image cap"                          />
+                          <div class="card-body">
+                            <h4 class="card-title">{{ catalogues.name }}</h4>
+                            <!-- <h5 class="card-title">{{ catalogues.pdf | lowercase }}</h5> -->
+                            <p class="card-text">{{ catalogues.description | slice: 0:20 }}</p>
+                          </div>
+                        </div>
+                        <div class="card-footer">
+                          <p class="card-text">
+                            <small class="text-muted"
+                              >{{ catalogues.dateDebut | date: "dd/MM/yyyy" }} à
+                              {{ catalogues.dateDebut | date: "HH:mm" }}</small
+                            >
+            
+                            <!-- <small class="actions text-muted float-right">
+                              <i
+                                class="ft-bell cursor-pointer mr-1 success"
+                                (click)="sendNotif()"
+                              ></i>
+                              <i
+                                class="ft-edit cursor-pointer mr-1 warning"
+                                [routerLink]="['/catalogues/edit/' + item._id]"
+                                routerLinkActive="router-link-active"
+                              ></i>
+                              <i
+                                class="ft-trash cursor-pointer mr-1 danger"
+                                (click)="deleteCatalogue(item._id)"
+                              ></i>
+                            </small> -->
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <p>Find me here</p> -->
+              </div>
+              
+            </ng-template>
+            <!-- <button class="btn btn-lg btn-outline-primary" (click)="openModal(customContent)">Launch demo modal</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Modal with custom class ends-->
+  <!-- </div> -->
+</section>
+
+
+

@@ -1,0 +1,217 @@
+@import "../../../assets/sass/scss/gradient-variables";
+
+:host ::ngdeep .ct-grid {
+  stroke-dasharray: 0px;
+  stroke: rgba(0, 0, 0, 0.1);
+}
+
+:host ::ngdeep .ct-label {
+  font-size: 0.9rem;
+}
+
+//widget Line Chart CSS Starts
+
+:host ::ngdeep .WidgetlineChart .ct-point {
+  stroke-width: 0px;
+}
+:host ::ngdeep .WidgetlineChart .ct-line {
+  stroke: #fff;
+}
+:host ::ngdeep .WidgetlineChartShadow {
+  -webkit-filter: drop-shadow(0px 15px 5px rgba(0, 0, 0, 0.8));
+  filter: drop-shadow(
+    0px 15px 5px rgba(0, 0, 0, 0.8)
+  ); /* Same syntax as box-shadow, except for the spread property */
+}
+
+//widget Line Chart CSS Ends
+
+//widget Line Chart 1 CSS Starts
+:host ::ngdeep .WidgetlineChart1 .ct-point {
+  stroke-width: 0px;
+}
+:host ::ngdeep .WidgetlineChart1 .ct-line {
+  stroke: url($dashboard2-gradient-path + #widgradient) !important; // #009DA0;
+}
+
+:host ::ngdeep .WidgetlineChart1Shadow {
+  -webkit-filter: drop-shadow(0px 20px 5px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(
+    0px 20px 5px rgba(0, 0, 0, 0.3)
+  ); /* Same syntax as box-shadow, except 
+                                                       for the spread property */
+}
+//widget Line Chart 1 CSS Ends
+
+//widget Line Chart 2 CSS Starts
+
+:host ::ngdeep .WidgetlineChart2 .ct-point {
+  stroke-width: 0px;
+}
+:host ::ngdeep .WidgetlineChart2 .ct-line {
+  stroke: url($dashboard2-gradient-path + #widgradient1) !important;
+}
+:host ::ngdeep .WidgetlineChart2 .ct-grid {
+  stroke-dasharray: 0px;
+  stroke: rgba(255, 255, 255, 0.2);
+}
+:host ::ngdeep .WidgetlineChart2Shadow {
+  -webkit-filter: drop-shadow(0px 20px 5px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(
+    0px 20px 5px rgba(0, 0, 0, 0.3)
+  ); /* Same syntax as box-shadow, except 
+                                                       for the spread property */
+}
+//widget Line Chart 2 CSS Ends
+
+//Donut Chart 1 CSS Starts
+
+:host ::ngdeep .donut1 .ct-label {
+  text-anchor: middle;
+  alignment-baseline: middle;
+  font-size: 60px;
+  fill: #009da0;
+}
+
+:host ::ngdeep .donut1 .ct-outstanding .ct-slice-donut {
+  stroke: #eee;
+}
+
+:host ::ngdeep .donut1 .ct-done .ct-slice-donut {
+  stroke: #009da0;
+}
+
+//Donut Chart 1 CSS Ends
+
+//Donut Chart 2 CSS Starts
+
+:host ::ngdeep .donut2 .ct-label {
+  text-anchor: middle;
+  alignment-baseline: middle;
+  font-size: 60px;
+  fill: #ff8d60;
+}
+
+:host ::ngdeep .donut2 .ct-outstanding .ct-slice-donut {
+  stroke: #eee;
+}
+
+:host ::ngdeep .donut2 .ct-done .ct-slice-donut {
+  stroke: #ff8d60;
+}
+
+//Donut Chart 2 CSS Ends
+
+//Donut Chart 3 CSS Starts
+
+:host ::ngdeep .donut3 .ct-label {
+  text-anchor: middle;
+  alignment-baseline: middle;
+  font-size: 60px;
+  fill: #ff586b;
+}
+
+:host ::ngdeep .donut3 .ct-outstanding .ct-slice-donut {
+  stroke: #eee;
+}
+
+:host ::ngdeep .donut3 .ct-done .ct-slice-donut {
+  stroke: #ff586a;
+}
+
+//Donut Chart 3 CSS Ends
+
+// Line area chart CSS Starts
+
+:host ::ngdeep .lineAreaChart .ct-series-a .ct-area {
+  fill: url($dashboard2-gradient-path + #gradient) !important;
+}
+
+:host ::ngdeep .lineAreaChart .ct-series-b .ct-area {
+  fill: #ff8d60;
+  fill-opacity: 0.1;
+}
+
+:host ::ngdeep .lineAreaChart .ct-point-circle {
+  stroke-width: 2px;
+  fill: white;
+}
+
+:host ::ngdeep .lineAreaChart .ct-series-b .ct-point-circle {
+  stroke: #ff8d60;
+}
+
+:host ::ngdeep .lineAreaChart .ct-series-a .ct-point-circle {
+  stroke: #31afb2;
+}
+
+:host ::ngdeep .lineAreaChart .ct-line {
+  fill: none;
+  stroke-width: 1px;
+}
+
+// Line area chart CSS Ends
+
+//Line chart 2 CSS Starts
+
+:host ::ngdeep .lineChart2 .ct-point-circle {
+  stroke-width: 2px;
+  fill: white;
+}
+
+:host ::ngdeep .lineChart2 .ct-series-b .ct-point-circle {
+  stroke: #ff8d60;
+}
+
+:host ::ngdeep .lineChart2 .ct-series-a .ct-point-circle {
+  stroke: #31afb2;
+}
+
+:host ::ngdeep .lineChart2 .ct-line {
+  fill: none;
+  stroke-width: 1px;
+}
+
+:host ::ngdeep .lineChart2Shadow {
+  -webkit-filter: drop-shadow(0px 25px 8px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(
+    0px 25px 8px rgba(0, 0, 0, 0.3)
+  ); /* Same syntax as box-shadow, except 
+                                                       for the spread property */
+}
+//Line chart 2 CSS Ends
+
+//Line Chart 1 CSS Starts
+
+:host ::ngdeep .lineChart1 .ct-line {
+  fill: none;
+  stroke-width: 3px;
+}
+
+:host ::ngdeep .lineChart1 .ct-point {
+  stroke-width: 0px;
+}
+
+:host ::ngdeep .lineChart1Shadow {
+  -webkit-filter: drop-shadow(0px 20px 6px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(
+    0px 20px 6px rgba(0, 0, 0, 0.3)
+  ); /* Same syntax as box-shadow, except 
+                                                       for the spread property */
+}
+//Line Chart 1 CSS Ends
+.card {
+  height: 160px;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+@media (min-width: 1680px) {
+  .last {
+    height: 200px;
+  }
+}
+
+// .card:hover {
+//   transform: scale(1.05) translateZ(0);
+// }

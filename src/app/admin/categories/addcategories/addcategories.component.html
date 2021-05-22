@@ -1,0 +1,130 @@
+<!-- Ajouter categorie -->
+<section id="striped-row-form-layouts" *ngIf="!idUpdate">
+  <div class="row text-left">
+    <div class="col-sm-12">
+      <div class="content-header">Ajouter une Catégorie</div>
+    </div>
+  </div>
+  <div class="row text-left">
+
+    <div class="col-md-12">
+      <div class="card">
+
+        <div class="card-content">
+          <div class="px-3">
+            <form #vform="ngForm" enctype="multipart/form-data" class="form form-horizontal striped-rows form-bordered"
+              (ngSubmit)="onAddcategories()">
+              <div class="form-body">
+                <h4 class="form-section"><i class="ft-user"></i> Catégories</h4>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput1">Nom*</label>
+                  <div class="col-md-6">
+                    <input ngModel #nom="ngModel" type="text" id="projectinput1" class="form-control" placeholder="Nom"
+                      name="nom" id="nom" [(ngModel)]="categories.name" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput5">Description*</label>
+                  <div class="col-md-6">
+                    <textarea ngModel #description="ngModel" type="textarea" id="projectinput5" class="form-control"
+                      placeholder="Description" name="description" id="description"
+                      [(ngModel)]="categories.description"></textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput5">Photo*</label>
+                  <div class="col-md-6">
+                    <input type="file"  ng2FileSelect [uploader]="uploader" name="file"
+                      id="file" (change)="fileChangeEvent($event)" accept="image/x-png,image/gif,image/jpeg" />
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="form-actions">
+                <button type="button" routerLink="/categories/show" class="btn btn-raised btn-warning mr-1">
+                  <i class="ft-x"></i> Annuler
+                </button>
+                <button type="submit" [disabled]="!vform.valid" class="btn btn-raised btn-primary">
+                  <i class="fa fa-check-square-o"></i> Confirmer
+                </button>
+
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Modifier categories -->
+<section id="striped-row-form-layouts" *ngIf="idUpdate">
+  <div class="row text-left">
+    <div class="col-sm-12">
+      <div class="content-header">Modifier une Catégorie</div>
+    </div>
+  </div>
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+
+        <div class="card-content">
+          <div class="px-3">
+            <form enctype="multipart/form-data" class="form form-horizontal striped-rows form-bordered"
+              (ngSubmit)="onEditcategories()">
+              <div class="form-body">
+                <h4 class="form-section"><i class="ft-user"></i> Catégories</h4>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput1">Nom</label>
+                  <div class="col-md-6">
+                    <input type="text" id="projectinput1" class="form-control" placeholder="Nom" name="nom"
+                      [(ngModel)]="categories.name" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput5">Description</label>
+                  <div class="col-md-6">
+                    <textarea type="textarea" id="projectinput5" class="form-control" placeholder="Description"
+                      name="description" [(ngModel)]="categories.description"></textarea>
+                  </div>
+                </div>
+                <div class="form-group row">
+
+                  <label class="col-md-3 label-control" for="projectinput5">
+                    <h4 [hidden]="truee" class="form-section float-center">
+                      <img src="{{ apiUrl }}/{{ categories.photo }}" alt="Card image cap" width="160" /></h4> Photo
+                  </label>
+                  <div class="col-md-6">
+                    <input type="file" [(ngModel)]="categories.photo" ng2FileSelect [uploader]="uploader" name="file"
+                      id="file" (change)="fileChangeEvent($event)" accept="image/x-png,image/gif,image/jpeg" />
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="form-actions">
+                <button type="button" routerLink="/categories/show" class="btn btn-raised btn-warning mr-1">
+                  <i class="ft-x"></i> Annuler
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="fa fa-edit"></i> Modifier
+                </button>
+
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!--File Upload Starts-->
+<!--File Upload Starts-->
+
+<!--File Upload Ends-->
