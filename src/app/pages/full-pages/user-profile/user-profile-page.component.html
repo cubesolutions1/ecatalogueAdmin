@@ -1,0 +1,311 @@
+<!--User Profile Starts-->
+<!--Basic User Details Starts-->
+<section id="user-profile">
+  <div class="row">
+    <div class="col-12">
+      <div class="card profile-with-cover">
+        <div class="card-img-top img-fluid bg-cover height-300" style="background: url('assets/img/photos/14.jpg') 50%">
+        </div>
+        <div class="media profil-cover-details row">
+          <div class="col-5">
+            <div class="align-self-start halfway-fab pl-3 pt-2">
+              <div class="text-left">
+                <h3 class="card-title white">{{ users.name }}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="align-self-center halfway-fab text-center">
+              <a class="profile-image">
+                <img src="{{ apiUrl }}User/{{ users.photo }}"
+                  class="rounded-circle img-border gradient-summer width-100" alt="Card image" />
+              </a>
+            </div>
+          </div>
+          <div class="col-5"></div>
+        </div>
+        <div class="profile-cover-buttons">
+          <div class="media-body halfway-fab align-self-end">
+            <div class="text-right d-none d-sm-none d-md-none d-lg-block">
+              <button type="button" class="btn btn-danger btn-raised mr-2" *ngIf="isEdit && !changePassword"
+                (click)="onChangePassword()">
+                <i class="fa fa-edit2"></i> Changer mot de passe
+              </button>
+              <button type="button" class="btn btn-warning btn-raised mr-3" *ngIf="!isEdit && !changePassword"
+                routerLink="/pages/profile/{{ users._id }}">
+                <i class="fa fa-edit"></i> Modifier votre profil
+              </button>
+              <button type="button" class="btn btn-light btn-raised mr-3" *ngIf="isEdit" routerLink="/pages/profile">
+                <i class="fa fa-edit"></i> Afficher votre profil
+              </button>
+            </div>
+            <div class="text-right d-block d-sm-block d-md-block d-lg-none">
+              <button type="button" class="btn btn-primary btn-raised mr-2">
+                <i class="fa fa-plus"></i>
+              </button>
+              <button type="button" class="btn btn-success btn-raised mr-3">
+                <i class="fa fa-dashcube"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="profile-section">
+          <div class="row">
+            <div class="col-lg-5 col-md-5">
+              <ul class="profile-menu no-list-style">
+                <!-- <li>
+                                    <a (click)="showPage('About')" [ngClass]="currentPage === 'About' ? 'primary font-medium-2 font-weight-600 active' : 'primary font-medium-2 font-weight-600'">About</a>
+                                </li> -->
+                <!-- <li>
+                                    <a (click)="showPage('TimeLine')" [ngClass]="currentPage === 'TimeLine' ? 'primary font-medium-2 font-weight-600 active' : 'primary font-medium-2 font-weight-600'">Timeline</a>
+                                </li> -->
+              </ul>
+            </div>
+            <div class="col-lg-2 col-md-2 text-center">
+              <span class="font-medium-2 text-uppercase">{{ users.name }} {{ users.prenom }}</span>
+              <p class="grey font-small-2">{{ users.role }}</p>
+            </div>
+            <!-- <div class="col-lg-5 col-md-5">
+                            <ul class="profile-menu no-list-style">
+                                <li>
+                                    <a (click)="showPage('Friends')" [ngClass]="currentPage === 'Friends' ? 'primary font-medium-2 font-weight-600 active' : 'primary font-medium-2 font-weight-600'">Friends</a>
+                                </li>
+                                <li>
+                                    <a (click)="showPage('Photos')" [ngClass]="currentPage === 'Photos' ? 'primary font-medium-2 font-weight-600 active' : 'primary font-medium-2 font-weight-600'">Photos</a>
+                                </li>
+                            </ul>
+                        </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Basic User Details Ends-->
+
+<!--About section starts-->
+<section id="about" *ngIf="!isEdit && !changePassword">
+  <div class="row">
+    <div class="col-12">
+      <div class="content-header">A propos</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Informations Personnelles</h5>
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+                       <hr />
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-4">
+                <ul class="no-list-style">
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a><i class="icon-present font-small-3"></i> Date de
+                        naissance:</a></span>
+                    <span class="d-block overflow-hidden">June 10th, 1988</span>
+                  </li>
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a><i class="ft-map-pin font-small-3"></i> Code
+                        Postal:</a></span>
+                    <span class="d-block overflow-hidden">{{
+                      users.codepostale
+                    }}</span>
+                  </li>
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a><i class="ft-globe font-small-3"></i> Adresse:</a></span>
+                    <span class="d-block overflow-hidden">{{
+                      users.adresse
+                    }}</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <ul class="no-list-style">
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a><i class="ft-user font-small-3"></i> Sexe:</a></span>
+                    <span class="d-block overflow-hidden">{{users.sexe}}</span>
+                  </li>
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a><i class="ft-mail font-small-3"></i> Email:</a></span>
+                    <a class="d-block overflow-hidden">{{ users.email }}</a>
+                  </li>
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a><i class="ft-monitor font-small-3"></i> Site web:</a></span>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <ul class="no-list-style">
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a><i class="ft-smartphone font-small-3"></i>
+                        Téléphone:</a></span>
+                    <span class="d-block overflow-hidden">{{
+                      users.phone
+                    }}</span>
+                  </li>
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a><i class="ft-briefcase font-small-3"></i> Poste:</a></span>
+                    <span class="d-block overflow-hidden">{{
+                      users.role
+                    }}</span>
+                  </li>
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a><i class="ft-book font-small-3"></i> Date de
+                        création:</a></span>
+                    <span class="d-block overflow-hidden">{{
+                      users.createdAt | date: "short"
+                    }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="about" *ngIf="isEdit && !changePassword">
+  <div class="row">
+    <div class="col-12">
+      <div class="content-header">Modifier votre profil</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Information Personnelle</h5>
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+            <hr />
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-4">
+                <ul class="no-list-style">
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a><i class="icon-present font-small-3"></i>
+                        Birthday:</a></span>
+                    <input type="text" class="d-block overflow-hidden" />
+                  </li>
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a><i class="ft-map-pin font-small-3"></i> Code
+                        Postale:</a></span>
+                    <input type="text" [(ngModel)]="users.codepostale" class="d-block overflow-hidden" />
+                  </li>
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a><i class="ft-globe font-small-3"></i> Adresse:</a></span>
+                    <input type="text" [(ngModel)]="users.adresse" class="d-block overflow-hidden" />
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <ul class="no-list-style">
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a><i class="ft-user font-small-3"></i> Gender:</a></span>
+                    <input type="text" [(ngModel)]="users.sexe" class="d-block overflow-hidden" />
+                  </li>
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a><i class="ft-mail font-small-3"></i> Email:</a></span>
+                    <input type="text" [(ngModel)]="users.email" class="d-block overflow-hidden" />
+                  </li>
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a><i class="ft-monitor font-small-3"></i> Site web:</a></span>
+                    <input type="text" class="d-block overflow-hidden" />
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <ul class="no-list-style">
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a><i class="ft-smartphone font-small-3"></i> Phone
+                        Number:</a></span>
+                    <input type="text" [(ngModel)]="users.phone" class="d-block overflow-hidden" />
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 col-md-6 col-lg-4">
+                <ul class="no-list-style">
+                  <li class="mb-2">
+                    <!-- <span class="text-bold-500 primary"><a><i class="ft-smartphone font-small-3"></i> Phone Number:</a></span> -->
+                    <button type="submit" class="btn btn-warning btn-raised mr-3" (click)="onEdit(idEdit)">
+                      <i class="fa fa-edit"></i> Modifier votre profil
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="about" *ngIf="changePassword">
+  <div class="row">
+    <div class="col-12">
+      <div class="content-header">Changer votre mot de passe</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Mot de passe</h5>
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+            <!-- <div class="mb-3">
+                            <span class="text-bold-500 primary">About Me:</span>
+                            <span class="d-block overflow-hidden">Hi, I’m Jose, I’m 29 and I work as a Ninja Developer for the
+                                “PIXINVENT” Creative Studio. In my research, I follow the flow of early medieval slavery from viking 
+                                raids in the west, through the booming ports of the Scandinavian north, and out into the Islamic world.
+                                Reading texts against the grain and seeing artifacts as traces of the past can make their lives once 
+                                again visible to us today. This Site web documents my efforts to do just that, and I hope it will prove 
+                                a resource and an inspiration for others in similar pursuits.
+                            </span>
+                        </div> -->
+            <hr />
+            <div class="row">
+              <div class="col-12 col-md-12 col-lg-12">
+                <ul class="no-list-style">
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a> Mot de passe Ancien:</a></span>
+                    <input type="password" [(ngModel)]="passwordCurrent" class="d-block overflow-hidden" />
+                  </li>
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a> Nouveau Mot de passe:</a></span>
+                    <input type="password" [(ngModel)]="password" class="d-block overflow-hidden" />
+                  </li>
+                  <li class="mb-2">
+                    <span class="text-bold-500 primary"><a> Confirmer votre Mot de passe:</a></span>
+                    <input type="password" [(ngModel)]="passwordConfirm" class="d-block overflow-hidden" />
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-4">
+                <ul class="no-list-style">
+                  <li class="mb-2">
+                    <!-- <span class="text-bold-500 primary"><a><i class="ft-smartphone font-small-3"></i> Phone Number:</a></span> -->
+                    <button type="button" class="btn btn-warning btn-raised mr-3" (click)="onUpdatePassword()">
+                      <i class="fa fa-edit"></i> Confirmer
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--About section ends-->

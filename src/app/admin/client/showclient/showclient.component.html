@@ -1,0 +1,83 @@
+<!--Extended Table starts-->
+<div class="row text-left">
+  <div class="col-12">
+    <div class="content-header">Liste des utilisateurs</div>
+
+  </div>
+</div>
+
+<!--Extended Table Ends-->
+<!--Shopping cart starts-->
+<section id="shopping-cart">
+  <div class="row text-left">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Utilisateurs</h4>
+          <!-- <div class="col-md-3 col-xs-4 col-lg-3 text-right float-right" style="padding: 10px" *ngIf="users.length > 0">
+            <ngb-pagination [collectionSize]="120" [(page)]="page" [maxSize]="3" [rotate]="true" [ellipses]="false"
+              [boundaryLinks]="true" (click)="getusers()">
+            </ngb-pagination>
+          </div> -->
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+            <table class="table table-responsive-md text-center">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Nom et prénom</th>
+                  <th>E-mail</th>
+                  <th>Adresse</th>
+                  <th>Téléphone</th>
+
+                  <th>Etat</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of users | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                  <td>
+                    <img class="media-object round-media" src="{{ apiUrl }}User/{{ item.photo }}"
+                      alt="Generic placeholder image" style="height: 40px" 
+                      #img (error)="img.src = 'http://catalogue.cubesolutions.tn:3112/img/User/default.jpg'"/>
+                  </td>
+                  <td>{{ item.name }} {{ item.prenom }}</td>
+                  <td>{{ item.email }} </td>
+                  <td>{{ item.adresse }} {{ item.codepostale }}</td>
+                  <td>{{ item.phone }}</td>
+                  <!-- <td>$9.97</td>
+                <td>
+                  2
+                  <div class="btn-group ml-1">
+                    <a class="bg-info px-1 py-1 white font-medium-5" href="javascript:void(0)">-</a>
+                    <a class="bg-info px-1 py-1 white font-medium-5" href="javascript:void(0)">+</a>
+                  </div>
+                </td>
+                <td>$19.94</td> -->
+                  <td>
+                    <a *ngIf="!item.active" href="javascript:void(0)" class="btn btn-outline-primary mr-1"
+                      (click)="onActiveUser(item._id)">Activer</a>
+                    <a *ngIf="item.active" href="javascript:void(0)" class="btn btn-outline-danger mr-1"
+                      (click)="onBloqueUser(item._id)">Bloquer</a>
+
+                  </td>
+                  <td>
+                    <a class="danger" (click)="onDeleteConfirm(item._id)" data-original-title="" title="">
+                      <i class="ft-trash font-medium-3"></i>
+                    </a>
+
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <ngb-pagination [collectionSize]="users.length"
+             [(page)]="page" [maxSize]="10" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!--Shopping cart ends-->

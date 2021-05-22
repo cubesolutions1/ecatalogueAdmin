@@ -1,0 +1,261 @@
+<div class="chat-application">
+  <div #contentOverlay class="content-overlay" (click)="onContentOverlay()"></div>
+  <div [perfectScrollbar] #chatSidebar class="chat-sidebar float-left d-none d-sm-none d-md-block d-lg-block">
+    <div class="chat-sidebar-content">
+      <div class="chat-fixed-search p-2">
+        <!-- <form>
+          <div class="position-relative has-icon-left">
+            <input class="form-control" id="timesheetinput1" name="employeename" type="text">
+            <div class="form-control-position">
+              <i class="ft-user"></i>
+            </div>
+          </div>
+        </form> -->
+      </div>
+      <div id="users-list" class="list-group position-relative">
+        <div class="users-list-padding">
+          <a class="list-group-item "
+             (click)="getUserMessage($event,chat.user.id)"
+             *ngFor="let chat of messages$ | async">
+            <span class="media">
+              <span class="avatar avatar-md avatar-online">
+                <img class="media-object d-flex mr-3 bg-primary height-50 rounded-circle" src="{{ apiUrl }}User/{{ chat.user.photo }}" 
+                  alt="Generic placeholder image">
+                <i></i>
+              </span>
+              <div class="media-body  text-left">
+                <h6 class="list-group-item-heading">{{chat.user.name}}
+                  <span class="font-small-3 float-right primary">{{chat.createdAt | date:'d MMM h:mm a'}}</span>
+                </h6>
+                <p class="list-group-item-text text-muted">
+                  <i class="ft-check primary font-small-2"></i> {{chat.commentaire}}
+                  <span class="float-right primary">
+                    <i class="font-medium-1 icon-pin blue-grey lighten-3"></i>
+                  </span>
+                </p>
+              </div>
+            </span>
+          </a>
+        <div style="width: 100%;text-align: center;">
+          <span *ngIf="(messages$ | async).length == 0">Pas de message disponible</span>
+
+        </div>
+          <!-- <a class="list-group-item no-border" (click)="SetActive($event,'chat2')">
+            <span class="media">
+              <span class="avatar avatar-md avatar-busy">
+                <img class="media-object d-flex mr-3 bg-primary height-50 rounded-circle" src="assets/img/portrait/small/avatar-s-7.png"
+                  alt="Generic placeholder image">
+                <i></i>
+              </span>
+              <div class="media-body  text-left">
+                <h6 class="list-group-item-heading">Kristopher Candy
+                  <span class="font-small-3 float-right primary">9:04 PM</span>
+                </h6>
+                <p class="list-group-item-text text-muted">
+                  <i class="ft-check primary font-small-2"></i> Thank you
+                  <span class="float-right
+                        primary">
+                    <span class="badge badge-pill badge-primary">12</span>
+                  </span>
+                </p>
+              </div>
+            </span>
+          </a>
+          <a class="list-group-item no-border" (click)="SetActive($event,'chat3')">
+            <span class="media">
+              <span class="avatar avatar-md avatar-away">
+                <img class="media-object d-flex mr-3 bg-primary height-50 rounded-circle" src="assets/img/portrait/small/avatar-s-8.png"
+                  alt="Generic placeholder image">
+                <i></i>
+              </span>
+              <div class="media-body  text-left">
+                <h6 class="list-group-item-heading">Sarah Woods
+                  <span class="font-small-3 float-right primary">2:14 AM</span>
+                </h6>
+                <p class="list-group-item-text text-muted">
+                  <i class="ft-check font-small-2"></i> Hello krish!
+                  <span class="float-right primary">
+                    <i class="font-medium-1 icon-volume-off blue-grey lighten-3 mr-1"></i>
+                    <span class="badge badge-pill badge-primary">3</span>
+                  </span>
+                </p>
+              </div>
+            </span>
+          </a>
+          <a class="list-group-item no-border" (click)="SetActive($event,'chat4')">
+            <span class="media">
+              <span class="avatar avatar-md avatar-away">
+                <img class="media-object d-flex mr-3 bg-primary height-50 rounded-circle" src="assets/img/portrait/small/avatar-s-5.png"
+                  alt="Generic placeholder image">
+                <i></i>
+              </span>
+              <div class="media-body  text-left">
+                <h6 class="list-group-item-heading">Bruce Reid
+                  <span class="font-small-3 float-right primary">Yesterday</span>
+                </h6>
+                <p class="list-group-item-text text-muted">
+                  <i class="ft-check font-small-2"></i> Will connect you</p>
+              </div>
+            </span>
+          </a>
+          <a class="list-group-item no-border" (click)="SetActive($event,'chat5')">
+            <span class="media">
+              <span class="avatar avatar-md avatar-online">
+                <img class="media-object d-flex mr-3 bg-primary height-50 rounded-circle" src="assets/img/portrait/small/avatar-s-9.png"
+                  alt="Generic placeholder image">
+                <i></i>
+              </span>
+              <div class="media-body  text-left">
+                <h6 class="list-group-item-heading">Heather Howell
+                  <span class="font-small-3 float-right primary">Friday</span>
+                </h6>
+                <p class="list-group-item-text text-muted">
+                  <i class="ft-check font-small-2"></i> Thank you
+                  <span class="float-right primary">
+                    <span class="badge badge-pill badge-primary">4</span>
+                  </span>
+                </p>
+              </div>
+            </span>
+          </a>
+          <a class="list-group-item no-border" (click)="SetActive($event,'chat6')">
+            <span class="media">
+              <span class="avatar avatar-md avatar-busy">
+                <img class="media-object d-flex mr-3 bg-primary height-50 rounded-circle" src="assets/img/portrait/small/avatar-s-4.png"
+                  alt="Generic placeholder image">
+                <i></i>
+              </span>
+              <div class="media-body  text-left">
+                <h6 class="list-group-item-heading">Kelly Reyes
+                  <span class="font-small-3 float-right primary">Thrusday</span>
+                </h6>
+                <p class="list-group-item-text text-muted">
+                  <i class="ft-check font-small-2"></i> I love you </p>
+              </div>
+            </span>
+          </a>
+          <a class="list-group-item no-border" (click)="SetActive($event,'chat7')">
+            <span class="media">
+              <span class="avatar avatar-md avatar-online">
+                <img class="media-object d-flex mr-3 bg-primary height-50 rounded-circle" src="assets/img/portrait/small/avatar-s-14.png"
+                  alt="Generic placeholder image">
+                <i></i>
+              </span>
+              <div class="media-body  text-left">
+                <h6 class="list-group-item-heading">Vincent Nelson</h6>
+                <p class="list-group-item-text text-muted">
+                  <i class="ft-check primary font-small-2"></i> Who you are?</p>
+              </div>
+            </span>
+          </a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chat-name p-2 bg-white">
+    <div class="media">
+      <span class="chat-app-sidebar-toggle ft-align-justify font-large-1 mr-2 d-none d-block d-sm-block d-md-none" (click)="onSidebarToggle()"></span>
+      <!-- <div class="media-body text-left">
+        <img [src]="[activeChatUserImg]" width="37" class="rounded-circle mr-1" alt="avatar" />
+        <span>{{ activeChatUser }}</span>
+        <i class="ft-more-vertical float-right mt-1"></i>
+      </div> -->
+    </div>
+  </div>
+  <section class="chat-app-window" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+    <div class="badge badge-dark mb-1">Historique</div>
+    <div class="chats">
+      <div class="chats"  *ngFor="let chat of userMessages$ | async">
+        <div style="text-align: left;
+        padding-left: 70px;" *ngIf="chat?.produit">
+          <img style="width:200px" src="{{ apiUrl }}Produit/{{ chat.produit.photo }}" >
+
+        </div>
+        <div style="text-align: left;
+        padding-left: 70px;" *ngIf="chat?.enseigne">
+          <img style="width:200px" src="{{ apiUrl }}Enseignes/{{ chat.enseigne.photo }}" >
+
+        </div>
+        <div class="chat chat-left">
+          
+          <div class="chat-avatar">
+            <a class="avatar" data-toggle="tooltip" data-placement="[chat.avatar]" title="" data-original-title="">
+              <img src="{{ apiUrl }}User/{{ chat.user.photo }}" 
+                   class="width-50" alt="avatar" #img
+                   (error)="img.src='http://catalogue.cubesolutions.tn:3112/img/User/default.jpg'"/>
+            </a>
+          </div>
+          <div class="chat-body ">
+            <div class="chat-content d-flex flex-row" >
+              <p    style="    margin-right: 1em;">{{ chat.commentaire }} </p>
+            
+              <!-- <vg-player *ngIf="chat.messageType === 'audio'">
+                <audio [vgMedia]="media1" #media1 id="singleAudio" preload="auto" controls>
+                  <source [src]="message" type="audio/mp3">
+                </audio>
+              </vg-player>
+              <vg-player *ngIf="chat.messageType === 'video'" style="height: 250px; width: 250px">
+                <video [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
+                  <source [src]="message" type="video/mp4">
+                </video>
+              </vg-player> -->
+              <div *ngIf="chat.active == 'none'">
+                <img  src="assets/img/1.svg"    style="width: 2em;     margin-right: 1em;   cursor: pointer;" (click)="updatestatus('declineCommentaire',chat.id,chat.user.id)">
+                <img  src="assets/img/2.svg"     style="width: 2em;     margin-right: 1em;   cursor: pointer;" (click)="updatestatus('activeCommentaire',chat.id,chat.user.id)">
+               
+              </div>
+              <div *ngIf=" chat.active == 'accept' ">
+                <img  src="assets/img/1.svg"    style="width: 2em;     margin-right: 1em;   cursor: pointer;" (click)="updatestatus('declineCommentaire',chat.id,chat.user.id)">
+              
+                <img  src="assets/img/3.svg"    style="width: 2em;     margin-right: 1em;   cursor: pointer;" >
+              </div>
+              <div *ngIf=" chat.active == 'decline'">
+                <img  src="assets/img/4.svg"     style="width: 2em;     margin-right: 1em;   cursor: pointer;" >
+                <img  src="assets/img/2.svg"     style="width: 2em;     margin-right: 1em;   cursor: pointer;" (click)="updatestatus('activeCommentaire',chat.id,chat.user.id)">
+               
+              </div>
+            </div>
+           
+            
+  
+          </div>
+          <p class="time" *ngIf="chat.time !='' ">{{chat.time}}</p>
+        </div>
+
+        <!-- <div class="chat" *ngIf="messages.length > 0">
+          <div class="chat-avatar">
+            <a class="avatar" data-toggle="tooltip" data-placement="right" title="" data-original-title="">
+              <img src="assets/img/portrait/small/avatar-s-1.png" class="width-50" alt="avatar" />
+            </a>
+          </div>
+          <div class="chat-body">
+            <div class="chat-content" *ngFor="let message of messages">
+              <p>{{ message }}</p>
+            </div>
+          </div>
+        </div> -->
+
+      </div>
+    </div>
+  </section>
+  <section class="chat-app-form bg-blue-grey bg-lighten-5">
+    <!-- <form class="chat-app-input row mt-2">
+      <fieldset class="form-group position-relative has-icon-left col-lg-10 col-8 m-0 px-3">
+        <div class="form-control-position">
+          <i class="icon-emoticon-smile"></i>
+        </div>
+        <input type="text" class="form-control" id="iconLeft4" placeholder="Type your message"  (keydown.enter)="onAddMessage();$event.preventDefault()"
+        #messageInput>
+        <div class="form-control-position control-position-right">
+          <i class="ft-image mr-1"></i>
+        </div>
+      </fieldset>
+      <fieldset class="form-group position-relative has-icon-left col-lg-2 col-4 m-0">
+        <button type="button" class="btn btn-raised btn-primary px-4" (click)="onAddMessage()">
+          <i class="fa fa-paper-plane-o d-block d-xl-inline-block d-lg-none p-0"></i>
+          <span class="d-none d-lg-inline-block ml-1">Send</span>
+        </button>
+      </fieldset>
+    </form> -->
+  </section>
+</div>

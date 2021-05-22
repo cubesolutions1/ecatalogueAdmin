@@ -1,0 +1,364 @@
+<!-- Striped row layout section start -->
+<section id="striped-row-form-layouts" *ngIf="!idUpdate">
+  <div class="row text-left">
+    <div class="col-sm-12">
+      <div class="content-header">Ajouter un slide ou une bannière</div>
+    </div>
+
+  </div>
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-content" *ngIf="!idUpdate">
+          <div class="px-3">
+            <form #vform="ngForm" enctype="multipart/form-data" class="form form-horizontal striped-rows form-bordered"
+              (ngSubmit)="onAddBanniere()">
+              <div class="form-body">
+                <h4 class="form-section"><i class="ft-file"></i> Slider1* (JPG,PNG) </h4>
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Photo <p>
+
+                    (1500px X 600px)
+                  </p> 
+                  </label>
+                  <div class="col-md-6">
+                    <input type="file" ng2FileSelect [uploader]="uploader" name="slider1" id="slider1"
+                      (change)="slider1ChangeEvent($event)" accept="image/x-png,image/jpeg" />
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+                <h4 class="form-section"><i class="ft-file"></i> Slider2* (JPG,PNG) </h4>
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Photo <p>
+
+                    (1500px X 600px)
+                  </p> 
+                  </label>
+                  <div class="col-md-6">
+                    <input type="file" ng2FileSelect [uploader]="uploader" name="Slider2" id="Slider2"
+                      (change)="Slider2ChangeEvent($event)" accept="image/x-png,image/jpeg" />
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+                <h4 class="form-section"><i class="ft-file"></i> Slider3* (JPG,PNG)</h4>
+
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Photo <p>
+
+                    (1500px X 600px)
+                  </p> 
+                  </label>
+                  <div class="col-md-6">
+                    <input type="file" ng2FileSelect [uploader]="uploader" name="Slider3" id="Slider3"
+                      (change)="Slider3ChangeEvent($event)" accept="image/x-png,image/jpeg" />
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+                <h4 class="form-section"><i class="ft-file"></i> Bannière1* (JPG,PNG) </h4>
+
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Photo <p>
+
+                    (900px X 480px)
+                  </p> 
+                  </label>
+                  <div class="col-md-6">
+                    <input type="file" ng2FileSelect [uploader]="uploader" name="banniere1" id="banniere1"
+                      (change)="banniere1ChangeEvent($event)" accept="image/x-png,image/jpeg" />
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+                <h4 class="form-section"><i class="ft-file"></i> Bannière2* (JPG,PNG) </h4>
+
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Photo<p>
+
+                    (900px X 480px)
+                  </p> 
+                  </label>
+                  <div class="col-md-6">
+                    <input type="file" ng2FileSelect [uploader]="uploader" name="banniere2" id="banniere2"
+                      (change)="banniere2ChangeEvent($event)" accept="image/x-png,image/jpeg" />
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-actions">
+                <p class="text-warning">NB: Veuillez svp cliquer sur prévisualiser avant de confirmer l'ajout</p>
+                <button type="button" [routerLink]="['/bannieres/show']" class="btn btn-raised btn-warning mr-1">
+                  <i class="ft-x"></i> Annuler
+                </button>
+                <button type="submit"   class="btn btn-raised btn-secondary mr-1">
+                  <i class="ft-eye"></i> Prévisualiser
+                </button>
+                <button type="button" (click)=" onConfirm()"  class="btn btn-raised btn-primary">
+                  <i class="fa fa-check-square-o"></i> Confirmer
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<section id="striped-row-form-layouts" *ngIf="idUpdate && photo ==='slider1'">
+  <div class="row text-left">
+    <div class="col-sm-12">
+      <div class="content-header">Modifier slider 1</div>
+    </div>
+
+  </div>
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="px-3">
+            <form #vform="ngForm" enctype="multipart/form-data" class="form form-horizontal striped-rows form-bordered"
+              (ngSubmit)="onEditBanniere()">
+              <div class="form-body">
+
+
+                <h4 class="form-section"><i class="ft-file"></i> Slider1 (JPG,PNG)</h4>
+
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Photo <p>
+
+                    (1500px X 600px)
+                  </p> 
+                  </label>
+                  <div class="col-md-6">
+                    <input type="file" ng2FileSelect [uploader]="uploader" name="slider1" id="slider1"
+                      (change)="slider1ChangeEvent($event)" accept="image/x-png,image/jpeg" />
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="form-actions">
+                <button type="button" [routerLink]="['/bannieres/show']" class="btn btn-raised btn-warning mr-1">
+                  <i class="ft-x"></i> Annuler
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="fa fa-edit"></i> Valider
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<section id="striped-row-form-layouts" *ngIf="idUpdate && photo==='slider2'">
+  <div class="row text-left">
+    <div class="col-sm-12">
+      <div class="content-header">Modifier Slide 2</div>
+    </div>
+
+  </div>
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="px-3">
+            <form #vform="ngForm" enctype="multipart/form-data" class="form form-horizontal striped-rows form-bordered"
+              (ngSubmit)="onEditBanniere()">
+              <div class="form-body">
+
+
+
+
+
+                <h4 class="form-section"><i class="ft-file"></i> Slider2 (JPG,PNG)</h4>
+
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Photo <p>
+
+                    (1500px X 600px)
+                  </p> 
+                  </label>
+                  <div class="col-md-6">
+                    <input type="file" ng2FileSelect [uploader]="uploader" name="Slider2" id="Slider2"
+                      (change)="Slider2ChangeEvent($event)" accept="image/x-png,image/jpeg" />
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+
+
+
+
+
+
+              </div>
+
+              <div class="form-actions">
+                <button type="button" [routerLink]="['/bannieres/show']" class="btn btn-raised btn-warning mr-1">
+                  <i class="ft-x"></i> Annuler
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="fa fa-edit"></i> Valider
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<section id="striped-row-form-layouts" *ngIf="idUpdate && photo==='slider3'">
+  <div class="row text-left">
+    <div class="col-sm-12">
+      <div class="content-header">Modifier Slide 3</div>
+    </div>
+
+  </div>
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="px-3">
+            <form #vform="ngForm" enctype="multipart/form-data" class="form form-horizontal striped-rows form-bordered"
+              (ngSubmit)="onEditBanniere()">
+              <div class="form-body">
+
+
+
+                <h4 class="form-section"><i class="ft-file"></i> Slider3 (JPG,PNG)</h4>
+
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Photo <p>
+
+                    (1500px X 600px)
+                  </p> 
+                  </label>
+                  <div class="col-md-6">
+                    <input type="file" ng2FileSelect [uploader]="uploader" name="Slider3" id="Slider3"
+                      (change)="Slider3ChangeEvent($event)" accept="image/x-png,image/jpeg" />
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="form-actions">
+                <button type="button" [routerLink]="['/bannieres/show']" class="btn btn-raised btn-warning mr-1">
+                  <i class="ft-x"></i> Annuler
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="fa fa-edit"></i> Valider
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<section id="striped-row-form-layouts" *ngIf="idUpdate && photo==='banniere1'">
+  <div class="row text-left">
+    <div class="col-sm-12">
+      <div class="content-header">Modifier bannière</div>
+    </div>
+
+  </div>
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="px-3">
+            <form #vform="ngForm" enctype="multipart/form-data" class="form form-horizontal striped-rows form-bordered"
+              (ngSubmit)="onEditBanniere()">
+              <div class="form-body">
+
+
+                <h4 class="form-section"><i class="ft-file"></i> Bannière1 (JPG,PNG)</h4>
+
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Photo <p>
+
+                    (900px X 480px)
+                  </p> 
+                  </label>
+                  <div class="col-md-6">
+                    <input type="file" ng2FileSelect [uploader]="uploader" name="banniere1" id="banniere1"
+                      (change)="banniere1ChangeEvent($event)" accept="image/x-png,image/jpeg" />
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" [routerLink]="['/bannieres/show']" class="btn btn-raised btn-warning mr-1">
+                  <i class="ft-x"></i> Annuler
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="fa fa-edit"></i> Valider
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<section id="striped-row-form-layouts" *ngIf="idUpdate && photo==='banniere2'">
+  <div class="row text-left">
+    <div class="col-sm-12">
+      <div class="content-header">Modifier bannière</div>
+    </div>
+
+  </div>
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="px-3">
+            <form #vform="ngForm" enctype="multipart/form-data" class="form form-horizontal striped-rows form-bordered"
+              (ngSubmit)="onEditBanniere()">
+              <div class="form-body">
+
+
+                <h4 class="form-section"><i class="ft-file"></i> Bannière (JPG,PNG)</h4>
+
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="projectinput5">Photo <p>
+
+                    (900px X 480px)
+                  </p> 
+                  </label>
+                  <div class="col-md-6">
+                    <input type="file" ng2FileSelect [uploader]="uploader" name="banniere2" id="banniere2"
+                      (change)="banniere2ChangeEvent($event)" accept="image/x-png,image/jpeg" />
+                    <span class="custom-file-control"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" [routerLink]="['/bannieres/show']" class="btn btn-raised btn-warning mr-1">
+                  <i class="ft-x"></i> Annuler
+                </button>
+                <button type="submit"   class="btn btn-raised btn-primary">
+                  <i class="fa fa-edit"></i> Valider
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!--Gallery Hover Effect Starts-->
+

@@ -1,0 +1,180 @@
+<div class="row text-left">
+  <div class="col-12">
+    <div class="content-header">Liste des Catégories</div>
+  </div>
+</div>
+
+<!-- <section id="shopping-cart">
+  <div class="row text-left">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Catégories</h4>
+
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+            <table class="table table-responsive-md text-center">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Nom</th>
+                  <th>Description</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of categories | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                  <td>
+                    <img class="media-object round-media" src="{{ apiUrl }}Categories/{{ item.photo }}"
+                      alt="Generic placeholder image" style="height: 35px" />
+                  </td>
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.description | slice: 0:30 }}...</td>
+
+                  <td>
+                    <a class="danger" (click)="onDeleteConfirm(item.id)" data-original-title="" title="">
+                      <i class="ft-trash font-medium-3"></i>
+                    </a>
+                    <a class="warning" data-original-title="" title="" [routerLink]="['/categories/edit/' + item._id]"
+                      routerLinkActive="router-link-active">
+                      <i class="ft-edit font-medium-3"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-3 col-xs-4 col-lg-3 text-right float-left" style="padding: 10px">
+
+          <ngb-pagination [collectionSize]="categories.length" [(page)]="page" [maxSize]="10" [rotate]="true"
+            [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section id="editing-DataTable" class="mb-3"> 
+
+
+</section> -->
+<!-- </section> -->
+<section id="sorting" class="mb-3">
+  <div class="row text-left">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Catégories</h4>
+
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+
+
+
+            <!-- <div class="row text-left">
+              <div class="col-12">
+                <div class="content-header">Sorting DataTable </div>
+              </div>
+            </div> -->
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="row text-right">
+                  <div class="col-12">
+                    <input type='text' style='padding:8px;margin:15px auto;width:30%;' placeholder='Rechercher'
+                      (keyup)='updateFilter($event)' />
+                  </div>
+                </div>
+                <ngx-datatable #table [messages]="{
+                  emptyMessage: 'Pas de données existant.',totalMessage: 'total'             }" class='bootstrap'
+                  [columns]="columns" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+                  [rowHeight]="'auto'" [limit]="10" [rows]='rows'>
+                  <!-- </ngx-datatable> -->
+                  <ngx-datatable-column name="ordre" class="text-center" [width]="50">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                      <span title="Double click to edit" (dblclick)="editing[rowIndex + '-ordre'] = true"
+                        *ngIf="!editing[rowIndex + '-ordre']">
+                        {{value}}
+                      </span>
+                      <input autofocus style="width:50px" (blur)="updateValue($event, 'ordre', rowIndex,row._id)"
+                        *ngIf="editing[rowIndex+ '-ordre']" type="text" [value]="value" />
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="photo" >
+                    <ng-template ngx-datatable-cell-template let-value="value">
+                      <!-- {{value}} -->
+                      <img class="media-object round-media" src="{{ apiUrl }}Categories/{{value}}"
+                        alt="Generic placeholder image" style="height: 35px" />
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="name">
+                    <!-- <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                      <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true"
+                        *ngIf="!editing[rowIndex + '-name']">
+                        {{value}}
+                      </span>
+                      <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']"
+                        type="text" [value]="value" />
+                    </ng-template> -->
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="description" [width]="300">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                      <!-- <span title="Double click to edit" (dblclick)="editing[rowIndex + '-gender'] = true"
+                        *ngIf="!editing[rowIndex + '-gender']"> -->
+                      {{value | slice:0:30 }}...
+                      <!--    </span>
+                      <select *ngIf="editing[rowIndex + '-gender']" (change)="updateValue($event, 'gender', rowIndex)"
+                        [value]="value">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>-->
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Actions" prop="rows.id" class="text-right">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                      <a class="danger" (click)="onDeleteConfirm(row._id)" data-original-title="" title="">
+                        <i class="ft-trash font-medium-3"></i>
+                      </a>
+                      <a class="warning" data-original-title="" title="" [routerLink]="['/categories/edit/' + row._id]"
+                        routerLinkActive="router-link-active">
+                        <i class="ft-edit font-medium-3"></i>
+                      </a>
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                </ngx-datatable>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- <div class="row">
+ 
+    
+ 
+  
+  <div class="col-sm-3">
+  <div class="panel panel-default" droppable (onDrop)="onItemDrop($event)">
+      <div class="panel-heading">Drop Items here</div>
+          <div class="panel-body">
+            <ul class="list-group">
+              <li draggable  *ngFor="let item of items" [dragData]="item" class="list-group-item">{{item.name}}</li>
+          </ul>
+          </div>
+      </div>
+  </div>
+</div>  -->
+<!--DataTable With Editing Feature Starts-->
+<!-- Filter Datatable Options Starts -->
+
+<!--Sorting DataTable Starts-->
+
+<!--Sorting DataTable Ends-->
+<!-- Filter Datatable Options Ends -->
+<!-- <ngx-datatable class="material" [rows]="categories" [loadingIndicator]="loadingIndicator"
+ [columns]="columns" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" 
+ [reorderable]="reorderable">
+</ngx-datatable> -->
