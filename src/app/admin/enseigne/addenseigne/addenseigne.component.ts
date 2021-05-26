@@ -6,6 +6,7 @@ import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import { Enseigne } from 'app/shared/Model/Enseigne';
 import { PointVente } from 'app/shared/Model/pointVente';
 import { ApiService } from 'app/shared/services/Api.service';
+import Swal from 'sweetalert2';
 declare var google;
 declare var navigator;
 const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
@@ -23,7 +24,8 @@ export class AddenseigneComponent implements OnInit {
   formattedEstablishmentAddress: string;
 
   phone: string;
-
+  adresseEnseigne=""
+  
 
 
   jours: any = [
@@ -51,7 +53,8 @@ export class AddenseigneComponent implements OnInit {
   hasAnotherDropZoneOver = false;
   filesToUpload = null;
   nameFile: string;
-  adress: string;
+  adress: string="";
+  url=""
   constructor(
     public zone: NgZone,
     private apiSer: ApiService,
@@ -66,17 +69,47 @@ export class AddenseigneComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    console.log();
-
+  openGPS(){
+   this.url="chrome://settings/content/location"
+    window.open( this.url,'_blank');
+    window.open( this.url);
+  }
+    
+  
+  DetectedPosition(){
     navigator.permissions.query({ name: 'geolocation' }).then(res => {
       if (res.state === 'denied') {
         this.lng = -61.0386417;
         this.lat = 14.6147652;
         this.getAddress(this.lat, this.lng);
+      
+     //   alert("Please open GPS browser")
+        Swal.fire('Oops...', 'Please open GPS browser')
 
+        Swal.fire({
+
+        //  title: "danger!",
+          text: "GPS Désactiver",
+          html:"Oops...', 'Please open GPS browser !"
+       //   "<a href='chrome://settings/content/location'>cliquer ici!</a>"
+          ,
+          showCloseButton: true,
+          showCancelButton: true,
+
+        })
+      } else {
+        
+      //  alert("We detected your position")
+        
       }
     });
+  }
+
+
+  ngOnInit() {
+    console.log();
+
+   
 
     if (navigator) {
       navigator.geolocation.getCurrentPosition(pos => {
@@ -121,6 +154,9 @@ export class AddenseigneComponent implements OnInit {
 
         if (status === google.maps.GeocoderStatus.OK) {
           const result = results[0];
+          console.log(JSON.stringify(result)+"******************************")
+          console.log(JSON.stringify(result.formatted_address)+"%%%%%%%%%%%%%%%%%%%%")
+          this.adresseEnseigne=JSON.stringify(result.formatted_address)
 
           if (result != null) {
             this.adress = result.formatted_address;
@@ -141,7 +177,8 @@ export class AddenseigneComponent implements OnInit {
 
   onAddEnseigne() {
 // console.log(this.pointventes.length);
-
+   //  this.getAuthGPS();
+     this.DetectedPosition()
     const fd = new FormData();
     for (let i = 0; i < this.enseignes.pointvente.length; i++) {
 
@@ -161,16 +198,26 @@ export class AddenseigneComponent implements OnInit {
     fd.append('horairedebut', this.enseignes.horairedebut);
     fd.append('horairefin', this.enseignes.horairefin);
     // fd.append('jours', this.enseignes.jours.toString())
-    fd.append('adresse', this.enseignes.adresse);
+    fd.append('adresse', this.adresseEnseigne);
     fd.append('url', this.enseignes.url);
     fd.append('activeUrl', this.enseignes.activeUrl);
     fd.append('startLocation[coordinates][0]', this.lat);
     fd.append('startLocation[coordinates][1]', this.lng);
     fd.append('startLocation[address]', this.adress);
+    console.log(this.adress+"00000000000000000000")
     this.apiSer.postData('enseignes/', fd).subscribe(event => {
+      console.log(this.adress+"0000000000000000000011111111")
       this.typeSuccess(event.status);
       this.route.navigateByUrl('/enseignes/show');
       // }
+     /*  Swal.fire({
+
+          text: "Succès",
+          html:"Enseigne Enregistrer avec succès",
+          showCloseButton: true,
+          showCancelButton: true,
+
+        }) */
     }, err => {
 console.error(err.error.message);
 if(err.error.error){
