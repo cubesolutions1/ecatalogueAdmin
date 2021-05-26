@@ -28,6 +28,7 @@ export class ShowcatalogueComponent implements OnInit {
   page = 1
   limit = 8
   catalogue: Catalogue = new Catalogue()
+  id:any
   constructor(private apiSer: ApiService,
     private toastr: ToastrService,
     private auth: AuthService) {
@@ -37,6 +38,8 @@ export class ShowcatalogueComponent implements OnInit {
   }
   ngOnInit() {
     this.getcategories();
+    this.id = localStorage.getItem('id')
+  //  console.log(this.id)
 
     this.getCatalogues();
     this.getCommercantByidUser()
@@ -68,7 +71,7 @@ export class ShowcatalogueComponent implements OnInit {
       this.catalogues = []
       this.getCommercantByidUser().then(res => {
         // 
-        return this.apiSer.getData('catalogues/etat?commercant=' + this.commercant + '&page=' + this.page + '&limit=' + this.limit).subscribe((res: any) => {
+        return this.apiSer.getData('catalogues/etat?commercant=' + this.id + '&page=' + this.page + '&limit=' + this.limit).subscribe((res: any) => {
           this.catalogues = res.data
           // 
           // 
