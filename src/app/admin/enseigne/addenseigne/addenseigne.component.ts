@@ -1,7 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Component, NgZone, OnInit,EventEmitter, Output, Input, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit,EventEmitter, Output, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import { Enseigne } from 'app/shared/Model/Enseigne';
 import { PointVente } from 'app/shared/Model/pointVente';
@@ -15,7 +15,7 @@ const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
   templateUrl: './addenseigne.component.html',
   styleUrls: ['./addenseigne.component.scss']
 })
-export class AddenseigneComponent implements OnInit {
+export class AddenseigneComponent implements OnInit ,AfterViewInit{
 
   latitude: any;
   longitude: any;
@@ -243,7 +243,7 @@ export class AddenseigneComponent implements OnInit {
     fd.append('description', this.enseignes.description);
     fd.append('horairedebut', this.enseignes.horairedebut);
     fd.append('horairefin', this.enseignes.horairefin);
-    fd.append('numerotel', this.enseignes.numerotel);
+    fd.append('phone', this.enseignes.phone);
     // fd.append('jours', this.enseignes.jours.toString())
     fd.append('adresse', this.formattedAddressAdmin);
     fd.append('url', this.enseignes.url);
@@ -293,7 +293,7 @@ if(err.error.error){
     fd.append('description', this.enseignes.description);
     fd.append('horairedebut', this.enseignes.horairedebut);
     fd.append('horairefin', this.enseignes.horairefin);
-    fd.append('numerotel', this.enseignes.numerotel);
+    fd.append('phone', this.enseignes.phone);
     fd.append('startLocation.coordinates[0]', this.lat);
     fd.append('startLocation.coordinates[1]', this.lng);
     fd.append('startLocation.address', this.adress);
