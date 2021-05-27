@@ -1,7 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit,EventEmitter, Output, Input, ViewChild } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import { Enseigne } from 'app/shared/Model/Enseigne';
 import { PointVente } from 'app/shared/Model/pointVente';
@@ -17,16 +17,44 @@ const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 })
 export class AddenseigneComponent implements OnInit {
 
-  address: Object;
+  latitude: any;
+  longitude: any;
+  address: string;
+  // address: Object;
   establishmentAddress: string;
+  latt:any;
+  longt:any;
+
+  formattedAddressAdmin: string;
+  formattedEstablishmentAddress: string;
+
+  //phone: string;
+  @Output() indexpointvente: EventEmitter<number> = new EventEmitter<number>();
+
+  @Input('item') data: PointVente;
+  @Input('index') i: number;
+  @Input() adressType: string;
+  @Output() setAddress: EventEmitter<any> = new EventEmitter();
+  @ViewChild('addresstext', {static: false}) addresstext: any;
+
+  autocompleteInputadresse: string;
+  queryWait: boolean;
+
+  latitudePointVente:any;
+  longitudePointVente:any;
+
+
+ addresse: Object;
+ establishmentAddresse: string;
 
   formattedAddress: string;
-  formattedEstablishmentAddress: string;
+  formattedEstablishmentAddresse: string;
 
   phone: string;
   adresseEnseigne=""
-  
-
+  adresse:""
+  teeeeeeeeeeest:[]=[];
+  listposVt=[];
 
   jours: any = [
     { data: 'Lundi' },
@@ -37,7 +65,7 @@ export class AddenseigneComponent implements OnInit {
     { data: 'Samedi' },
     { data: 'Dimanche' }
   ];
-  enseignes: Enseigne = new Enseigne(null, '', '', '', []);
+  enseignes: Enseigne = new Enseigne(null, '', '', '', null, []);
   pointventes: PointVente[] = [];
   uploader: FileUploader = new FileUploader({
     url: URL,
@@ -54,6 +82,7 @@ export class AddenseigneComponent implements OnInit {
   filesToUpload = null;
   nameFile: string;
   adress: string="";
+  adressAdmin: string="";
   url=""
   constructor(
     public zone: NgZone,
@@ -71,51 +100,56 @@ export class AddenseigneComponent implements OnInit {
 
   
   
-  DetectedPosition(){
 
-    
-    navigator.permissions.query({ name: 'geolocation' }).then(res => {
-      if (res.state === 'denied') {
-       
-          navigator.geolocation.getCurrentPosition(pos => {
-            this.lng = +pos.coords.longitude;
-            this.lat = +pos.coords.latitude;
-            
-    
-          });
-          // this.getAddresse()
-        
-        this.getAddress(this.lat, this.lng);
-        Swal.fire({
-
-          title: "GPS Désactiver!",
-          text: "GPS Désactiver",
-          html:"Oops...', 'Please open GPS browser !",
-          showCloseButton: true,
-          showCancelButton: true,
-
-        })
-      } else {
-        navigator.geolocation.getCurrentPosition(pos => {
-          this.lng != +pos.coords.longitude;
-          this.lat != +pos.coords.latitude;
-          this.getAddress(+pos.coords.latitude, +pos.coords.longitude);
-  
-        });
-       
-        
-        Swal.fire({
-
-          title: "GPS Activer!",
-          text: "GPS Activer",
-          html:"We detected your position."+" "+ "your lat =" + this.lat+ " "+"and"+" "+"your lng ="+" "+this.lng,
-          showCloseButton: true,
-          showCancelButton: true,
-
-        })
-        
-      }
+  ngAfterViewInit() {
+    this.getPlaceAutocomplete();
+  }
+  private getPlaceAutocomplete() {
+    const autocomplete = new google.maps.places.Autocomplete(this.addresstext.nativeElement,
+      {
+        componentRestrictions: {  },
+        types: [this.adressType]  // 'establishment' / 'address' / 'geocode'
+      });
+    google.maps.event.addListener(autocomplete, 'place_changed', () => {
+      const place = autocomplete.getPlace();
+      this.latt = place.geometry.location.lat();
+      this.longt = place.geometry.location.lng();
+      console.log(this.latt,this.longt);
+      
+      // this.getAddrComponent(place)
+      this.invokeEvent(place);
+     this.data.adresse= this.getAddressee(place)
+     this.data.lat= this.latt
+     this.data.lng= this.longt
     });
+  }
+  getAddrComponentt(place, componentTemplate) {
+    let result;
+  console.log(    place.address_components.length);
+    for (let i = 0; i < place.address_components.length; i++) {
+      const addressType = place.address_components[i].types[0];
+      if (componentTemplate[addressType]) {
+        result = place.address_components[i][componentTemplate[addressType]];
+        console.log('result',result);
+        
+        return result;
+      }
+    }
+    return;
+  }
+  
+ public getAddressee(place: object) {
+  //  this.address = place['formatted_address'];
+     this.phone = this.getPhone(place);
+    this.formattedAddressAdmin = place['formatted_address'];
+   return this.zone.run((res: any) => {
+     console.log(JSON.stringify(res)+"111111111111111111111111111111111111111111111111111111111111111111111111111111111")
+      return this.formattedAddressAdmin = place['formatted_address'];
+      console.log('res',res+"%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+    })
+  }
+  invokeEvent(place: Object) {
+    this.setAddress.emit(place);
   }
 
 
@@ -133,10 +167,11 @@ export class AddenseigneComponent implements OnInit {
       });
       // this.getAddresse()
     }
-    this.enseignes = new Enseigne(null, '', '', '', []);
+    this.enseignes = new Enseigne(null, '', '', '',null, []);
 
     this.pointventes.push(new PointVente(null, '', '', '','',''));
     this.enseignes.pointvente = this.pointventes;
+    //console.log(JSON.stringify(this.enseignes)+"000000000000000000000000001111111111111111111111111000000000000000000000000000022222222222222")
     this.activeRoute.params.subscribe((res: any) => {
       if (res.idEdit) {
         this.idUpdate = res.idEdit;
@@ -167,8 +202,8 @@ export class AddenseigneComponent implements OnInit {
 
         if (status === google.maps.GeocoderStatus.OK) {
           const result = results[0];
-          console.log(JSON.stringify(result)+"******************************")
-          console.log(JSON.stringify(result.formatted_address)+"%%%%%%%%%%%%%%%%%%%%")
+       //   console.log(JSON.stringify(result)+"******************************")
+       //   console.log(JSON.stringify(result.formatted_address)+"%%%%%%%%%%%%%%%%%%%%")
           this.adresseEnseigne=JSON.stringify(result.formatted_address)
 
           if (result != null) {
@@ -189,9 +224,7 @@ export class AddenseigneComponent implements OnInit {
   }
 
   onAddEnseigne() {
-// console.log(this.pointventes.length);
-   //  this.getAuthGPS();
-     this.DetectedPosition()
+
     const fd = new FormData();
     for (let i = 0; i < this.enseignes.pointvente.length; i++) {
 
@@ -210,33 +243,28 @@ export class AddenseigneComponent implements OnInit {
     fd.append('description', this.enseignes.description);
     fd.append('horairedebut', this.enseignes.horairedebut);
     fd.append('horairefin', this.enseignes.horairefin);
+    fd.append('numerotel', this.enseignes.numerotel);
     // fd.append('jours', this.enseignes.jours.toString())
-    fd.append('adresse', this.adresseEnseigne);
+    fd.append('adresse', this.formattedAddressAdmin);
     fd.append('url', this.enseignes.url);
     fd.append('activeUrl', this.enseignes.activeUrl);
-    fd.append('startLocation[coordinates][0]', this.lat);
+    fd.append(`startLocation[coordinates][0]`, this.latt);
+      fd.append(`startLocation[coordinates][1]`, this.longt);
+      fd.append(`startLocation[address]`, this.formattedAddressAdmin);
+   /*  fd.append('startLocation[coordinates][0]', this.lat);
     fd.append('startLocation[coordinates][1]', this.lng);
-    fd.append('startLocation[address]', this.adress);
+    fd.append('startLocation[address]', this.adress); */
   //  console.log(this.adress+"00000000000000000000")
     this.apiSer.postData('enseignes/', fd).subscribe(event => {
     //  console.log(this.adress+"0000000000000000000011111111")
       this.typeSuccess(event.status);
       this.route.navigateByUrl('/enseignes/show');
       // }
-     /*  Swal.fire({
-
-          text: "Succès",
-          html:"Enseigne Enregistrer avec succès",
-          showCloseButton: true,
-          showCancelButton: true,
-
-        }) */
     }, err => {
 console.error(err.error.message);
 if(err.error.error){
 
-  // if(err.name==="HttpErrorResponse") this.typeError('Probléme technique survenue! veuillez attendre svp..!')
-  // tslint:disable-next-line: max-line-length
+  
   if (err.error.error.code == 11000) { this.typeError('Ce nom existe déjà'); } 
   err.error.error ? this.typeError(err.error.message):''
 }
@@ -245,15 +273,12 @@ if(err.error.error){
   onEditEnseigne() {
     const fd = new FormData();
     if (this.filesToUpload) {
-      //   this.typeError('Veuillez ajouter une photo')
-      // } else {
+     
       fd.append('photo', this.filesToUpload[0], this.filesToUpload[0].name);
     }
     for (let i = 0; i < this.enseignes.pointvente.length; i++) {
 
-      //
-      //  if(this.pointventes[i].name!=='undefined')   fd.append(`pointvente[name][${i}]`, this.pointventes[i].name)
-      //  if(this.pointventes[i].description)   fd.append(`pointvente[description][${i}]`, this.pointventes[i].description)
+     
     }
 
     const locations = {
@@ -268,6 +293,7 @@ if(err.error.error){
     fd.append('description', this.enseignes.description);
     fd.append('horairedebut', this.enseignes.horairedebut);
     fd.append('horairefin', this.enseignes.horairefin);
+    fd.append('numerotel', this.enseignes.numerotel);
     fd.append('startLocation.coordinates[0]', this.lat);
     fd.append('startLocation.coordinates[1]', this.lng);
     fd.append('startLocation.address', this.adress);
@@ -300,6 +326,18 @@ if(err.error.error){
     return new Promise(resolve => {
       //
       this.apiSer.getData('enseignes/' + this.idUpdate).subscribe((res: any) => {
+   //   console.log(JSON.stringify(res.data.pointvente)+'eeeeeeeeeeeeeeeeeeeeeeeeeee')
+          this.listposVt = res.data.pointvente
+          console.log(JSON.stringify(this.listposVt))
+        res.data.pointvente.forEach(element => {
+         // console.log(JSON.stringify(element.startLocation.coordinates))
+         this.teeeeeeeeeeest=element
+        // console.log(JSON.stringify(this.teeeeeeeeeeest) +666666666666666666666666)
+          this.latitudePointVente = JSON.stringify(element.startLocation.coordinates[0])
+          this.longitudePointVente = JSON.stringify(element.startLocation.coordinates[1])
+       //   console.log("latitude pv ="+this.latitudePointVente+""+"longitude pv="+ this.longitudePointVente )
+        });
+        
         this.enseignes = res.data;
 
         resolve(this.enseignes);
@@ -325,7 +363,7 @@ if(err.error.error){
   }
 
   addPointVente() {
-    // if (this.show < 10) {
+    
     this.show++;
 
     this.pointventes.push(new PointVente(null, '', '', '','',''));
