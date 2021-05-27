@@ -36,45 +36,43 @@
                   <div class="col-md-6">
                     <input type="time" id="timesheetinput5" class="form-control" name="starttime"
                       [(ngModel)]="enseignes.horairedebut" />
-                    <!-- <ng-select [items]="horaires" name="data" bindLabel="data" bindValue="data"
-                      placeholder="Choissisez une horaire de début" [(ngModel)]="enseignes.horairedebut">
-                      <ng-template ng-label-tmp let-item="item">
-
-                        <b style="color: black">{{item.data }}</b>
-                      </ng-template>
-                      <ng-template ng-option-tmp let-item="item" let-index="index">
-
-                        <b style="color: black">{{ item.data }}</b>
-                      </ng-template>
-                    </ng-select> -->
+                    
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-3 label-control" for="projectinput5">Horaire fermeture*</label>
                   <div class="col-md-6">
-                    <input type="time" id="timesheetinput5" class="form-control" name="starttime"
-                      [(ngModel)]="enseignes.horairefin" />
-                    <!-- <ng-select [items]="horaires" name="data" bindLabel="data" bindValue="data"
-                      placeholder="Choissisez une horaire de fin" [(ngModel)]="enseignes.horairefin">
-                      <ng-template ng-label-tmp let-item="item">
-
-                        <b style="color: black">{{item.data }}</b>
-                      </ng-template>
-                      <ng-template ng-option-tmp let-item="item" let-index="index">
-
-                        <b style="color: black">{{ item.data }}</b>
-                      </ng-template>
-                    </ng-select> -->
+                    <input type="time" id="timesheetinput6" class="form-control" name="endtime"
+                      [(ngModel)]="enseignes.horairefin" [ngModelOptions]="{standalone: true}"/>
+                    
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="description">Addresse {{formattedAddressAdmin}}</label>
+                  <div class="col-md-6">
+              
+              
+                    <input class="form-control" type="text" [(ngModel)]="autocompleteInputadresse" #addresstext
+                      style="padding: 12px 20px; border: 1px solid #ccc; width: 550px">
                   </div>
                 </div>
 
                 <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput5">Numéro de téléphone*</label>
+                  <div class="col-md-6">
+                    <input type="number" id="numtelinput" class="form-control" name="numtel"
+                      [(ngModel)]="enseignes.numerotel" />
+                    
+                  </div>
+                </div>
+             
+              <!--   <div class="form-group row">
                   <label class="col-md-3 label-control" for="projectinput5">adresse</label>
                   <div class="col-md-6">
                     <textarea type="text" id="projectinput5" class="form-control" [value]="adresseEnseigne" placeholder="adresse"
                       name="adresse" [(ngModel)]="adresseEnseigne"></textarea>
                   </div>
-                </div>
+                </div> -->
                 <div class="form-group row">
                   <label class="col-md-3 label-control" for="url">Adresse web</label>
                   <div class="col-md-6">
@@ -161,16 +159,7 @@
                   <div class="col-md-6">
                     <input type="time" id="timesheetinput5" class="form-control" name="starttime"
                       [(ngModel)]="enseignes.horairedebut" />
-                    <!-- <ng-select [items]="horaires" name="data" bindLabel="data" bindValue="data"
-                      placeholder="Choissisez une horaire de début" [(ngModel)]="enseignes.horairedebut">
-                      <ng-template ng-label-tmp let-item="item">
-                        <b style="color: black">{{item.data }}</b>
-                      </ng-template>
-                      <ng-template ng-option-tmp let-item="item" let-index="index">
-
-                        <b style="color: black">{{ item.data }}</b>
-                      </ng-template>
-                    </ng-select> -->
+                    
                   </div>
                 </div>
                 <div class="form-group row">
@@ -178,17 +167,7 @@
                   <div class="col-md-6">
                     <input type="time" id="timesheetinput5" class="form-control" name="starttime"
                       [(ngModel)]="enseignes.horairefin" />
-                    <!-- <ng-select [items]="horaires" name="data" bindLabel="data" bindValue="data"
-                      placeholder="Choissisez une horaire de fin" [(ngModel)]="enseignes.horairefin">
-                      <ng-template ng-label-tmp let-item="item">
-
-                        <b style="color: black">{{item.data }}</b>
-                      </ng-template>
-                      <ng-template ng-option-tmp let-item="item" let-index="index">
-
-                        <b style="color: black">{{ item.data }}</b>
-                      </ng-template>
-                    </ng-select> -->
+                   
                   </div>
                 </div>
 
@@ -235,7 +214,7 @@
                 (click)="onEditEnseigne()">
                 <i class="fa fa-check-square-o"></i> Modifier les Points de Ventes
               </button>
-              <agm-map [zoom]="15" class="" [usePanning]="true" [fullscreenControl]="true" [rotateControl]="false"
+           <!--  <agm-map [zoom]="15" class="" [usePanning]="true" [fullscreenControl]="true" [rotateControl]="false"
                 [zoomControl]="true" [scaleControl]="false" [streetViewControl]="false" [scrollwheel]="false"
                 [latitude]="enseignes?.startLocation?.coordinates[0]"
                 [longitude]="enseignes?.startLocation?.coordinates[1]">
@@ -243,8 +222,18 @@
                   [longitude]="enseignes?.startLocation?.coordinates[1]" [markerDraggable]="true"></agm-marker>
 
 
-              </agm-map>
-              <span>{{adress}}</span>
+              </agm-map> -->
+              <span>{{adress}}</span> 
+               <agm-map [zoom]="15"
+                [zoomControl]="true" 
+                [latitude]="enseignes?.startLocation?.coordinates[0]"
+                [longitude]="enseignes?.startLocation?.coordinates[1]">
+                <agm-marker   *ngFor="let data of listposVt; let i = index"
+                [latitude]="data.startLocation.coordinates[0]" 
+                  [longitude]="data.startLocation.coordinates[1]"></agm-marker>
+
+            </agm-map> 
+          
               <div class="form-actions">
                 <button type="button" routerLink="/enseignes/show" class="btn btn-raised btn-warning mr-1">
                   <i class="ft-x"></i> Annuler
