@@ -5,7 +5,7 @@ export class Enseigne {
   public description: string;
   public horairedebut: string;
   public horairefin: string;
-  public numerotel:number;
+  public phone:string;
   public adresse: string;
   public url: string;
   public jours: [];
@@ -20,12 +20,12 @@ export class Enseigne {
     name: string,
     description: string,
     photo: string,
-    numerotel:number,
+    phone:string,
     pointvente: PointVente[]) {
     this._id = _id;
     this.name = name;
     this.description = description;
-    this.numerotel= numerotel;
+    this.phone= phone;
     this.photo = photo;
     this.pointvente = pointvente
   }

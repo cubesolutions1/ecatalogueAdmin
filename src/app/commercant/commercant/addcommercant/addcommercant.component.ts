@@ -21,7 +21,7 @@ export class AddcommercantComponent implements OnInit {
   user: User = new User()
   commercant: Commercant = new Commercant();
   pointventes: PointVente[] = []
-  enseignes: Enseigne = new Enseigne(null, '', '', '', [])
+  enseignes: Enseigne = new Enseigne(null, '', '', '',null, [])
   idUpdate: number = null
   groupe = false
   name: string = '';
