@@ -69,37 +69,50 @@ export class AddenseigneComponent implements OnInit {
     });
   }
 
-  openGPS(){
-   this.url="chrome://settings/content/location"
-    window.open( this.url,'_blank');
-    window.open( this.url);
-  }
-    
+  
   
   DetectedPosition(){
+
+    
     navigator.permissions.query({ name: 'geolocation' }).then(res => {
       if (res.state === 'denied') {
-        this.lng = -61.0386417;
-        this.lat = 14.6147652;
+       
+          navigator.geolocation.getCurrentPosition(pos => {
+            this.lng = +pos.coords.longitude;
+            this.lat = +pos.coords.latitude;
+            
+    
+          });
+          // this.getAddresse()
+        
         this.getAddress(this.lat, this.lng);
-      
-     //   alert("Please open GPS browser")
-        Swal.fire('Oops...', 'Please open GPS browser')
-
         Swal.fire({
 
-        //  title: "danger!",
+          title: "GPS Désactiver!",
           text: "GPS Désactiver",
-          html:"Oops...', 'Please open GPS browser !"
-       //   "<a href='chrome://settings/content/location'>cliquer ici!</a>"
-          ,
+          html:"Oops...', 'Please open GPS browser !",
           showCloseButton: true,
           showCancelButton: true,
 
         })
       } else {
+        navigator.geolocation.getCurrentPosition(pos => {
+          this.lng != +pos.coords.longitude;
+          this.lat != +pos.coords.latitude;
+          this.getAddress(+pos.coords.latitude, +pos.coords.longitude);
+  
+        });
+       
         
-      //  alert("We detected your position")
+        Swal.fire({
+
+          title: "GPS Activer!",
+          text: "GPS Activer",
+          html:"We detected your position."+" "+ "your lat =" + this.lat+ " "+"and"+" "+"your lng ="+" "+this.lng,
+          showCloseButton: true,
+          showCancelButton: true,
+
+        })
         
       }
     });
@@ -204,9 +217,9 @@ export class AddenseigneComponent implements OnInit {
     fd.append('startLocation[coordinates][0]', this.lat);
     fd.append('startLocation[coordinates][1]', this.lng);
     fd.append('startLocation[address]', this.adress);
-    console.log(this.adress+"00000000000000000000")
+  //  console.log(this.adress+"00000000000000000000")
     this.apiSer.postData('enseignes/', fd).subscribe(event => {
-      console.log(this.adress+"0000000000000000000011111111")
+    //  console.log(this.adress+"0000000000000000000011111111")
       this.typeSuccess(event.status);
       this.route.navigateByUrl('/enseignes/show');
       // }
