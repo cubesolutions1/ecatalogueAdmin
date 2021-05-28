@@ -69,6 +69,12 @@ export class ApiService {
 
             }));
     }
+
+    /* updateProject(url: string,id:number,project:Object):Observable<Object>{
+        return this.http.put('commercants/updateCommercant/',+ id,project, {responseType: 'text'});
+      }
+ */
+
     patch(url: string, entities: any) {
         console.log(entities);
 

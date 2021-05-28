@@ -7,6 +7,7 @@ import { Enseigne } from 'app/shared/Model/Enseigne';
 import { PointVente } from 'app/shared/Model/pointVente';
 import { ApiService } from 'app/shared/services/Api.service';
 import Swal from 'sweetalert2';
+import { Commercant } from 'app/shared/Model/Commercant';
 declare var google;
 declare var navigator;
 const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
@@ -37,7 +38,7 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
   @Output() setAddress: EventEmitter<any> = new EventEmitter();
   @ViewChild('addresstext', {static: false}) addresstext: any;
 
-  autocompleteInputadresse: string;
+  autocompleteInput: string;
   queryWait: boolean;
 
   latitudePointVente:any;
@@ -66,6 +67,7 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
     { data: 'Dimanche' }
   ];
   enseignes: Enseigne = new Enseigne(null, '', '', '', null, []);
+  commercant: Commercant = new Commercant();
   pointventes: PointVente[] = [];
   uploader: FileUploader = new FileUploader({
     url: URL,
@@ -145,7 +147,6 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
    return this.zone.run((res: any) => {
      console.log(JSON.stringify(res)+"111111111111111111111111111111111111111111111111111111111111111111111111111111111")
       return this.formattedAddressAdmin = place['formatted_address'];
-      console.log('res',res+"%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
     })
   }
   invokeEvent(place: Object) {
@@ -182,15 +183,7 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
 
 
   }
-  markerDragEnd($event) {
-    this.lng = $event.coords.lng;
-    this.lat = $event.coords.lat;
-    this.getAddress($event.coords.lat, $event.coords.lng);
-    // this.enseignes.startLocation.coordinates[0]= $event.coords.lat
-    // this.enseignes.startLocation.coordinates[1]= $event.coords.lng
-
-
-  }
+  
   getAddress(lat: number, lng: number) {
 
     if (navigator.geolocation) {
@@ -202,7 +195,7 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
 
         if (status === google.maps.GeocoderStatus.OK) {
           const result = results[0];
-       //   console.log(JSON.stringify(result)+"******************************")
+          console.log(JSON.stringify(result)+"******************************")
        //   console.log(JSON.stringify(result.formatted_address)+"%%%%%%%%%%%%%%%%%%%%")
           this.adresseEnseigne=JSON.stringify(result.formatted_address)
 
@@ -215,7 +208,19 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
       });
     }
   }
+  markerDragEnd($event) {
+    
+    this.lng = $event.coords.lng;
+    this.lat = $event.coords.lat;
+    alert("event="+$event.coords.lng+" "+$event.coords.lat)
+    this.getAddress($event.coords.lat, $event.coords.lng);
+    this.commercant.$pointvente.lat=$event.coords.lat
+    this.commercant.$pointvente.lng=$event.coords.lng
+    // this.enseignes.startLocation.coordinates[0]= $event.coords.lat
+    // this.enseignes.startLocation.coordinates[1]= $event.coords.lng
 
+
+  }
   fileChangeEvent(event) {
     //
 
@@ -272,14 +277,29 @@ if(err.error.error){
   }
   onEditEnseigne() {
     const fd = new FormData();
-    if (this.filesToUpload) {
-     
-      fd.append('photo', this.filesToUpload[0], this.filesToUpload[0].name);
-    }
+    if (this.filesToUpload) {fd.append('photo', this.filesToUpload[0], this.filesToUpload[0].name);}
     for (let i = 0; i < this.enseignes.pointvente.length; i++) {
+      fd.append(`pointvente[startLocation][coordinates][0][${i}]`, this.commercant.$pointvente.lat);
+      fd.append(`pointvente[startLocation][coordinates][1][${i}]`, this.commercant.$pointvente.lng);
 
+      alert("OOOOOOOOO="+this.commercant.$pointvente.lat+"OOOOOOOOO"+this.commercant.$pointvente.lng)
      
     }
+ 
+
+    /* for (let i = 0; i < this.enseignes.pointvente.length; i++) {
+
+
+      fd.append(`pointvente[nbpointvente]`, this.enseignes.pointvente.length.toString());
+      fd.append(`pointvente[name][${i}]`, this.pointventes[i].name);
+      fd.append(`pointvente[description][${i}]`, this.pointventes[i].description);
+      fd.append(`pointvente[startLocation][coordinates][0][${i}]`, this.pointventes[i].lat);
+      fd.append(`pointvente[startLocation][coordinates][1][${i}]`, this.pointventes[i].lng);
+      fd.append(`pointvente[startLocation][address][${i}]`, this.pointventes[i].adresse);
+    }
+    if (this.filesToUpload) { fd.append('photo', this.filesToUpload[0], this.filesToUpload[0].name); }
+ */
+
 
     const locations = {
       address: this.adress,
@@ -294,9 +314,9 @@ if(err.error.error){
     fd.append('horairedebut', this.enseignes.horairedebut);
     fd.append('horairefin', this.enseignes.horairefin);
     fd.append('phone', this.enseignes.phone);
-    fd.append('startLocation.coordinates[0]', this.lat);
-    fd.append('startLocation.coordinates[1]', this.lng);
-    fd.append('startLocation.address', this.adress);
+    fd.append('startLocation.coordinates[0]', this.latt);
+    fd.append('startLocation.coordinates[1]',this.longt);
+    fd.append('startLocation.address', this.formattedAddressAdmin);
 
     // fd.append('startLocation[coordinates][0]', this.lng);
     // fd.append('startLocation[address]', this.adress);

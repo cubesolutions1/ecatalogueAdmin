@@ -133,6 +133,8 @@
             </form>
           </div>
         </div>
+
+        <!------------------------------- Edit ensegien ----------------------------------------->
         <div class="card-content" *ngIf="idUpdate">
           <div class="px-3">
             <form enctype="multipart/form-data" class="form form-horizontal striped-rows form-bordered"
@@ -148,14 +150,14 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput5">Description</label>
+                  <label class="col-md-3 label-control" for="projectinput2">Description</label>
                   <div class="col-md-6">
                     <textarea type="text" id="projectinput5" class="form-control" placeholder="Description"
                       name="description" [(ngModel)]="enseignes.description"></textarea>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput5">horaire ouverture</label>
+                  <label class="col-md-3 label-control" for="projectinput3">horaire ouverture</label>
                   <div class="col-md-6">
                     <input type="time" id="timesheetinput5" class="form-control" name="starttime"
                       [(ngModel)]="enseignes.horairedebut" />
@@ -163,11 +165,30 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput5">Horaire fermeture</label>
+                  <label class="col-md-3 label-control" for="projectinput3">Horaire fermeture</label>
                   <div class="col-md-6">
-                    <input type="time" id="timesheetinput5" class="form-control" name="starttime"
+                    <input type="time" id="timesheetinput5" class="form-control" name="Endtime"
                       [(ngModel)]="enseignes.horairefin" />
                    
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="description">Addresse {{formattedAddressAdmin}}</label>
+                  <div class="col-md-6">
+              
+              
+                    <input class="form-control" type="text" [(ngModel)]="adresseAdmin" #addresstext
+                      style="padding: 12px 20px; border: 1px solid #ccc; width: 400px">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput5">Numéro de téléphone*</label>
+                  <div class="col-md-6">
+                    <input type="number" id="phone" class="form-control" name="phone"
+                      [(ngModel)]="enseignes.phone" />
+                    
                   </div>
                 </div>
 
@@ -224,7 +245,7 @@
 
               </agm-map>  -->
               <span>{{adress}}</span> 
-               <agm-map [zoom]="15" [usePanning]="true" [fullscreenControl]="true" [rotateControl]="false"
+              <!--  <agm-map [zoom]="15" [usePanning]="true" [fullscreenControl]="true" [rotateControl]="false"
                [zoomControl]="true" [scaleControl]="false" [streetViewControl]="false" [scrollwheel]="false"
                 [latitude]="enseignes?.startLocation?.coordinates[0]"
                 [longitude]="enseignes?.startLocation?.coordinates[1]">
@@ -232,7 +253,17 @@
                 [latitude]="data.startLocation.coordinates[0]" 
                   [longitude]="data.startLocation.coordinates[1]"></agm-marker>
 
-            </agm-map> 
+            </agm-map>  -->
+            <agm-map [zoom]="10" class="" [usePanning]="true" [fullscreenControl]="true" [rotateControl]="false"
+            [zoomControl]="true" [scaleControl]="false" [streetViewControl]="false" [scrollwheel]="false"
+            [latitude]="enseignes?.startLocation?.coordinates[0]"
+            [longitude]="enseignes?.startLocation?.coordinates[1]">
+            <agm-marker  *ngFor="let data of listposVt"
+            [latitude]="data.startLocation.coordinates[1]" (dragEnd)="markerDragEnd($event)"
+              [longitude]="data.startLocation.coordinates[0]" [markerDraggable]="true"></agm-marker>
+
+
+          </agm-map>
           
               <div class="form-actions">
                 <button type="button" routerLink="/enseignes/show" class="btn btn-raised btn-warning mr-1">

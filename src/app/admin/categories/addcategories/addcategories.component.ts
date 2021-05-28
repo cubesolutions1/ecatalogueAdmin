@@ -48,7 +48,8 @@ export class AddcategoriesComponent implements OnInit {
         console.log('id' + res)
       }
     });
-
+  
+    alert(this.apiUrl)
   }
 
   fileChangeEvent(event) {
@@ -123,15 +124,16 @@ export class AddcategoriesComponent implements OnInit {
   }
 
   public getcategoriesById() {
-    return new Promise(resolve => {
+  //  return new Promise(resolve => {
       // console.log('this.idSociete', this.IdSociete);
       this.apiSer.getData('categories/' + this.idUpdate).subscribe((res: any) => {
+        console.log(JSON.stringify(res)+"%%%%%%%%%%%%%%%%%%%%%%%%%%%")
         this.categories = res.data
 
-        resolve(this.categories)
+      //  resolve(this.categories)
 
       })
-    })
+   // })
   }
 
   // Angular2 File Upload

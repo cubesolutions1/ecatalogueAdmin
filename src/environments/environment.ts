@@ -7,6 +7,11 @@ export const environment = {
   production: false,
   //apiUrl: 'http://localhost:3112/api/v1/',
    apiUrl: 'http://192.168.1.45:3112/api/v1/',
+   // apiUrl: 'http://catalogue.cubesolutions.tn:3112/api/v1/',
+  // apiUrl: 'admin.neod-distri.fr/api/v1/',
+
+
+
   // apiUrl: 'http://192.168.137.215:3112/api/v1/',
   // apiUrl: 'https://ecatalogueapi.herokuapp.com/api/v1/',
   //  apiUrl: 'http://catalogue.cubesolutions.tn:3112/api/v1/',
@@ -14,7 +19,9 @@ export const environment = {
   
 
   //apiImg: 'http://localhost:3112/img/',
-  apiImg: 'http://192.168.1.45:3112/img/',
+   apiImg: 'http://192.168.1.45:3112/img/',
+ // apiImg: 'http://catalogue.cubesolutions.tn:3112/public/img/',
+ // apiImg: 'admin.neod-distri.fr/img/',
   // apiImg: 'http://192.168.137.215:3112/img/',
   // apiImg: 'https://ecatalogueapi.herokuapp.com/img/',
   //  apiImg: 'http://catalogue.cubesolutions.tn:3112/img/',
