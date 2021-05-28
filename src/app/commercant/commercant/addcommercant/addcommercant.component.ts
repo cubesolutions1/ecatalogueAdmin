@@ -26,8 +26,8 @@ export class AddcommercantComponent implements OnInit {
   groupe = false
   name: string = '';
   apiUrl: string;
-  independant = true
-
+  independant = true;
+  commercanttest:any
   constructor(private apiSer: ApiService,
     private route: Router,
     private enseigneService: EnseigneService,
@@ -81,6 +81,32 @@ export class AddcommercantComponent implements OnInit {
       this.typeError(err.error.message)
     });
   }
+
+
+  /* onSaveConfirm() {
+    // update block
+    var body = {
+        "nom": this.user.name,
+        "prenom":  this.user.name,
+        "email":  this.user.name,
+        "adresse":  this.user.name,
+        "telephone":  this.user.name
+      }
+
+           
+    
+                this.apiSer.patchData('commercants/updateCommercant/', body, this.idUpdate)
+                .subscribe(data => {
+                  console.log("data  updated ="+ JSON.stringify(data))
+    
+                  alert("update avec success");
+                },
+                  err => {
+                    alert(JSON.stringify(err));
+                  })
+            
+        } */
+
   onEditcommercant() {
     console.log('photo', this.user);
     const body = {
@@ -123,9 +149,10 @@ export class AddcommercantComponent implements OnInit {
 
   public getcommercantById() {
     this.commercantService.getCommercantById(this.idUpdate).subscribe((res: any) => {
-      console.log('res.data.user', res.data);
+      console.log('res.data.user', JSON.stringify(res.data.data.user.name));
+      this.commercanttest = JSON.stringify(res.data.data.user.name)
       this.commercant = res.data
-      this.user = res.data.user
+      this.user = res.data.data.user
       this.enseignes = res.data.enseigne
       this.pointventes = res.data.pointvente
 

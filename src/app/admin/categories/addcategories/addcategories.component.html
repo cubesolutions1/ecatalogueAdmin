@@ -96,7 +96,8 @@
 
                   <label class="col-md-3 label-control" for="projectinput5">
                     <h4 [hidden]="truee" class="form-section float-center">
-                      <img src="{{ apiUrl }}/{{ categories.photo }}" alt="Card image cap" width="160" /></h4> Photo
+                      <img src="{{apiUrl}}/{{categories.photo}}" alt="Card image cap" width="160" />
+                    </h4> Photo
                   </label>
                   <div class="col-md-6">
                     <input type="file" [(ngModel)]="categories.photo" ng2FileSelect [uploader]="uploader" name="file"
