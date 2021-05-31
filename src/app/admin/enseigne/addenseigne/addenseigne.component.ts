@@ -17,6 +17,19 @@ const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
   styleUrls: ['./addenseigne.component.scss']
 })
 export class AddenseigneComponent implements OnInit ,AfterViewInit{
+  
+  labelOptions = {
+    color: '#000000',
+    fontFamily: '',
+    fontSize: '14px',
+    fontWeight: 'bold',
+    text: 'Enseigne'
+    };
+
+   public iconUrl = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+    // public iconUrl = 'E:/rami/ecatalogueAdmin/src/assets/img/icon2.png';
+
+    detailsPvt:any;
 
   latitude: any;
   longitude: any;
@@ -41,8 +54,6 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
   autocompleteInput: string;
   queryWait: boolean;
 
-  latitudePointVente:any;
-  longitudePointVente:any;
 
 
  addresse: Object;
@@ -67,6 +78,7 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
     { data: 'Dimanche' }
   ];
   enseignes: Enseigne = new Enseigne(null, '', '', '', null, []);
+  listpvt : PointVente = new PointVente(null,'','','','','') ;
   commercant: Commercant = new Commercant();
   pointventes: PointVente[] = [];
   uploader: FileUploader = new FileUploader({
@@ -76,8 +88,6 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
   show = 0;
   lat: any;
   lng: any;
-  lat2: any;
-  lng2: any;
   idUpdate: number = null;
   hasBaseDropZoneOver = false;
   hasAnotherDropZoneOver = false;
@@ -116,9 +126,7 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
       const place = autocomplete.getPlace();
       this.latt = place.geometry.location.lat();
       this.longt = place.geometry.location.lng();
-      console.log(this.latt,this.longt);
       
-      // this.getAddrComponent(place)
       this.invokeEvent(place);
      this.data.adresse= this.getAddressee(place)
      this.data.lat= this.latt
@@ -127,12 +135,10 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
   }
   getAddrComponentt(place, componentTemplate) {
     let result;
-  console.log(    place.address_components.length);
     for (let i = 0; i < place.address_components.length; i++) {
       const addressType = place.address_components[i].types[0];
       if (componentTemplate[addressType]) {
         result = place.address_components[i][componentTemplate[addressType]];
-        console.log('result',result);
         
         return result;
       }
@@ -141,11 +147,9 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
   }
   
  public getAddressee(place: object) {
-  //  this.address = place['formatted_address'];
      this.phone = this.getPhone(place);
     this.formattedAddressAdmin = place['formatted_address'];
    return this.zone.run((res: any) => {
-     console.log(JSON.stringify(res)+"111111111111111111111111111111111111111111111111111111111111111111111111111111111")
       return this.formattedAddressAdmin = place['formatted_address'];
     })
   }
@@ -155,24 +159,19 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
 
 
   ngOnInit() {
-    console.log();
-
    
-
-    if (navigator) {
+   if (navigator) {
       navigator.geolocation.getCurrentPosition(pos => {
         this.lng = +pos.coords.longitude;
         this.lat = +pos.coords.latitude;
         this.getAddress(+pos.coords.latitude, +pos.coords.longitude);
 
       });
-      // this.getAddresse()
-    }
+    } 
     this.enseignes = new Enseigne(null, '', '', '',null, []);
 
     this.pointventes.push(new PointVente(null, '', '', '','',''));
     this.enseignes.pointvente = this.pointventes;
-    //console.log(JSON.stringify(this.enseignes)+"000000000000000000000000001111111111111111111111111000000000000000000000000000022222222222222")
     this.activeRoute.params.subscribe((res: any) => {
       if (res.idEdit) {
         this.idUpdate = res.idEdit;
@@ -181,7 +180,7 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
       }
     });
 
-
+    console.log(JSON.stringify(this.enseignes.pointvente)+"******************************************")
   }
   
   getAddress(lat: number, lng: number) {
@@ -195,8 +194,6 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
 
         if (status === google.maps.GeocoderStatus.OK) {
           const result = results[0];
-          console.log(JSON.stringify(result)+"******************************")
-       //   console.log(JSON.stringify(result.formatted_address)+"%%%%%%%%%%%%%%%%%%%%")
           this.adresseEnseigne=JSON.stringify(result.formatted_address)
 
           if (result != null) {
@@ -208,17 +205,21 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
       });
     }
   }
-  markerDragEnd($event) {
+
+  markerDragEndEns($event) {
     
     this.lng = $event.coords.lng;
     this.lat = $event.coords.lat;
-    alert("event="+$event.coords.lng+" "+$event.coords.lat)
-    this.getAddress($event.coords.lat, $event.coords.lng);
-    this.commercant.$pointvente.lat=$event.coords.lat
-    this.commercant.$pointvente.lng=$event.coords.lng
-    // this.enseignes.startLocation.coordinates[0]= $event.coords.lat
-    // this.enseignes.startLocation.coordinates[1]= $event.coords.lng
+     this.getAddress($event.coords.lat, $event.coords.lng);
+    alert("event enseigne="+this.lng+" "+ this.lat )
+  }
 
+  markerDragEnd($event) {
+    
+    this.longt = $event.coords.lng;
+    this.latt = $event.coords.lat;
+    this.getAddress(this.latt,  this.longt);
+    alert("event pointvente="+this.longt+" "+this.latt)
 
   }
   fileChangeEvent(event) {
@@ -237,34 +238,28 @@ export class AddenseigneComponent implements OnInit ,AfterViewInit{
       fd.append(`pointvente[nbpointvente]`, this.enseignes.pointvente.length.toString());
       fd.append(`pointvente[name][${i}]`, this.pointventes[i].name);
       fd.append(`pointvente[description][${i}]`, this.pointventes[i].description);
-      fd.append(`pointvente[startLocation][coordinates][1][${i}]`, this.pointventes[i].lat);
-      fd.append(`pointvente[startLocation][coordinates][0][${i}]`, this.pointventes[i].lng);
+      fd.append(`pointvente[startLocation][coordinates][0][${i}]`, this.latt);
+      fd.append(`pointvente[startLocation][coordinates][1][${i}]`, this.longt);
       fd.append(`pointvente[startLocation][address][${i}]`, this.pointventes[i].adresse);
     }
     if (this.filesToUpload) { fd.append('photo', this.filesToUpload[0], this.filesToUpload[0].name); }
 
-    // console.log(this.lat, this.lng)
     fd.append('name', this.enseignes.name);
     fd.append('description', this.enseignes.description);
     fd.append('horairedebut', this.enseignes.horairedebut);
     fd.append('horairefin', this.enseignes.horairefin);
     fd.append('phone', this.enseignes.phone);
-    // fd.append('jours', this.enseignes.jours.toString())
     fd.append('adresse', this.formattedAddressAdmin);
     fd.append('url', this.enseignes.url);
     fd.append('activeUrl', this.enseignes.activeUrl);
     fd.append(`startLocation[coordinates][0]`, this.latt);
-      fd.append(`startLocation[coordinates][1]`, this.longt);
-      fd.append(`startLocation[address]`, this.formattedAddressAdmin);
-   /*  fd.append('startLocation[coordinates][0]', this.lat);
-    fd.append('startLocation[coordinates][1]', this.lng);
-    fd.append('startLocation[address]', this.adress); */
-  //  console.log(this.adress+"00000000000000000000")
+    fd.append(`startLocation[coordinates][1]`, this.longt);
+    fd.append(`startLocation[address]`, this.adress);
     this.apiSer.postData('enseignes/', fd).subscribe(event => {
-    //  console.log(this.adress+"0000000000000000000011111111")
+ 
       this.typeSuccess(event.status);
       this.route.navigateByUrl('/enseignes/show');
-      // }
+    
     }, err => {
 console.error(err.error.message);
 if(err.error.error){
@@ -278,32 +273,17 @@ if(err.error.error){
   onEditEnseigne() {
     const fd = new FormData();
     if (this.filesToUpload) {fd.append('photo', this.filesToUpload[0], this.filesToUpload[0].name);}
-    for (let i = 0; i < this.enseignes.pointvente.length; i++) {
-      fd.append(`pointvente[startLocation][coordinates][0][${i}]`, this.commercant.$pointvente.lat);
-      fd.append(`pointvente[startLocation][coordinates][1][${i}]`, this.commercant.$pointvente.lng);
 
-      alert("OOOOOOOOO="+this.commercant.$pointvente.lat+"OOOOOOOOO"+this.commercant.$pointvente.lng)
-     
-    }
- 
-
-    /* for (let i = 0; i < this.enseignes.pointvente.length; i++) {
-
-
+     for (let i = 0; i < this.enseignes.pointvente.length; i++) {
       fd.append(`pointvente[nbpointvente]`, this.enseignes.pointvente.length.toString());
-      fd.append(`pointvente[name][${i}]`, this.pointventes[i].name);
-      fd.append(`pointvente[description][${i}]`, this.pointventes[i].description);
-      fd.append(`pointvente[startLocation][coordinates][0][${i}]`, this.pointventes[i].lat);
-      fd.append(`pointvente[startLocation][coordinates][1][${i}]`, this.pointventes[i].lng);
-      fd.append(`pointvente[startLocation][address][${i}]`, this.pointventes[i].adresse);
-    }
-    if (this.filesToUpload) { fd.append('photo', this.filesToUpload[0], this.filesToUpload[0].name); }
- */
-
+      fd.append(`pointvente[startLocation][coordinates][0][${i}]`, this.latt);
+      fd.append(`pointvente[startLocation][coordinates][1][${i}]`, this.longt);
+    } 
+     
 
     const locations = {
       address: this.adress,
-      coordinates: [this.lat, this.lng]
+      coordinates: [this.latt, this.longt]
     };
 
     // console.log(this.enseignes)
@@ -314,19 +294,45 @@ if(err.error.error){
     fd.append('horairedebut', this.enseignes.horairedebut);
     fd.append('horairefin', this.enseignes.horairefin);
     fd.append('phone', this.enseignes.phone);
-    fd.append('startLocation.coordinates[0]', this.latt);
-    fd.append('startLocation.coordinates[1]',this.longt);
-    fd.append('startLocation.address', this.formattedAddressAdmin);
+    fd.append('startLocation.coordinates[1]', this.lng);
+    fd.append('startLocation.coordinates[0]',this.lat);
+    fd.append('startLocation.address', this.formattedAddressAdmin); 
 
-    // fd.append('startLocation[coordinates][0]', this.lng);
-    // fd.append('startLocation[address]', this.adress);
-    // fd.append('jours', this.enseignes.jours.toString())
+   /*  const fd = new FormData();
+    for (let i = 0; i < this.enseignes.pointvente.length; i++) {
+
+
+      fd.append(`pointvente[nbpointvente]`, this.enseignes.pointvente.length.toString());
+    //  fd.append(`pointvente[name][${i}]`, this.pointventes[i].name);
+    //  fd.append(`pointvente[description][${i}]`, this.pointventes[i].description);
+      fd.append(`pointvente[startLocation][coordinates][0][${i}]`, this.latt);
+      fd.append(`pointvente[startLocation][coordinates][1][${i}]`, this.longt);
+   //   fd.append(`pointvente[startLocation][address][${i}]`, this.pointventes[i].adresse);
+    }
+    if (this.filesToUpload) { fd.append('photo', this.filesToUpload[0], this.filesToUpload[0].name); }
+
+
+    const locations = {
+      address: this.adress,
+      coordinates: [this.lat, this.lng]
+    };
+    fd.append('name', this.enseignes.name);
+    fd.append('description', this.enseignes.description);
+    fd.append('horairedebut', this.enseignes.horairedebut);
+    fd.append('horairefin', this.enseignes.horairefin);
+    fd.append('phone', this.enseignes.phone);
+    fd.append('adresse', this.formattedAddressAdmin);
+    fd.append('url', this.enseignes.url);
+    fd.append('activeUrl', this.enseignes.activeUrl);
+    fd.append(`startLocation[coordinates][0]`, this.lat);
+    fd.append(`startLocation[coordinates][1]`, this.lng);
+    fd.append(`startLocation[address]`, this.adress); */
 
     this.apiSer.patchData('enseignes/', fd, this.idUpdate).subscribe(data => {
 
       if (data) {
         this.typeSuccess(data.status);
-        // this.route.navigateByUrl('/enseignes/show');
+         this.route.navigateByUrl('/enseignes/show');
       }
     }, err => {
 
@@ -346,19 +352,21 @@ if(err.error.error){
     return new Promise(resolve => {
       //
       this.apiSer.getData('enseignes/' + this.idUpdate).subscribe((res: any) => {
-   //   console.log(JSON.stringify(res.data.pointvente)+'eeeeeeeeeeeeeeeeeeeeeeeeeee')
+       
           this.listposVt = res.data.pointvente
-          console.log(JSON.stringify(this.listposVt))
         res.data.pointvente.forEach(element => {
-         // console.log(JSON.stringify(element.startLocation.coordinates))
-         this.teeeeeeeeeeest=element
-        // console.log(JSON.stringify(this.teeeeeeeeeeest) +666666666666666666666666)
-          this.latitudePointVente = JSON.stringify(element.startLocation.coordinates[0])
-          this.longitudePointVente = JSON.stringify(element.startLocation.coordinates[1])
-       //   console.log("latitude pv ="+this.latitudePointVente+""+"longitude pv="+ this.longitudePointVente )
+            this.detailsPvt= element
+           // console.log(JSON.stringify(this.detailsPvt))
+         /* this.latens=element.startLocation.coordinates[0]
+         this.lngens=element.startLocation.coordinates[1] */
         });
         
         this.enseignes = res.data;
+        res.data.pointvente.forEach(element => {
+          this.listpvt= element.startLocation.coordinates
+        });
+        
+        
 
         resolve(this.enseignes);
 
@@ -399,13 +407,10 @@ if(err.error.error){
     this.address = place['formatted_address'];
     this.phone = this.getPhone(place);
     this.formattedAddress = place['formatted_address'];
-   
-    
     this.zone.run((res: any) => {
-
       this.formattedAddress = place['formatted_address'];
 
-      // console.log('res',res);
+    
 
     })
   }
@@ -422,12 +427,10 @@ if(err.error.error){
 
   getAddrComponent(place, componentTemplate) {
     let result;
-  // console.log(    place.address_components.length);
     for (let i = 0; i < place.address_components.length; i++) {
       const addressType = place.address_components[i].types[0];
       if (componentTemplate[addressType]) {
         result = place.address_components[i][componentTemplate[addressType]];
-        // console.log('result',result);
         
         return result;
       }
