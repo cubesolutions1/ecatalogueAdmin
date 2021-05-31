@@ -66,13 +66,13 @@
                   </div>
                 </div>
              
-              <!--   <div class="form-group row">
+                <div class="form-group row">
                   <label class="col-md-3 label-control" for="projectinput5">adresse</label>
                   <div class="col-md-6">
                     <textarea type="text" id="projectinput5" class="form-control" [value]="adresseEnseigne" placeholder="adresse"
                       name="adresse" [(ngModel)]="adresseEnseigne"></textarea>
                   </div>
-                </div> -->
+                </div> 
                 <div class="form-group row">
                   <label class="col-md-3 label-control" for="url">Adresse web</label>
                   <div class="col-md-6">
@@ -165,7 +165,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput3">Horaire fermeture</label>
+                  <label class="col-md-3 label-control" for="projectinput4">Horaire fermeture</label>
                   <div class="col-md-6">
                     <input type="time" id="timesheetinput5" class="form-control" name="Endtime"
                       [(ngModel)]="enseignes.horairefin" />
@@ -173,15 +173,8 @@
                   </div>
                 </div>
 
-                <div class="form-group row">
-                  <label class="col-md-3 label-control" for="description">Addresse {{formattedAddressAdmin}}</label>
-                  <div class="col-md-6">
+               
               
-              
-                    <input class="form-control" type="text" [(ngModel)]="adresseAdmin" #addresstext
-                      style="padding: 12px 20px; border: 1px solid #ccc; width: 400px">
-                  </div>
-                </div>
 
                 <div class="form-group row">
                   <label class="col-md-3 label-control" for="projectinput5">Numéro de téléphone*</label>
@@ -191,7 +184,6 @@
                     
                   </div>
                 </div>
-
                 <div class="form-group row">
                   <label class="col-md-3 label-control" for="url">Adresse web</label>
                   <div class="col-md-6">
@@ -228,41 +220,30 @@
                   </div>
                 </div>
               </div>
-              <div *ngFor="let item of enseignes.pointvente; let i = index">
-                <app-pointvente (indexpointvente)="deleteEnseigne($event)" [item]="item" [index]="i"></app-pointvente>
-              </div>
+               <div *ngFor="let item of enseignes.pointvente; let i = index">
+                <app-pointvente (indexpointvente)="deleteEnseigne($event)" (setAddress)="getAddress($event)"
+                adressType="geocode" [item]="item" [index]="i"></app-pointvente>
+              </div> 
+
+              
               <button *ngIf="enseignes?.pointvente.length!==0" type="button" class="btn btn-raised btn-primary"
                 (click)="onEditEnseigne()">
                 <i class="fa fa-check-square-o"></i> Modifier les Points de Ventes
               </button>
-             <!-- <agm-map [zoom]="15" class="" [usePanning]="true" [fullscreenControl]="true" [rotateControl]="false"
-                [zoomControl]="true" [scaleControl]="false" [streetViewControl]="false" [scrollwheel]="false"
-                [latitude]="enseignes?.startLocation?.coordinates[0]"
-                [longitude]="enseignes?.startLocation?.coordinates[1]">
-                <agm-marker [latitude]="enseignes.startLocation?.coordinates[0]" (dragEnd)="markerDragEnd($event)"
-                  [longitude]="enseignes?.startLocation?.coordinates[1]" [markerDraggable]="true"></agm-marker>
+             
 
-
-              </agm-map>  -->
-              <span>{{adress}}</span> 
-              <!--  <agm-map [zoom]="15" [usePanning]="true" [fullscreenControl]="true" [rotateControl]="false"
-               [zoomControl]="true" [scaleControl]="false" [streetViewControl]="false" [scrollwheel]="false"
-                [latitude]="enseignes?.startLocation?.coordinates[0]"
-                [longitude]="enseignes?.startLocation?.coordinates[1]">
-                <agm-marker   *ngFor="let data of listposVt; let i = index" (dragEnd)="markerDragEnd($event)"
-                [latitude]="data.startLocation.coordinates[0]" 
-                  [longitude]="data.startLocation.coordinates[1]"></agm-marker>
-
-            </agm-map>  -->
-            <agm-map [zoom]="10" class="" [usePanning]="true" [fullscreenControl]="true" [rotateControl]="false"
+           <agm-map [zoom]="8" class="" [usePanning]="true" [fullscreenControl]="true" [rotateControl]="false"
             [zoomControl]="true" [scaleControl]="false" [streetViewControl]="false" [scrollwheel]="false"
             [latitude]="enseignes?.startLocation?.coordinates[0]"
             [longitude]="enseignes?.startLocation?.coordinates[1]">
+            <agm-marker 
+             [label]="labelOptions" [iconUrl]="iconUrl" 
+            [latitude]="enseignes?.startLocation?.coordinates[0]" (dragEnd)="markerDragEndEns($event)"
+              [longitude]="enseignes?.startLocation?.coordinates[1]" [markerDraggable]="true">
+             </agm-marker>
             <agm-marker  *ngFor="let data of listposVt"
-            [latitude]="data.startLocation.coordinates[1]" (dragEnd)="markerDragEnd($event)"
-              [longitude]="data.startLocation.coordinates[0]" [markerDraggable]="true"></agm-marker>
-
-
+            [latitude]="data.startLocation.coordinates[0]" (dragEnd)="markerDragEnd($event)"
+              [longitude]="data.startLocation.coordinates[1]" [markerDraggable]="true"></agm-marker>
           </agm-map>
           
               <div class="form-actions">

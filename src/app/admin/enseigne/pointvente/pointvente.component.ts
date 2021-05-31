@@ -44,7 +44,7 @@ export class PointventeComponent implements OnInit {
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
       const place = autocomplete.getPlace();
       var latt = place.geometry.location.lat();
-var longt = place.geometry.location.lng();
+      var longt = place.geometry.location.lng();
       console.log(latt,longt);
       
       // this.getAddrComponent(place)
