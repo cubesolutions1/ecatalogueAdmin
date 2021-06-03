@@ -13,6 +13,7 @@ export class UtilsService {
   public static API_BANNIERRE = UtilsService.REMOTE_ADDRESS + "bannieres/";
   public static API_ENSEIGNE = UtilsService.REMOTE_ADDRESS + "enseignes/";
   public static API_Commercant = UtilsService.REMOTE_ADDRESS + "commercants/";
+  public static API_Commercant1 = UtilsService.REMOTE_ADDRESS + "commercants/AllPointVentCommercant/";
   constructor(private httpClient: HttpClient,) { }
   public post(url: string, object: any): Observable<any> {
 

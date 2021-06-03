@@ -10,6 +10,8 @@ import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import { ToastrService } from 'ngx-toastr';
 import swal from 'sweetalert2';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { IDropdownSettings } from 'ng-multiselect-dropdown/public_api';
+import { CommercantService } from './../../../shared/services/commercant.service';
 
 const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 
@@ -36,7 +38,7 @@ export class AddproduitComponent implements OnInit {
 
   // reduction: number
   // prixNv: number
-  produits: Produit = new Produit()
+  produits: Produit = new Produit();
   uploader: FileUploader = new FileUploader({
     url: URL,
     isHTML5: true
@@ -45,7 +47,7 @@ export class AddproduitComponent implements OnInit {
   dateFin: any
   truee: true
   idUpdate: number = null
-  idUser = ''
+  idUser :any;
   hasBaseDropZoneOver = false;
   hasAnotherDropZoneOver = false;
   photoToUpload = null
@@ -56,18 +58,26 @@ export class AddproduitComponent implements OnInit {
   enseignes: any
   good = false
 
-
+  listPvByCommercId=[];
   closeResult: string;
 
 
   typecompagne = [{ name: 'promo' }, { name: 'normal' }]
+
+
+  dropdownList = [];
+  selectedItems = [];
+  dropdownSettings = {};
+
+
   constructor(
     private modalService: NgbModal,
     private apiSer: ApiService,
     private authSer: AuthService,
     private route: Router,
     private activeRoute: ActivatedRoute,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private commercantService: CommercantService) {
     this.apiUrl = environment.apiImg
 
     this.activeRoute.params.subscribe((res: any) => {
@@ -93,7 +103,42 @@ export class AddproduitComponent implements OnInit {
     this.getcategories();
     this.getCommercantByidUser();
 
+
+    this.dropdownList = [
+      { item_id: 1, item_text: 'Mumbai' },
+      { item_id: 2, item_text: 'Bangaluru' },
+      { item_id: 3, item_text: 'Pune' },
+      { item_id: 4, item_text: 'Navsari' },
+      { item_id: 5, item_text: 'New Delhi' }
+    ];
+    this.selectedItems = [
+      { item_id: 3, item_text: 'Pune' },
+      { item_id: 4, item_text: 'Navsari' }
+    ];
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: '_id',
+      textField: 'name',
+      selectAllText: 'Sélectionner tout',
+      unSelectAllText: 'Déselectionner tout',
+      itemsShowLimit: 5,
+      allowSearchFilter: true
+    };
+    
+    
   }
+
+  onItemSelect(item: any) {
+    console.log(item);
+    alert(JSON.stringify(item)+"0000000000000000");
+  }
+  onSelectAll(items: any) {
+    console.log(items);
+    alert(JSON.stringify(items)+"1111111111111111");
+  }
+  
+
+
 
   photoChangeEvent(event) {
     //
@@ -110,7 +155,7 @@ export class AddproduitComponent implements OnInit {
     // this.produits.pdf = this.filesToUpload[0].name
 
     this.produits.commercant = this.commercants
-    console.log(this.commercants)
+  //  console.log(this.commercants)
     const fd = new FormData()
     if (this.photoToUpload) {
       fd.append('photo', this.photoToUpload[0], this.photoToUpload[0].name)
@@ -225,8 +270,10 @@ export class AddproduitComponent implements OnInit {
     return new Promise(resolve => {
       this.commercants = ''
       this.apiSer.getData('commercants/getCommercantByIdUser').subscribe((res: any) => {
-
-        console.log(res.data[0]._id)
+        
+        this.listPvByCommercId=res.data
+     //   console.log(JSON.stringify(this.listPvByCommercId) + "***********getcommercantById*************")
+      //  console.log(res.data[0]._id)
          this.commercants = res.data[0]._id
         this.enseignes = res.data[0].enseigne._id
         resolve(this.commercants)

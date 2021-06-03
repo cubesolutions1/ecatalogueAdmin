@@ -29,6 +29,8 @@ import { AuthGuard } from "./shared/auth/auth-guard.service";
 import { MenuComponent } from './menu/menu.component';
 import { H401Interceptor } from './shared/interceptors/H401Interceptor';
 import { AuthInterceptor } from './shared/auth/authinterceptor';
+import { Ng2TelInputModule } from 'ng2-tel-input';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -57,7 +59,9 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+    Ng2TelInputModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [
     AuthService,

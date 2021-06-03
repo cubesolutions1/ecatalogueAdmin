@@ -20,6 +20,7 @@ import { ShowenseigneComponent } from './showenseigne/showenseigne.component';
 import { AddenseigneComponent } from './addenseigne/addenseigne.component';
 import { EnseigneRoutingModule } from './enseigne-routing.module';
 import { AgmCoreModule } from '@agm/core';
+import { Ng2TelInputModule } from 'ng2-tel-input';
 
 
 
@@ -46,7 +47,8 @@ import { AgmCoreModule } from '@agm/core';
     TagInputModule,
     HttpClientModule,
     UiSwitchModule,
-    NgSelectModule
+    NgSelectModule,
+    Ng2TelInputModule
   ]
 })
 export class EnseigneModule { }
