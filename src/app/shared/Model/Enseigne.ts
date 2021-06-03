@@ -8,8 +8,10 @@ export class Enseigne {
   public phone:string;
   public adresse: string;
   public url: string;
+  public type:string;
   public jours: [];
   public activeUrl: string;
+  
   // public startLocation:{
   //   address:string,
   //   coordinates: []
@@ -21,6 +23,7 @@ export class Enseigne {
     description: string,
     photo: string,
     phone:string,
+    type:string,
     pointvente: PointVente[]) {
     this._id = _id;
     this.name = name;

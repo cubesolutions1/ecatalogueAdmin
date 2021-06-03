@@ -14,6 +14,7 @@ import { ChartistModule } from 'ng-chartist';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 @NgModule({
   declarations: [ShowcommercantComponent, AddcommercantComponent],
   imports: [
@@ -28,7 +29,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     NgSelectModule,
     FormsModule,
     Ng2SmartTableModule,
-    RouterModule
+    RouterModule,
+    NgMultiSelectDropDownModule.forRoot()
   ]
 })
 export class CommercantModule { }

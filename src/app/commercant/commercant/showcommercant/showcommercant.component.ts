@@ -11,7 +11,8 @@ import { UserService } from 'app/shared/services/user.service';
   styleUrls: ['./showcommercant.component.scss']
 })
 export class ShowcommercantComponent implements OnInit {
-  users: any = []
+  users: any = [];
+  statusComm:"";
   apiUrl: string
   defaultt: string
   error = false
@@ -41,16 +42,15 @@ export class ShowcommercantComponent implements OnInit {
       // console.log(this.pages);
       // console.log('this.idSociete', this.IdSociete);
       this.users = []
-      return this.apiSer.getData('commercants/getCommercants?sort=-user.createdAt')
-        .subscribe((res: any) => {
-          console.log(res);
-          
+      return this.apiSer.getData('commercants/getCommercants?sort=-user.createdAt').subscribe(
+        (res: any) => {
+          console.log(JSON.stringify(res));
+            this.statusComm=res.status
           for (let i = 0; i < res.data.length; i++) {
             console.log(res.data[i].enseigne != null);
             if (res.data[i].enseigne != null) {
               this.users.push(res.data[i])
             }
-            // console.log(this.users);
           }
           resolve(this.users)
         }, err => console.log(err)

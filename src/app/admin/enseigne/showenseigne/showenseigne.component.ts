@@ -39,6 +39,10 @@ export class ShowenseigneComponent implements OnInit {
         })
     }
 
+    testedit (item) {
+        console.log( JSON.stringify(item)+"*************")
+    }
+
     // And the listener code which asks the DataSource to filter the data:
 
 

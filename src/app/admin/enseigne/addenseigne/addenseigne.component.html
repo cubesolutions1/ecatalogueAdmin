@@ -36,45 +36,57 @@
                   <div class="col-md-6">
                     <input type="time" id="timesheetinput5" class="form-control" name="starttime"
                       [(ngModel)]="enseignes.horairedebut" />
-                    
+
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-3 label-control" for="projectinput5">Horaire fermeture*</label>
                   <div class="col-md-6">
                     <input type="time" id="timesheetinput6" class="form-control" name="endtime"
-                      [(ngModel)]="enseignes.horairefin" [ngModelOptions]="{standalone: true}"/>
-                    
+                      [(ngModel)]="enseignes.horairefin" [ngModelOptions]="{standalone: true}" />
+
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="description">Addresse {{formattedAddressAdmin}}</label>
+                  <label class="col-md-3 label-control" for="description">Addresse* {{formattedAddressAdmin}}</label>
                   <div class="col-md-6">
-              
-              
+
+
                     <input class="form-control" type="text" [(ngModel)]="autocompleteInputadresse" #addresstext
                       style="padding: 12px 20px; border: 1px solid #ccc; width: 400px">
                   </div>
                 </div>
 
+
                 <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput5">Numéro de téléphone*</label>
+                  <div class="col-md-6" style="width: 100%;">
+                    <input type="text" ng2TelInput (hasError)="hasError($event)"
+                      (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)"
+                      pattern="^[\s0-9]*$" [required]="emailReq ? false : !null" name="phone" #phone="ngModel"
+                      style="width: 100% !important" [(ngModel)]="enseignes.phone" />
+
+                  </div>
+                </div>
+
+                <!-- <div class="form-group row">
                   <label class="col-md-3 label-control" for="projectinput5">Numéro de téléphone*</label>
                   <div class="col-md-6">
                     <input type="number" id="phone" class="form-control" name="phone"
                       [(ngModel)]="enseignes.phone" />
                     
                   </div>
-                </div>
-             
-                <div class="form-group row">
+                </div> -->
+
+                <!-- <div class="form-group row">
                   <label class="col-md-3 label-control" for="projectinput5">adresse</label>
                   <div class="col-md-6">
                     <textarea type="text" id="projectinput5" class="form-control" [value]="adresseEnseigne" placeholder="adresse"
                       name="adresse" [(ngModel)]="adresseEnseigne"></textarea>
                   </div>
-                </div> 
+                </div>  -->
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="url">Adresse web</label>
+                  <label class="col-md-3 label-control" for="url">Adresse web*</label>
                   <div class="col-md-6">
                     <textarea type="text" id="url" class="form-control" placeholder="Adresse web" name="url"
                       [(ngModel)]="enseignes.url"></textarea>
@@ -110,16 +122,59 @@
 
 
               </div>
-              <div *ngFor="let item of enseignes.pointvente; let i = index">
-                
-                <app-pointvente (indexpointvente)="deleteEnseigne($event)" (setAddress)="getAddress($event)"
-                  adressType="geocode" [item]="item" [index]="i"></app-pointvente>
 
+
+
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Type d'enseigne</label>
+                    <div class="input-group col-md-9"  style="justify-content: space-around;">
+                      <div class="custom-control custom-radio d-inline-block ml-1">
+                        <input type="radio" id="customRadioInline3" (change)="onchange($event.target.value)"
+                          [(ngModel)]="enseignes.type" name="independant" value="independant"
+                          class="custom-control-input" />
+                        <label class="custom-control-label" for="customRadioInline3">Indépendant</label>
+                      </div>
+                      <div class="custom-control custom-radio d-inline-block">
+                        <input type="radio" id="customRadioInline4" name="groupe" value="groupe"
+                          [(ngModel)]="enseignes.type" class="custom-control-input"
+                          (change)="onchange($event.target.value)" />
+                        <label class="custom-control-label" for="customRadioInline4">Groupe</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div *ngIf="groupe ==true">
+
+                <div *ngFor="let item of enseignes.pointvente; let i = index">
+
+                  <app-pointvente (indexpointvente)="deleteEnseigne($event)" (setAddress)="getAddress($event)"
+                    adressType="geocode" [item]="item" [index]="i"></app-pointvente>
+
+
+                </div>
+                <button type="button" class="btn btn-raised btn-primary" (click)="addPointVente()">
+                  <i class="fa fa-check-square-o"></i> Ajouter un Point de vente
+                </button>
 
               </div>
-              <button type="button" class="btn btn-raised btn-primary" (click)="addPointVente()">
-                <i class="fa fa-check-square-o"></i> Ajouter un Point de vente
-              </button>
+
+
+
+
+
+
+
+
+
+
+
 
               <!-- <span>{{adress}}</span> -->
               <div class="form-actions">
@@ -161,7 +216,7 @@
                   <div class="col-md-6">
                     <input type="time" id="timesheetinput5" class="form-control" name="starttime"
                       [(ngModel)]="enseignes.horairedebut" />
-                    
+
                   </div>
                 </div>
                 <div class="form-group row">
@@ -169,21 +224,43 @@
                   <div class="col-md-6">
                     <input type="time" id="timesheetinput5" class="form-control" name="Endtime"
                       [(ngModel)]="enseignes.horairefin" />
-                   
+
                   </div>
                 </div>
 
-               
-              
 
-                <div class="form-group row">
+
+                <!-- <div class="form-group row">
                   <label class="col-md-3 label-control" for="projectinput5">Numéro de téléphone*</label>
                   <div class="col-md-6">
-                    <input type="number" id="phone" class="form-control" name="phone"
-                      [(ngModel)]="enseignes.phone" />
+                    <input type="number" id="phone" class="form-control" name="phone" [(ngModel)]="enseignes.phone" />
+
+                  </div>
+                </div> -->
+
+
+                <div class="form-group row" >
+                  <label class="col-md-3 label-control" for="projectinput5">Numéro de téléphone</label>
+                  <div class="col-md-6" style="width: 100%;">
+                    <input  type="text" ng2TelInput (hasError)="hasError($event)" 
+                    (intlTelInputObject)="telInputObject($event)" 
+                    (countryChange)="onCountryChange($event)" 
+                    pattern="^[\s0-9]*$" [required]="emailReq ? false : !null" 
+                    name="phone" #phone="ngModel" style="width: 100% !important"
+                    [(ngModel)]="enseignes.phone" />
                     
                   </div>
                 </div>
+
+
+
+
+
+
+
+
+
+
                 <div class="form-group row">
                   <label class="col-md-3 label-control" for="url">Adresse web</label>
                   <div class="col-md-6">
@@ -220,32 +297,72 @@
                   </div>
                 </div>
               </div>
-               <div *ngFor="let item of enseignes.pointvente; let i = index">
-                <app-pointvente (indexpointvente)="deleteEnseigne($event)" (setAddress)="getAddress($event)"
-                adressType="geocode" [item]="item" [index]="i"></app-pointvente>
-              </div> 
 
-              
+
+
+
+
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Type d'enseigne</label>
+                    <div class="input-group col-md-9">
+                      <div class="custom-control custom-radio d-inline-block ml-1">
+                        <input type="radio" id="customRadioInline3" (change)="onchange($event.target.value)"
+                          [(ngModel)]="enseignes.type" name="independant" value="independant"
+                          class="custom-control-input" />
+                        <label class="custom-control-label" for="customRadioInline3">Indépendant</label>
+                      </div>
+                      <div class="custom-control custom-radio d-inline-block">
+                        <input type="radio" id="customRadioInline4" name="groupe" value="groupe"
+                          [(ngModel)]="enseignes.type" class="custom-control-input"
+                          (change)="onchange($event.target.value)" />
+                        <label class="custom-control-label" for="customRadioInline4">Groupe</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div *ngIf="groupe ==true">
+
+                <div *ngFor="let item of enseignes.pointvente; let i = index">
+
+                  <app-pointvente (indexpointvente)="deleteEnseigne($event)" (setAddress)="getAddress($event)"
+                    adressType="geocode" [item]="item" [index]="i"></app-pointvente>
+
+
+                </div>
+                <button type="button" class="btn btn-raised btn-primary" (click)="addPointVente()">
+                  <i class="fa fa-check-square-o"></i> Ajouter un Point de vente
+                </button>
+
+              </div>
+
+
+
               <button *ngIf="enseignes?.pointvente.length!==0" type="button" class="btn btn-raised btn-primary"
                 (click)="onEditEnseigne()">
                 <i class="fa fa-check-square-o"></i> Modifier les Points de Ventes
               </button>
-             
 
-           <agm-map [zoom]="8" class="" [usePanning]="true" [fullscreenControl]="true" [rotateControl]="false"
-            [zoomControl]="true" [scaleControl]="false" [streetViewControl]="false" [scrollwheel]="false"
-            [latitude]="enseignes?.startLocation?.coordinates[0]"
-            [longitude]="enseignes?.startLocation?.coordinates[1]">
-            <agm-marker 
-             [label]="labelOptions" [iconUrl]="iconUrl" 
-            [latitude]="enseignes?.startLocation?.coordinates[0]" (dragEnd)="markerDragEndEns($event)"
-              [longitude]="enseignes?.startLocation?.coordinates[1]" [markerDraggable]="true">
-             </agm-marker>
-            <agm-marker  *ngFor="let data of listposVt"
-            [latitude]="data.startLocation.coordinates[0]" (dragEnd)="markerDragEnd($event)"
-              [longitude]="data.startLocation.coordinates[1]" [markerDraggable]="true"></agm-marker>
-          </agm-map>
-          
+
+              <agm-map [zoom]="8" class="" [usePanning]="true" [fullscreenControl]="true" [rotateControl]="false"
+                [zoomControl]="true" [scaleControl]="false" [streetViewControl]="false" [scrollwheel]="false"
+                [latitude]="enseignes?.startLocation?.coordinates[0]"
+                [longitude]="enseignes?.startLocation?.coordinates[1]">
+                <agm-marker [label]="labelOptions" [iconUrl]="iconUrl"
+                  [latitude]="enseignes?.startLocation?.coordinates[0]" (dragEnd)="markerDragEndEns($event)"
+                  [longitude]="enseignes?.startLocation?.coordinates[1]" [markerDraggable]="true">
+                </agm-marker>
+                <agm-marker *ngFor="let data of listposVt" [latitude]="data.startLocation.coordinates[0]"
+                  (dragEnd)="markerDragEnd($event)" [longitude]="data.startLocation.coordinates[1]"
+                  [markerDraggable]="true"></agm-marker>
+              </agm-map>
+
               <div class="form-actions">
                 <button type="button" routerLink="/enseignes/show" class="btn btn-raised btn-warning mr-1">
                   <i class="ft-x"></i> Annuler

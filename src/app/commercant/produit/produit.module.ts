@@ -28,6 +28,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import { MatchHeightModule } from '../../shared/directives/match-height.directive';
 import { ArchwizardModule } from 'angular-archwizard';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 @NgModule({
   declarations: [AddproduitComponent, ShowproduitComponent,],
   imports: [
@@ -44,7 +45,8 @@ import { ArchwizardModule } from 'angular-archwizard';
     ReactiveFormsModule,
     NgbModule,
     MatchHeightModule,
-    NgSelectModule
+    NgSelectModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   entryComponents: []
 
