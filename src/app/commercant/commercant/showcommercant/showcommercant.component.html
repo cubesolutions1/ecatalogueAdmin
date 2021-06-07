@@ -27,8 +27,10 @@
                   <!--                    <th>photo</th> 
  -->
                   <th>Adresse</th>
+                  <th>Type</th>
                   <th>Téléphone</th>
                   <th>Administration Enseigne</th>
+                  <th>Points de vente</th>
 
                   <th>Etat</th>
                   <th>Actions</th>
@@ -46,8 +48,12 @@
                   <td>{{ item?.user?.email }} </td>
  
                   <td>{{ item?.user?.adresse }} {{ item?.user?.codepostale }}</td>
+                  <td>{{ item?.type }}</td>
                   <td>{{ item?.user?.phone }}</td>
                   <td>{{ item?.enseigne.name }}</td>
+                  <td >
+                    <p *ngFor="let items of item.pointvente">{{items.name}}</p>
+                  </td>
                   <td>
                     <a *ngIf="!item?.user?.active" href="javascript:void(0)" class="btn btn-outline-primary mr-1"
                       (click)="onActiveAdmin(item?.user?._id)">Activer</a>
@@ -59,7 +65,8 @@
                     <a class="danger" (click)="onDeleteConfirm(item.id)" data-original-title="" title="">
                       <i class="ft-trash font-medium-3"></i>
                     </a>
-                    <a class="warning" data-original-title="" title="" [routerLink]="['/commercants/edit/'+ item._id]"
+                   
+                    <a class="warning" data-original-title="" title="" [routerLink]="['/commercants/edit/'+ item._id]" (click)="onUpdate(item)"
                       routerLinkActive="router-link-active">
                       <i class="ft-edit font-medium-3"></i>
                     </a>

@@ -1,7 +1,7 @@
 import { Input, ViewEncapsulation } from '@angular/core';
 import { AuthService } from 'app/shared/auth/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Produit } from 'app/shared/Model/produit';
 import { ApiService } from 'app/shared/services/Api.service';
@@ -35,7 +35,12 @@ export class AddproduitComponent implements OnInit {
     { id: 9, name: 90 },
     { id: 10, name: 100 }
   ];
+  listNamePv: any;
+  allPvCommercants: any = [];
+  formDetailsGroup: FormGroup;
 
+  listTypeProduit=[
+   {name:"promo"} ,{name:"ventflash"} ,{name:"normal"}]
   // reduction: number
   // prixNv: number
   produits: Produit = new Produit();
@@ -47,7 +52,7 @@ export class AddproduitComponent implements OnInit {
   dateFin: any
   truee: true
   idUpdate: number = null
-  idUser :any;
+  idUser: any;
   hasBaseDropZoneOver = false;
   hasAnotherDropZoneOver = false;
   photoToUpload = null
@@ -58,7 +63,7 @@ export class AddproduitComponent implements OnInit {
   enseignes: any
   good = false
 
-  listPvByCommercId=[];
+  listPvByCommercId = [];
   closeResult: string;
 
 
@@ -77,7 +82,8 @@ export class AddproduitComponent implements OnInit {
     private route: Router,
     private activeRoute: ActivatedRoute,
     private toastr: ToastrService,
-    private commercantService: CommercantService) {
+    private commercantService: CommercantService,
+    private fb: FormBuilder) {
     this.apiUrl = environment.apiImg
 
     this.activeRoute.params.subscribe((res: any) => {
@@ -124,22 +130,45 @@ export class AddproduitComponent implements OnInit {
       itemsShowLimit: 5,
       allowSearchFilter: true
     };
-    
-    
+
+    this.formDetailsGroup = this.fb.group({
+      categories: ['', Validators.required],
+      commercant: ['', [Validators.required, Validators.minLength(3)]],
+      dateDebut: ['', Validators.required],
+      dateFin: ['', Validators.required],
+      heureDebut: ['', Validators.required],
+      heureFin: ['', Validators.required],
+      description: ['', Validators.required],
+      enseigne: ['', Validators.required],
+      photo: ['', Validators.required],
+      etat: ['', Validators.required],
+      name: ['', Validators.required],
+      prix: ['', Validators.required],
+      prixNv: ['', Validators.required],
+      reduction: ['', Validators.required],
+      typecompagne: ['', Validators.required],
+      pointvente: [[], Validators.required],
+
+    })
   }
+
+
+
+
+
+
 
   onItemSelect(item: any) {
     console.log(item);
-    alert(JSON.stringify(item)+"0000000000000000");
+    this.allPvCommercants.push(item._id)
+
+
   }
   onSelectAll(items: any) {
     console.log(items);
-    alert(JSON.stringify(items)+"1111111111111111");
+    this.allPvCommercants.push(items._id)
+
   }
-  
-
-
-
   photoChangeEvent(event) {
     //
 
@@ -150,44 +179,34 @@ export class AddproduitComponent implements OnInit {
 
 
   }
-  // setter
-  onAddproduits(customContent) {
-    // this.produits.pdf = this.filesToUpload[0].name
+  
+  onSubmit(customContent) {
+    var data = {
+      "categories": this.formDetailsGroup.value.categories,
+        "commercant": this.commercants,
+      "dateDebut": this.formDetailsGroup.value.dateDebut+ 'T' + this.formDetailsGroup.value.heureDebut+'Z',
+       "dateFin": this.formDetailsGroup.value.dateFin+ 'T' + this.formDetailsGroup.value.heureFin+'Z',
+    /*  "heureDebut":this.formDetailsGroup.value.heureDebut,
+     "heureFin":this.formDetailsGroup.value.heureFin, */
+      "description": this.formDetailsGroup.value.description,
+        "enseigne": this.idUser,
+        "photo": this.photoToUpload[0].name,
+        "etat": "todo",
+     "name": this.formDetailsGroup.value.name,
+        "prix": this.formDetailsGroup.value.prix,
+        "prixNv": this.produits.prixNv.toString(),
+        "reduction":this.formDetailsGroup.value.reduction,
+        "typecompagne": this.formDetailsGroup.value.typecompagne.name,
 
-    this.produits.commercant = this.commercants
-  //  console.log(this.commercants)
-    const fd = new FormData()
-    if (this.photoToUpload) {
-      fd.append('photo', this.photoToUpload[0], this.photoToUpload[0].name)
-      fd.append('name', this.produits.name)
-      fd.append('description', this.produits.description)
-      fd.append('categories', this.produits.categories)
-      fd.append('commercant', this.produits.commercant)
-      fd.append('prix', this.produits.prix.toString())
-      fd.append('prixNv', this.produits.prixNv.toString())
-      fd.append('reduction', this.produits.reduction.toString())
-      fd.append('dateDebut', this.produits.dateDebut + 'T' + this.produits.heureDebut)
-      // fd.append('type', this.produits.type)
-      // fd.append('materiaux', this.produits.materiaux)
-      fd.append('enseigne', this.enseignes)
-      fd.append('dateFin', this.produits.dateFin + 'T' + this.produits.heureFin)
-      //
-      //
+        "pointvente": this.allPvCommercants
     }
-    this.apiSer.postData('produits/', fd).subscribe(event => {
-      // if (event.type === HttpEventType.UploadProgress) {
-      //
-      // } else if (event.type === HttpEventType.Response) {
+
+    this.apiSer.postData('produits/', data).subscribe(event => {
+
 
       this.getproduitById(event.data.produit._id)
       this.openModal(customContent)
 
-      // this.typeSuccess(event.status)
-
-
-      // this.route.navigateByUrl('/produits/show')
-      // this.validationForm.reset();
-      // }
     }, err => {
 
 
@@ -197,12 +216,48 @@ export class AddproduitComponent implements OnInit {
           this.typeError('Vous devez se connecter');
           this.authSer.logout()
         }
-        // else if (err.error.error.errors.name == 'ValidatorError') {
-        //   this.typeError(err.error.message.split('failed:')[1])
-        // }
+
       }
     });
   }
+  /*  onAddproduits(customContent) {
+ 
+     this.produits.commercant = this.commercants
+     const fd = new FormData()
+     if (this.photoToUpload) {
+       fd.append('photo', this.photoToUpload[0], this.photoToUpload[0].name)
+       fd.append('name', this.produits.name)
+       fd.append('description', this.produits.description)
+       fd.append('categories', this.produits.categories)
+       fd.append('commercant', this.produits.commercant)
+       fd.append('prix', this.produits.prix.toString())
+       fd.append('prixNv', this.produits.prixNv.toString())
+       fd.append('reduction', this.produits.reduction.toString())
+       fd.append('dateDebut', this.produits.dateDebut + 'T' + this.produits.heureDebut)
+       fd.append('enseigne', this.enseignes)
+       fd.append('dateFin', this.produits.dateFin + 'T' + this.produits.heureFin)
+       fd.append('pointvente', this.allPvCommercants)
+      
+     }
+     this.apiSer.postData('produits/', fd).subscribe(event => {
+      
+ 
+       this.getproduitById(event.data.produit._id)
+       this.openModal(customContent)
+ 
+     }, err => {
+ 
+ 
+       if (err.error) { this.typeError(err.error.message) }
+       if (err.error.error) {
+         if (err.error.error.code == 11000) { this.typeError('Ce nom existe déjà!') } else if (err.error.error.name === 'TokenExpiredError') {
+           this.typeError('Vous devez se connecter');
+           this.authSer.logout()
+         }
+         
+       }
+     });
+   } */
   onEditproduits(customContent) {
     // this.produits.pdf = this.filesToUpload[0].name
     //
@@ -270,11 +325,15 @@ export class AddproduitComponent implements OnInit {
     return new Promise(resolve => {
       this.commercants = ''
       this.apiSer.getData('commercants/getCommercantByIdUser').subscribe((res: any) => {
-        
-        this.listPvByCommercId=res.data
-     //   console.log(JSON.stringify(this.listPvByCommercId) + "***********getcommercantById*************")
-      //  console.log(res.data[0]._id)
-         this.commercants = res.data[0]._id
+
+
+        this.listNamePv = res.data[0].pointvente
+
+        console.log(JSON.stringify(res) + "***********getcommercantById*************")
+        this.listPvByCommercId = res.data
+        //   console.log(JSON.stringify(this.listPvByCommercId) + "***********getcommercantById*************")
+        //  console.log(res.data[0]._id)
+        this.commercants = res.data[0]._id
         this.enseignes = res.data[0].enseigne._id
         resolve(this.commercants)
         resolve(this.enseignes)
@@ -282,7 +341,7 @@ export class AddproduitComponent implements OnInit {
       })
     })
   }
-  
+
   onCustomFormSubmit() {
     this.validationForm.reset();
   }
@@ -290,7 +349,7 @@ export class AddproduitComponent implements OnInit {
   enreduction() {
     this.produits.prixNv = null
     // this.reduction = this.reduction * 1
-    return this.produits.prixNv = Math.round(this.produits.prix - ((this.produits.prix * this.produits.reduction / 100)))
+    return this.produits.prixNv = Math.round(this.formDetailsGroup.value.prix - ((this.formDetailsGroup.value.prix * this.formDetailsGroup.value.reduction / 100)))
   };
 
   // II preview product

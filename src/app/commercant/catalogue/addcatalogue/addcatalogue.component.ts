@@ -279,7 +279,7 @@ export class AddcatlogueComponent implements OnInit {
       this.commercants = ''
       this.apiSer.getData('commercants/getCommercantByIdUser').subscribe((res: any) => {
         //
-        console.log(this.commercants)
+        console.log(JSON.stringify(res)+"***************************************")
         this.commercants = res.data[0]._id
         this.enseigne = res.data[0].enseigne._id
         resolve(this.commercants)

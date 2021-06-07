@@ -11,6 +11,9 @@ import { User } from './../../../shared/Model/User';
 import { ApiService } from 'app/shared/services/Api.service';
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { first } from 'rxjs/operators';
+import { browser } from 'protractor';
 
 @Component({
   selector: 'app-addcommercant',
@@ -24,13 +27,14 @@ export class AddcommercantComponent implements OnInit {
   showMessageTimeout: any = {};
   showMessageServiceUnavailable: any = {};
   showMessageServerError: any = {};
-  pointventeProduit=[];
+  pointventeProduit = [];
   simbaList = [];
   simbaList2 = [];
-  resultPV=[]
+  resultPV = []
   allPvCommercants: any = [];
-
-
+  formDetailsGroup: FormGroup;
+  editformDetailsGroup: FormGroup;
+  ensegineID: "";
   user: User = new User()
   commercant: Commercant = new Commercant();
   pointventes: PointVente[] = []
@@ -43,31 +47,39 @@ export class AddcommercantComponent implements OnInit {
   commercanttest: any
   private tabPVallMarchant = []
   lenghtPv: any;
-
-  listSelectPvComm= [];
+  listSelectPvComm = [];
   dropdownList = [];
   selectedItems = [];
   dropdownSettings = {};
+  typeMarchant:"";
 
+  
+  
 
   constructor(private apiSer: ApiService,
     private route: Router,
     private enseigneService: EnseigneService,
     private commercantService: CommercantService,
     private activeRoute: ActivatedRoute,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private fb: FormBuilder) {
     this.apiUrl = environment.apiImg + 'enseignes'
     this.activeRoute.params.subscribe((res: any) => {
       if (res) {
+        
         this.idUpdate = res.idEdit;
-       // console.log('id' + res.idEdit)
+        // console.log('id' + res.idEdit)
       }
     });
   }
 
+  
+
   ngOnInit() {
     this.activeRoute.params.subscribe((res: any) => {
+      console.log(JSON.stringify(res) + "DetailsCommercantByIDFromNavigation")
       if (res.idEdit) {
+       
         this.idUpdate = res.idEdit;
         this.getcommercantById();
         // console.log('id' + res)
@@ -75,10 +87,32 @@ export class AddcommercantComponent implements OnInit {
     });
     // console.log('id' + this.groupe, this.independant)
     this.getAllEnseignes()
-    //this.getAllPV();
-   
+    this.getAllPV();
 
+   
+    this.formDetailsGroup = this.fb.group({
+      user: [{}, Validators.required],
+      fax: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      passwordConfirm: ['', Validators.required],
+      adresse: ['', Validators.required],
+      phone: ['', Validators.required],
+      prenom: ['', Validators.required],
+      name: ['', Validators.required],
+      type: ['', Validators.required],
+      pointvente: [[], Validators.required],
+
+    })
+
+    if (!this.idUpdate) {
+      this.commercantService.getCommercantById(this.idUpdate)
+                .pipe(first())
+                .subscribe(x => this.formDetailsGroup.patchValue(x));
+        }
+     
     
+
     this.dropdownSettings = {
       singleSelection: false,
       idField: '_id',
@@ -88,72 +122,59 @@ export class AddcommercantComponent implements OnInit {
       itemsShowLimit: 5,
       allowSearchFilter: true
     };
-  }
+
   
+     
+  }
 
-  onItemSelect(item: any) {
-    console.log(item);
-    this.listSelectPvComm.push(item._id)
   
-  // alert(JSON.stringify(this.listSelectPvComm)+"0000000000000000");
-  }
-  onSelectAll(items: any) {
-    console.log(items);
-    this.listSelectPvComm.push(items._id)
-   // alert(JSON.stringify(items)+"1111111111111111");
+  get formValidate() {
+    return this.formDetailsGroup.controls;
   }
 
-  getAllPV () {
-    this.commercantService.getAllComercants().subscribe(
-      (res) => {
-      for (var i=0;i<res.length;i++){
-          res[i].pointvente.forEach(element => {
-            this.tabPVallMarchant.push(element._id)
-          
-          });
-        
-      }
-      })
-
-        
-  }
-
-
-  onAddcommercant() {
-    this.user.role = 'commercant'
    
-    const body = {
-      commercant: this.commercant,
-      user: this.user
-    }
 
-     console.log(JSON.stringify(body)+"***********add new product **************")
-
-    this.apiSer.postData('commercants/createCommercant', body).subscribe(event => {
+       
   
-      this.typeSuccess(event.status)
-      this.route.navigateByUrl('/commercants/show')
-   
-    }, err => {
-      console.log('err.ts', err);
-      this.typeError(err.error.message)
-    });
-  }
+  
+  /*  updateMarchant() {
 
-
-
-  onEditcommercant() {
-    console.log('photo', this.user);
-    
-    const body = {
-      commercant: this.commercant,
+    this.editformDetailsGroup.patchValue({
       user: this.user,
-      // enseigne: this.enseignes,
-      pointvente: this.pointventes
-    }
-    // this.user.photo = this.enseignes[0].photo
-    console.log('f', body);
-    this.apiSer.patchData('commercants/updateCommercant/', body, this.idUpdate).subscribe(data => {
+      fax: this.user.fax,
+      email: this.user.email,
+      password: this.user.password,
+      passwordConfirm: this.user.passwordConfirm,
+      adresse: this.user.adresse,
+      phone: this.user.phone,
+      prenom: this.user.prenom,
+      name: this.user.name,
+      type: this.user.type,
+      pointvente: this.allPvCommercants,
+
+    }) 
+
+    var data2 = {
+      user: {
+        "password": this.user.password,
+        "passwordConfirm": this.user.password,
+        "email": this.user.email,
+        "adresse": this.user.adresse,
+        "prenom": this.user.prenom,
+        "phone": this.user.phone,
+        "name": this.user.name,
+      },
+      commercant: {
+        "fax": this.user.fax,
+        "enseigne":  this.ensegineID,
+        "pointvente": this.allPvCommercants,
+        "type": this.typeMarchant
+      }
+
+    } 
+   
+  
+    this.apiSer.patchData('commercants/updateCommercant/', this.formDetailsGroup.value, this.idUpdate).subscribe(data => {
       // console.log(data));
       if (data) {
         this.typeSuccess(data.status)
@@ -163,9 +184,121 @@ export class AddcommercantComponent implements OnInit {
       console.log('err.ts', err);
       this.typeError(err.error.message)
     });
+  }  
+
+ */
+ 
+
+
+  onSubmit() {
+
+
+
+    if (!this.idUpdate) {
+      var data = {
+        user: {
+          "password": this.formDetailsGroup.value.password,
+          "passwordConfirm": this.formDetailsGroup.value.passwordConfirm,
+          "email": this.formDetailsGroup.value.email,
+          "adresse": this.formDetailsGroup.value.adresse,
+          "prenom": this.formDetailsGroup.value.prenom,
+          "phone": this.formDetailsGroup.value.phone,
+          "name": this.formDetailsGroup.value.name,
+          "role": "commercant"
+        },
+        commercant: {
+          "fax": this.formDetailsGroup.value.fax,
+          "enseigne": this.ensegineID,
+          "pointvente": this.allPvCommercants,
+          "type": this.typeMarchant
+        }
+  
+      }
+      this.apiSer.postData('commercants/createCommercant', data)
+      .pipe(first()).subscribe(event => {
+        console.log(JSON.stringify(event) + " test create new marchant")
+        this.typeSuccess(event.status)
+        this.route.navigateByUrl('/commercants/show')
+  
+      }, err => {
+        console.log('err.ts', err);
+        this.typeError(err.error.message)
+      });
+
+    }
+    else {
+      alert("edit")
+
+      var data2 = {
+        user: {
+          
+          "email": this.user.email,
+          "adresse": this.user.adresse,
+          "prenom": this.user.prenom,
+          "phone": this.user.phone,
+          "name": this.user.name,
+        },
+        commercant: {
+          "fax": this.user.fax,
+          "enseigne": this.ensegineID,
+          "pointvente": this.allPvCommercants,
+          "type": this.typeMarchant
+        }
+  
+      }
+      
+      this.apiSer.patchData('commercants/updateCommercant/', data2, this.idUpdate)
+      .pipe(first())
+      .subscribe(data => {
+        // console.log(data));
+        if (data) {
+          this.typeSuccess(data.status)
+          this.route.navigateByUrl('/commercants/show')
+        }
+      }, err => {
+        console.log('err.ts', err);
+        this.typeError(err.error.message)
+      });
+    }
+    
+
   }
+  
+ 
+
+  onItemSelect(item: any) {
+    console.log(item);
+    this.allPvCommercants.push(item._id)
+
+    
+  }
+  onSelectAll(items: any) {
+    console.log(items);
+    this.allPvCommercants.push(items._id)
+   
+  }
+
+  getAllPV() {
+    this.commercantService.getAllComercants().subscribe(
+      (res) => {
+        console.log(JSON.stringify(res.listPointVents)+"************************")
+        for (var i = 0; i < res.listPointVents.length; i++) {
+          res.listPointVents[i].pointvente.forEach(element => {
+            this.tabPVallMarchant.push(element._id)
+            console.log(JSON.stringify( this.tabPVallMarchant)+"************************")
+
+          });
+
+        }
+      })
+
+
+  }
+
+
   onchange(event) {
-    // console.log(event);
+     console.log(event);
+     this.typeMarchant =event
     if (event === 'groupe') {
 
       this.groupe = true
@@ -185,15 +318,17 @@ export class AddcommercantComponent implements OnInit {
 
   public getcommercantById() {
     this.commercantService.getCommercantById(this.idUpdate).subscribe((res: any) => {
-      console.log(JSON.stringify(res.data.data) + "***********getcommercantById*************")
-   //   console.log('res.data.user', JSON.stringify(res.data.data.user.name));
+     //  console.log(JSON.stringify(res) + "***********getcommercantById*************")
+     //  console.log(res)
       this.commercanttest = JSON.stringify(res.data.data.user.name)
       this.commercant = res.data
       this.user = res.data.data.user
+      console.log(JSON.stringify(this.user) + "***********getcommercantById*************")
       this.enseignes = res.data.enseigne
-      this.pointventes = res.data.pointventess
-      console.log(JSON.stringify(this.pointventes) + "***********000000000000*************")
-    //  console.log(JSON.stringify(this.commercant) + "////////////////////////////////////////////////////")
+
+      this.pointventes = res.data.data.pointvente
+      
+
 
       return this.commercant
     })
@@ -206,38 +341,43 @@ export class AddcommercantComponent implements OnInit {
       return this.enseignes
     })
   }
-  public getEnseigneByid(event) {
-    // console.log(event._id);
 
-    this.pointventes = [] 
+
+  public myCallBack(el){
+    return this.tabPVallMarchant.indexOf(el) < 0;
+  }
+
+  public getEnseigneByid(event) {
+    console.log(event._id);
+    this.ensegineID = event._id
+    this.pointventes = []
     this.enseigneService.getEnseigneById(event._id).subscribe((res: any) => {
       this.getAllPV()
       this.pointventes = res.data.data.pointvente;
-       this.lenghtPv=this.pointventes.length
-    //  console.log(JSON.stringify (this.pointventes),"ppppp");
-    //  console.log( this.tabPVallMarchant,"iddddddddddddddddddddd");
+      this.lenghtPv = this.pointventes.length
+     
       this.user.photo = res.data.photo
-      //this.simbaList = this.tabPVallMarchant.filter(val => ! this.simbaList2.includes(val));
-     // this.pointventes = this.tabPVallMarchant.filter(val => ! this.tabPVallMarchant.includes(val));
+     
 
-
-      for(var i=0;i<this.tabPVallMarchant.length;i++){
+   console.log(this.tabPVallMarchant.length+"444444444444444444444444444444")
+      for (var i = 0; i < this.tabPVallMarchant.length; i++) {
         this.resultPV = this.pointventes.filter(PV => PV._id != this.tabPVallMarchant[i]);
+        
       } 
 
-    //  console.log(this.resultPV,"resssssssssssssssss")
-     
-
-      }, (error) => {
-        console.log(error.status);
-        this.showErrorAlert(error);
-      }
-
-      
-    )
-      return this.enseignes
  
-     
+   console.log(JSON.stringify(this.pointventes)+"555555555555555555555555555555")
+
+    }, (error) => {
+      console.log(error.status);
+      this.showErrorAlert(error);
+    }
+
+
+    )
+    return this.enseignes
+
+
   }
 
 

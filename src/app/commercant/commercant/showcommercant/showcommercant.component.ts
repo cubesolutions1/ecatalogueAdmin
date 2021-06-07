@@ -19,7 +19,7 @@ export class ShowcommercantComponent implements OnInit {
   page: number = 1
   limit: number = 5
   pageSize = 10;
-
+  tabPVallMarchant=[];
   constructor(private apiSer: ApiService,
     private userSer: UserService,
     private toastr: ToastrService,
@@ -36,21 +36,35 @@ export class ShowcommercantComponent implements OnInit {
 
   }
 
+  onUpdate(item) {
+   alert(JSON.stringify(item))
+  }
+
 
   public getCommercants() {
     return new Promise(resolve => {
       // console.log(this.pages);
       // console.log('this.idSociete', this.IdSociete);
       this.users = []
-      return this.apiSer.getData('commercants/getCommercants?sort=-user.createdAt').subscribe(
-        (res: any) => {
-          console.log(JSON.stringify(res));
+      return this.apiSer.getData('commercants/getCommercants?sort=-user.createdAt')
+        .subscribe((res: any) => {
+         console.log(res);
             this.statusComm=res.status
+            
+            for (var i = 0; i < res.length; i++) {
+              res[i].pointvente.forEach(element => {
+                this.tabPVallMarchant.push(element.name)
+                console.log(JSON.stringify(this.tabPVallMarchant))
+    
+              });
+    
+            }
           for (let i = 0; i < res.data.length; i++) {
-            console.log(res.data[i].enseigne != null);
+        //    console.log(res.data[i].enseigne != null);
             if (res.data[i].enseigne != null) {
               this.users.push(res.data[i])
             }
+             console.log(this.users);
           }
           resolve(this.users)
         }, err => console.log(err)
@@ -61,7 +75,7 @@ export class ShowcommercantComponent implements OnInit {
   // And the listener code which asks the DataSource to filter the data:
 
   onDeleteConfirm(event) {
-    console.log(event);
+   // console.log(event);
     swal.fire({
       title: 'êtes vous Sûre?',
       text: "Vous ne pouvez pas restaurer vos données!",
@@ -73,7 +87,7 @@ export class ShowcommercantComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         return this.apiSer.delete('commercants/deletecommercantbyiduser/', event).subscribe((res: any) => {
-          console.log(res);
+       //   console.log(res);
 
           this.getCommercants();
 
@@ -125,7 +139,7 @@ export class ShowcommercantComponent implements OnInit {
         id: id
       }
       return this.userSer.bloqueUser(body).subscribe((res: any) => {
-        console.log(res);
+      //  console.log(res);
         this.getCommercants();
         this.typeSuccess(res.status)
         resolve(res.status)
@@ -141,7 +155,7 @@ export class ShowcommercantComponent implements OnInit {
       // console.log('this.idSociete', this.IdSociete);
       this.users = []
       return this.userSer.activeUser(body).subscribe((res: any) => {
-        console.log(res);
+      //  console.log(res);
         this.getCommercants();
         this.typeSuccess(res.status)
         resolve(res.status)

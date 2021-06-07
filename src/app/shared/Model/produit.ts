@@ -15,5 +15,6 @@ export class Produit {
     prix:number;
     prixNv:number;
     reduction:number;
+    pointvente:[];
     constructor(){}
 }
