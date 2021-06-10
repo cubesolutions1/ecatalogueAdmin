@@ -52,7 +52,9 @@ export class AddcommercantComponent implements OnInit {
   selectedItems = [];
   dropdownSettings = {};
   typeMarchant:"";
-
+  fax:"";
+  typeCommercant:"";
+  nameenseignes:""
   
   
 
@@ -77,7 +79,7 @@ export class AddcommercantComponent implements OnInit {
 
   ngOnInit() {
     this.activeRoute.params.subscribe((res: any) => {
-      console.log(JSON.stringify(res) + "DetailsCommercantByIDFromNavigation")
+     // console.log(JSON.stringify(res) + "DetailsCommercantByIDFromNavigation")
       if (res.idEdit) {
        
         this.idUpdate = res.idEdit;
@@ -134,61 +136,6 @@ export class AddcommercantComponent implements OnInit {
 
    
 
-       
-  
-  
-  /*  updateMarchant() {
-
-    this.editformDetailsGroup.patchValue({
-      user: this.user,
-      fax: this.user.fax,
-      email: this.user.email,
-      password: this.user.password,
-      passwordConfirm: this.user.passwordConfirm,
-      adresse: this.user.adresse,
-      phone: this.user.phone,
-      prenom: this.user.prenom,
-      name: this.user.name,
-      type: this.user.type,
-      pointvente: this.allPvCommercants,
-
-    }) 
-
-    var data2 = {
-      user: {
-        "password": this.user.password,
-        "passwordConfirm": this.user.password,
-        "email": this.user.email,
-        "adresse": this.user.adresse,
-        "prenom": this.user.prenom,
-        "phone": this.user.phone,
-        "name": this.user.name,
-      },
-      commercant: {
-        "fax": this.user.fax,
-        "enseigne":  this.ensegineID,
-        "pointvente": this.allPvCommercants,
-        "type": this.typeMarchant
-      }
-
-    } 
-   
-  
-    this.apiSer.patchData('commercants/updateCommercant/', this.formDetailsGroup.value, this.idUpdate).subscribe(data => {
-      // console.log(data));
-      if (data) {
-        this.typeSuccess(data.status)
-        this.route.navigateByUrl('/commercants/show')
-      }
-    }, err => {
-      console.log('err.ts', err);
-      this.typeError(err.error.message)
-    });
-  }  
-
- */
- 
-
 
   onSubmit() {
 
@@ -227,9 +174,9 @@ export class AddcommercantComponent implements OnInit {
 
     }
     else {
-      alert("edit")
+     // alert("edit")
 
-      var data2 = {
+       var data2 = {
         user: {
           
           "email": this.user.email,
@@ -239,13 +186,15 @@ export class AddcommercantComponent implements OnInit {
           "name": this.user.name,
         },
         commercant: {
-          "fax": this.user.fax,
+          "fax": this.fax,
           "enseigne": this.ensegineID,
-          "pointvente": this.allPvCommercants,
-          "type": this.typeMarchant
+          "pointvente": this.pointventes,
+          "type": this.typeCommercant
         }
   
-      }
+      } 
+
+     // alert(JSON.stringify(this.formDetailsGroup.value))
       
       this.apiSer.patchData('commercants/updateCommercant/', data2, this.idUpdate)
       .pipe(first())
@@ -281,11 +230,11 @@ export class AddcommercantComponent implements OnInit {
   getAllPV() {
     this.commercantService.getAllComercants().subscribe(
       (res) => {
-        console.log(JSON.stringify(res.listPointVents)+"************************")
+    //    console.log(JSON.stringify(res.listPointVents)+"************************")
         for (var i = 0; i < res.listPointVents.length; i++) {
           res.listPointVents[i].pointvente.forEach(element => {
             this.tabPVallMarchant.push(element._id)
-            console.log(JSON.stringify( this.tabPVallMarchant)+"************************")
+         //   console.log(JSON.stringify( this.tabPVallMarchant)+"************************")
 
           });
 
@@ -297,7 +246,7 @@ export class AddcommercantComponent implements OnInit {
 
 
   onchange(event) {
-     console.log(event);
+    // console.log(event);
      this.typeMarchant =event
     if (event === 'groupe') {
 
@@ -318,13 +267,15 @@ export class AddcommercantComponent implements OnInit {
 
   public getcommercantById() {
     this.commercantService.getCommercantById(this.idUpdate).subscribe((res: any) => {
-     //  console.log(JSON.stringify(res) + "***********getcommercantById*************")
+       console.log(JSON.stringify(res) + "***********getcommercantById*************")
      //  console.log(res)
       this.commercanttest = JSON.stringify(res.data.data.user.name)
       this.commercant = res.data
       this.user = res.data.data.user
-      console.log(JSON.stringify(this.user) + "***********getcommercantById*************")
-      this.enseignes = res.data.enseigne
+   //   console.log(JSON.stringify(this.user) + "***********getcommercantById*************")
+      this.nameenseignes = res.data.data.enseigne.name
+      this.fax=res.data.data.fax
+      this.typeCommercant=res.data.data.type
 
       this.pointventes = res.data.data.pointvente
       
@@ -336,7 +287,7 @@ export class AddcommercantComponent implements OnInit {
   public getAllEnseignes() {
     this.enseigneService.getAllEnseignes().subscribe((res: any) => {
       this.enseignes = res.data.data
-      console.log(this.enseignes);
+    //  console.log(this.enseignes);
       this.independant = true
       return this.enseignes
     })
@@ -348,7 +299,7 @@ export class AddcommercantComponent implements OnInit {
   }
 
   public getEnseigneByid(event) {
-    console.log(event._id);
+  //  console.log(event._id);
     this.ensegineID = event._id
     this.pointventes = []
     this.enseigneService.getEnseigneById(event._id).subscribe((res: any) => {
@@ -359,14 +310,14 @@ export class AddcommercantComponent implements OnInit {
       this.user.photo = res.data.photo
      
 
-   console.log(this.tabPVallMarchant.length+"444444444444444444444444444444")
+  // console.log(this.tabPVallMarchant.length+"444444444444444444444444444444")
       for (var i = 0; i < this.tabPVallMarchant.length; i++) {
         this.resultPV = this.pointventes.filter(PV => PV._id != this.tabPVallMarchant[i]);
         
       } 
 
  
-   console.log(JSON.stringify(this.pointventes)+"555555555555555555555555555555")
+ //  console.log(JSON.stringify(this.pointventes)+"555555555555555555555555555555")
 
     }, (error) => {
       console.log(error.status);

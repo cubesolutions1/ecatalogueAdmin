@@ -50,11 +50,12 @@ export class ShowcatalogueComponent implements OnInit {
       // this.commercant = null
 
       return this.apiSer.getData('commercants/getCommercantByIdUser').subscribe((res: any) => {
+        console.log()
         // 
-        console.log(res)
-        res.length>0 ?  this.commercant = res.data[0]._id:[]
+       // console.log(res)
+       // res.length>0 ?  this.commercant = res.data[0]._id:[]
         // 
-        
+        this.commercant = res.data[0]._id
         resolve(this.commercant)
 
       }, err => {

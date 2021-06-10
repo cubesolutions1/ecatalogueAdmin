@@ -212,7 +212,7 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
     this.lng = $event.coords.lng;
     this.lat = $event.coords.lat;
     this.getAddress($event.coords.lat, $event.coords.lng);
-    alert("event enseigne=" + this.lng + " " + this.lat)
+  //  alert("event enseigne=" + this.lng + " " + this.lat)
   }
 
   markerDragEnd($event) {
@@ -220,7 +220,7 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
     this.longt = $event.coords.lng;
     this.latt = $event.coords.lat;
     this.getAddress(this.latt, this.longt);
-    alert("event pointvente=" + this.longt + " " + this.latt)
+   // alert("event pointvente=" + this.longt + " " + this.latt)
 
   }
   fileChangeEvent(event) {
@@ -507,12 +507,12 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
 
 
   onCountryChange(event) {
-    alert("prefix Code =" + event.dialCode + "getNumber=" + event.value)
+ //   alert("prefix Code =" + event.dialCode + "getNumber=" + event.value)
     console.log("prefix Code =" + event.dialCode)
     this.prefixPhone= event.dialCode
   }
   getNumber(event) {
-    alert("getNumber=" + event.value)
+  //  alert("getNumber=" + event.value)
   }
   hasError: boolean;
   onError(obj) {

@@ -282,7 +282,7 @@
                     <a class="danger" (click)="deleteproduit(item._id)" data-original-title="" title="">
                       <i class="ft-trash font-medium-3"></i>
                     </a>
-                    <a class="warning" data-original-title="" title="" [routerLink]="['/produits/edit/' + item._id]"
+                    <a class="warning" data-original-title="" title="" [routerLink]="['/produits/edit/' + item._id]" [state]="{ id:1 , name:'Angular'}"
                       routerLinkActive="router-link-active">
                       <i class="ft-edit font-medium-3"></i>
                     </a>

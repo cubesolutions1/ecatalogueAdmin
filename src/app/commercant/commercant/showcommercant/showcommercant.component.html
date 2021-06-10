@@ -52,7 +52,7 @@
                   <td>{{ item?.user?.phone }}</td>
                   <td>{{ item?.enseigne.name }}</td>
                   <td >
-                    <p *ngFor="let items of item.pointvente">{{items.name}}</p>
+                    <p *ngFor="let items of item.pointvente" >{{items.name}}</p>
                   </td>
                   <td>
                     <a *ngIf="!item?.user?.active" href="javascript:void(0)" class="btn btn-outline-primary mr-1"
