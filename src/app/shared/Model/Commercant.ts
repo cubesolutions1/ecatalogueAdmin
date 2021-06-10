@@ -47,4 +47,23 @@ export class Commercant {
     public set $enseigne(x: Enseigne) {
         this.enseigne = x
     }
+
+}
+
+export interface ICommercant {
+
+     id: string;
+     user: User;
+     enseigne: Enseigne;
+     fax: string;
+     email: string;
+     password :string;
+     passwordConfirm:string;
+     adresse:string;
+     phone: number;
+     prenom: string;
+     name: string;
+     type: string;
+     pointvente: [];
+
 }

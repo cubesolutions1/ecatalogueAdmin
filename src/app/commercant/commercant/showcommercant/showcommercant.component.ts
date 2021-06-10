@@ -2,7 +2,7 @@ import { environment } from './../../../../environments/environment';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'app/shared/services/Api.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import swal from 'sweetalert2';
 import { UserService } from 'app/shared/services/user.service';
 @Component({
@@ -11,6 +11,7 @@ import { UserService } from 'app/shared/services/user.service';
   styleUrls: ['./showcommercant.component.scss']
 })
 export class ShowcommercantComponent implements OnInit {
+  @Input() data = {};
   users: any = [];
   statusComm:"";
   apiUrl: string
@@ -37,7 +38,8 @@ export class ShowcommercantComponent implements OnInit {
   }
 
   onUpdate(item) {
-   alert(JSON.stringify(item))
+  // alert(JSON.stringify(item))
+   this.data=JSON.stringify(item)
   }
 
 
