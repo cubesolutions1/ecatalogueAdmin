@@ -13,16 +13,16 @@
       <div class="card">
         <div class="card-content">
           <div class="px-3">
-            <form class="form form-horizontal striped-rows form-bordered"
-            [formGroup]="formDetailsGroup" (ngSubmit)="onSubmit()">
+            <form #vform="ngForm" enctype="multipart/form-data" class="form form-horizontal striped-rows form-bordered"
+              [formGroup]="formDetailsGroup" (ngSubmit)="onSubmit(customContent)">
               <div class="form-body">
                 <h4 class="form-section"><i class="ft-list"></i> Produit</h4>
 
                 <div class="form-group row">
                   <label class="col-md-2 label-control" for="projectinput1">Nom De produit</label>
                   <div class="col-md-6">
-                    <input type="text" id="projectinput1" class="form-control" placeholder="Nom" 
-                       name="nom" formControlName="name" />
+                    <input type="text" id="projectinput1" class="form-control" placeholder="Nom"  required
+                       name="nom" formControlName="name" [(ngModel)]="produits.name"/>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -30,31 +30,32 @@
                   <div class="col-md-6">
                     <textarea type="textarea" id="description" class="form-control" autocomplete="on"
                       placeholder="Veuillez décrire les spécifications de votre produit: type, matériaux, etc..."
-                      name="description" formControlName="description" ></textarea>
+                      name="description"  formControlName="description" [(ngModel)]="produits.description"></textarea>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2 label-control" for="categories">Catégories</label>
                   <div class="col-md-6">
-                    <ng-select [items]="categories" name="categories" bindLabel="name" bindValue="id"
-                      placeholder="Choisissez"  formControlName="categories">
+                    <ng-select 
+                    [items]="categories" name="categories" bindLabel="name" bindValue="id"
+                      placeholder="Choisissez"  formControlName="categories" [(ngModel)]="typeProduit">
                       <ng-template ng-label-tmp let-item="item">
                         <img height="25" width="25" src="{{ apiUrl }}Categories/{{ item.photo }}" />
-                        <b style="color: black"> {{ item.name }}</b>
+                        <b style="color: black" > {{ item.name }}</b>
                       </ng-template>
                       <ng-template ng-option-tmp let-item="item" let-index="index">
                         <img height="25" width="25" src="{{ apiUrl }}Categories/{{ item.photo }}" />
-                        <b style="color: black"> {{ item.name }}</b>
+                        <b style="color: black" > {{ item.name }}</b>
                       </ng-template>
                     </ng-select>
                   </div>
                 </div>
 
                 <div class="form-group row">
-                  <label class="col-md-2 label-control" for="categories">Type de produit</label>
+                  <label class="col-md-2 label-control" for="typeproduit">Type de produit</label>
                   <div class="col-md-6">
-                    <ng-select [items]="listTypeProduit" name="categories" 
-                      placeholder="Choisissez" formControlName="typecompagne">
+                    <ng-select [items]="listTypeProduit" name="typeproduit"  
+                      placeholder="Choisissez"  formControlName="typecompagne" [(ngModel)]="produits.typecompagne">
                       <ng-template ng-label-tmp let-item="item">
                         <b style="color: black"> {{ item.name }}</b>
                       </ng-template>
@@ -66,20 +67,36 @@
                 </div>
 
 
-
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="typeproduit">Points de vente</label>
+                  <div class="col-md-6">
+                    <ng-select [items]="pointventeComm" name="typeproduit"  [multiple]="true" 
+                      placeholder="Choisissez"  formControlName="pointvente" >
+                      <ng-template ng-label-tmp let-item="item">
+                        <b style="color: black"> {{ item.name }}</b>
+                      </ng-template>
+                      <ng-template ng-option-tmp let-item="item" let-index="index">
+                        <b style="color: black"> {{ item.name }}</b>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+                 
+                
                 <h4 class="form-section"><i class="ft-clipboard"></i> Prix</h4>
                 <div class="form-group row">
                   <label class="col-md-2 label-control" for="projectinput5">Prix sans remise</label>
                   <div class="col-md-4">
                     <div class="position-relative has-icon-right">
-                      <input type="text" id="projectinput5" class="form-control" placeholder="Prix sans remise" min="0"
-                        value="promo" name="typecompagne" formControlName="prix"/>
+                      <input type="text" id="projectinput5" class="form-control" placeholder="Prix sans remise" 
+                        required min="0" value="promo"  name="typecompagne" formControlName="prix" [(ngModel)]="produits.prix"
+                         />
                       <div class="form-control-position" style="color: black !important">
                         €
                       </div>
                     </div>
-                    <small class="form-text text-muted danger" *ngIf="produits.prix<0">Veuillez ajouter un nombre
-                      positif?</small>
+                    <!-- <small class="form-text text-muted danger" *ngIf="produits.prix<0">Veuillez ajouter un nombre
+                      positif?</small> -->
                   </div>
                 </div>
                 <div class="form-group row">
@@ -88,7 +105,8 @@
                   <div class="col-md-4">
                     <div class="position-relative has-icon-right">
                       <ng-select [items]="reductions" name="reductions" bindLabel="name" bindValue="name"
-                        (change)="enreduction()" placeholder="Choisissez le taux de réduction" formControlName="reduction">
+                        (change)="enreduction()" placeholder="Choisissez le taux de réduction" formControlName="reduction" [(ngModel)]="produits.reduction"
+                       >
                         <ng-template ng-label-tmp let-item="item">
                           <b style="color: black">{{ item.name }} </b>
                           <b style="color: black"> %</b>
@@ -108,24 +126,28 @@
                   <label class="col-md-2 label-control" for="prixNv">Nouveau prix</label>
                   <div class="col-md-4">
                     <div class="position-relative has-icon-right">
-                      <input type="text" disabled id="prixNv" class="form-control" placeholder="Voilà"
-                        [value]="produits.prixNv" name="prixNv" />
+                      <input type="text" disabled id="prixNv" class="form-control" placeholder="Voilà"  required
+                        [value]="produits.prixNv"  name="prixNv"  formControlName="prixNv" [(ngModel)]="produits.prixNv"/>
                       <div class="form-control-position" style="color: black !important">
                         €
                       </div>
                     </div>
                   </div>
                 </div>
-
+                <!--Date début-->
                 <h4 class="form-section"><i class="ft-clock"></i> Date</h4>
 
                 <div class="form-group row">
                   <label class="col-md-2 label-control" for="timesheetinput3">Date début</label>
                   <div class="col-md-4">
                     <div class="position-relative has-icon-left">
-                      <input type="date" class="form-control"  name="maxDate" 
-                        placeholder="maxDate 2019-11-11" formControlName="dateDebut"/>
-
+                      <input type="date" class="form-control"  name="maxDate" formControlName="dateDebut" [(ngModel)]="datedebutProduit"
+                         placeholder="maxDate 2019-11-11" />
+                      <!-- <small
+                        class="form-text text-muted danger"
+                        *ngIf="minDate.errors?.minDate"
+                        >Veuillez ajouter une date début valide?</small
+                      > -->
                       <div class="form-control-position">
                         <i class="ft-message-square"></i>
                       </div>
@@ -135,23 +157,25 @@
                   </label>
                   <div class="col-md-4">
                     <div class="position-relative has-icon-left">
-                      <input type="time" id="timesheetinput5" class="form-control" name="starttime" 
-                      formControlName="heureDebut"/>
+                      <input type="time" id="timesheetinput5" class="form-control" name="starttime" [(ngModel)]="heuredebutProduit"
+                         formControlName="heureDebut"/>
                       <div class="form-control-position">
                         <i class="ft-clock"></i>
                       </div>
                     </div>
                   </div>
                 </div>
-
+                <!--Date fin-->
                 <div class="form-group row">
                   <label class="col-md-2 label-control" for="timesheetinput3">Date fin
                   </label>
                   <div class="col-md-4">
                     <div class="position-relative has-icon-left">
-                      <input type="date" class="form-control"  id="timesheetinput3" name="minDate"
-                         placeholder="maxDate 2019-11-11"  formControlName="dateFin"/>
-                      
+                      <input type="date" class="form-control"  id="timesheetinput3" name="minDate" formControlName="dateFin" [(ngModel)]="datefinProduit"
+                        placeholder="maxDate 2019-11-11"
+                         />
+                      <!-- <small class="form-text text-muted danger" *ngIf="minDate.errors?.minDate">Veuillez ajouter un
+                        date de fin valide?</small> -->
                       <div class="form-control-position">
                         <i class="ft-message-square"></i>
                       </div>
@@ -161,7 +185,8 @@
                   <label class="col-md-2 label-control" for="timesheetinput6">Heure fin</label>
                   <div class="col-md-4">
                     <div class="position-relative has-icon-left">
-                      <input type="time" id="timesheetinput6" class="form-control" name="endtime" formControlName="heureFin" />
+                      <input type="time" id="timesheetinput6" class="form-control" name="endtime" formControlName="heureFin" [(ngModel)]="heurefinProduit"
+                        />
                       <div class="form-control-position">
                         <i class="ft-clock"></i>
                       </div>
@@ -174,54 +199,131 @@
                   <label class="col-md-2 label-control" for="photo">Photo du produit (format:png,jpeg)
                   </label>
                   <div class="col-md-6">
-                    <input type="file" ng2FileSelect [uploader]="uploader" name="photo" id="photo"
-                      (change)="photoChangeEvent($event)" accept="image/x-png,image/gif,image/jpeg" />
+                    <input type="file"  ng2FileSelect [uploader]="uploader" name="photo"
+                      id="photo" (change)="photoChangeEvent($event)" accept="image/x-png,image/gif,image/jpeg" />
                     <span class="custom-file-control"></span>
                   </div>
                 </div>
+                
 
-                <h4 class="form-section"><i class="ft-file"></i> Points de Vente</h4>
-
+                 <!--  <h4 class="form-section"><i class="ft-file"></i> Points de vente</h4>
                 <div class="form-group row">
-                  <label class="col-md-2 label-control" for="categories">Points de vente</label>
+                  <label class="col-md-2 label-control" for="categories"> Points de vente</label>
                   <div class="col-md-6">
-                    <ng-multiselect-dropdown [placeholder]="'Choisissez'" [settings]="dropdownSettings"
-                      [data]="listNamePv" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-                    </ng-multiselect-dropdown>
+                    <ng-multiselect-dropdown [placeholder]="'Choisissez'"  [settings]="dropdownSettings"
+                   [data]="pointventeComm" (onSelect)="onItemSelect($event)"
+                    (onSelectAll)="onSelectAll($event)" formControlName="pointvente">
+                  </ng-multiselect-dropdown> 
                   </div>
-                  <div style="height: 300px;"></div>
-                </div>
+                  <div style="height: 400px;"></div>
+                </div> --> 
+
 
               </div>
-              <div class="form-actions" *ngIf="!idUpdate">
+              <div class="form-actions">
                 <button type="button" [routerLink]="['/produits/show']" class="btn btn-raised btn-danger mr-1">
                   <i class="ft-x"></i> Annuler
                 </button>
-                <button type="submit" class="btn btn-raised btn-success mr-1">
+                <button type="submit"  class="btn btn-raised btn-success mr-1">
                   <i class="ft-eye"></i> Prévisualiser
                 </button>
                 <button type="button" (click)="onConfirm()" class="btn btn-raised btn-primary">
                   <i class="fa fa-check-square-o"></i> Confirmer
                 </button>
               </div>
-              <div class="form-actions" *ngIf="idUpdate">
-                <button type="button" [routerLink]="['/produits/show']" class="btn btn-raised btn-danger mr-1">
-                  <i class="ft-x"></i> Annuler
-                </button>
-                <button type="submit" class="btn btn-raised btn-success mr-1">
-                  <i class="ft-eye"></i> Prévisualiser
-                </button>
-                <button type="button" (click)="onConfirm()" class="btn btn-raised btn-primary">
-                  <i class="fa fa-check-square-o"></i> Modifier
-                </button>
-              </div>
             </form>
           </div>
         </div>
-
-        <!-- -------------------------------------------------------------------------------------------------------------- -->
-
+       
       </div>
     </div>
   </div>
 </section>
+
+<!--Modal starts-->
+<!--Modal starts-->
+
+<!--Modal ends-->
+
+<!--Modal starts-->
+<section id="modals">
+  <div class="row text-left">
+    <!-- <div class="col-sm-12">
+      <div class="content-header">Modals</div>
+    </div> -->
+  </div>
+  <div class="row text-left" matchHeight="card">
+    <!--Modal with Default options starts-->
+
+    <!--Modal with Default options ends-->
+
+    <!--Components as content starts-->
+
+    <!--Components as content ends-->
+
+    <!--Modal with custom class starts-->
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <!-- <div class="card"> -->
+      <!-- <div class="card-header">
+          <h4 class="card-title">Modal with custom class</h4>
+          <p>With some style and dark window modal.</p>
+        </div> -->
+      <div class="card-content">
+        <div class="card-body">
+          <ng-template #customContent let-c="close" let-d="dismiss">
+            <div class="modal-header">
+              <!-- <h4 class="modal-title">Modal title</h4> -->
+              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="product product-5 text-center">
+                <figure class="product-media" style="background-color: transparent;">
+                  <span class="product-label  label-sale"
+                    style="background-color: #07ca6f;">{{produits.reduction}}%</span>
+                    <a >
+                    <img src="{{ apiUrl }}Categories/{{ produits.photo }}" alt="Product image"
+                     class="product-image" style="border: 2.5px solid
+                      #07ca6f;border-radius: 100%
+                            ;width:150px;height:150px;
+                            margin-right: auto;margin-left:auto">
+                  </a>
+                  <p class="font-large-1 text-primary"><a style="color:black !important;"
+                   >{{produits.name | slice:0:20}}...</a></p>
+                  <p class="font-large-1 text-primary"><a style="color:black !important;"
+                   ><span class="pr-2"
+                       style="color: #07ca6f;">&euro;{{produits.prixNv}} </span><del
+                        style="-color: #07ca6f;">
+                        &euro;{{produits.prix}}  </del></a></p>
+                  <div>
+                    <!-- {{getDifference(item.dateFin)}} -->
+                    <p class="font-large-1  text-danger">
+                      <strong style="color: #07ca6f;">
+                        <!-- <countdown [config]="{leftTime: getDifference(produits.dateFin)}"></countdown> -->
+                        <!-- <countdown [config]="{leftTime: getDifference(item.dateFin), format:'dd:hh:mm:ss'}"></countdown> -->
+
+                      </strong>
+                      <!-- <strong>{{getDifference(item.dateFin,item.dateDebut)}}</strong> -->
+                    </p>
+                  </div>
+                  <!-- </div> -->
+
+                </figure>
+        </div>
+              
+              <!-- <p>Find me here</p> -->
+            </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Close</button> -->
+            </div>
+          </ng-template>
+          <!-- <button class="btn btn-lg btn-outline-primary" (click)="openModal(customContent)">Launch demo modal</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Modal with custom class ends-->
+  <!-- </div> -->
+</section>
+<!--Modal ends-->
