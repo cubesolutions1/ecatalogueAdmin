@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="671ea2c9-33c7-4387-b7c0-5ca774ffd760" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/banniere/addbanniere/addbanniere.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/banniere/addbanniere/addbanniere.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/banniere/addbanniere/addbanniere.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/banniere/addbanniere/addbanniere.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/banniere/showbanniere/showbanniere.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/banniere/showbanniere/showbanniere.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/banniere/showbanniere/showbanniere.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/banniere/showbanniere/showbanniere.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/enseigne/addenseigne/addenseigne.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/enseigne/addenseigne/addenseigne.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/enseigne/pointvente/pointvente.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/enseigne/pointvente/pointvente.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/admin/enseigne/pointvente/pointvente.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/enseigne/pointvente/pointvente.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/services/banniere.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/services/banniere.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/services/utils.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/services/utils.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/environments/environment.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +20,6 @@
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
     <option name="sortByType" value="true" />
@@ -77,31 +67,5 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="1620" y="91" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1619443541519">
-      <screen x="1366" y="0" width="1600" height="870" />
-    </state>
-    <state x="1620" y="91" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.738/1366.0.1600.870@1366.0.1600.870" timestamp="1619443541519" />
-    <state width="1579" height="168" key="GridCell.Tab.0.bottom" timestamp="1619455245630">
-      <screen x="1366" y="0" width="1600" height="870" />
-    </state>
-    <state width="1579" height="168" key="GridCell.Tab.0.bottom/0.0.1366.738/1366.0.1600.870@1366.0.1600.870" timestamp="1619455245630" />
-    <state width="1579" height="168" key="GridCell.Tab.0.center" timestamp="1619455245630">
-      <screen x="1366" y="0" width="1600" height="870" />
-    </state>
-    <state width="1579" height="168" key="GridCell.Tab.0.center/0.0.1366.738/1366.0.1600.870@1366.0.1600.870" timestamp="1619455245630" />
-    <state width="1579" height="168" key="GridCell.Tab.0.left" timestamp="1619455245630">
-      <screen x="1366" y="0" width="1600" height="870" />
-    </state>
-    <state width="1579" height="168" key="GridCell.Tab.0.left/0.0.1366.738/1366.0.1600.870@1366.0.1600.870" timestamp="1619455245630" />
-    <state width="1579" height="168" key="GridCell.Tab.0.right" timestamp="1619455245630">
-      <screen x="1366" y="0" width="1600" height="870" />
-    </state>
-    <state width="1579" height="168" key="GridCell.Tab.0.right/0.0.1366.738/1366.0.1600.870@1366.0.1600.870" timestamp="1619455245630" />
-    <state x="1829" y="182" width="672" height="678" key="search.everywhere.popup" timestamp="1619442538128">
-      <screen x="1366" y="0" width="1600" height="870" />
-    </state>
-    <state x="1829" y="182" width="672" height="678" key="search.everywhere.popup/0.0.1366.738/1366.0.1600.870@1366.0.1600.870" timestamp="1619442538128" />
   </component>
 </project>
