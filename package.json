@@ -1,9 +1,8 @@
 {
   "name": "ecatalogueadmin",
-  "version": "8.0.0",
+  "version": "0.0.0",
   "license": "",
   "scripts": {
-    "ng": "ng",
     "start": "node server.js",
     "dev": "ng serve -o --port=4900",
     "build": "node --max_old_space_size=5048 ./node_modules/@angular/cli/bin/ng build --prod",
@@ -11,8 +10,7 @@
     "amine": "ng serve -o --host=192.168.137.239 --port=4901 --live-reload=false",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "generate": "ng g c"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {

@@ -49,7 +49,7 @@ export class AddcategoriesComponent implements OnInit {
       }
     });
   
-    alert(this.apiUrl)
+    // alert(this.apiUrl)
   }
 
   fileChangeEvent(event) {

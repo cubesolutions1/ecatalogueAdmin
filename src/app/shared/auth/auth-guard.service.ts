@@ -1,4 +1,4 @@
-import { ToastrService } from 'ngx-toastr';
+import {ToastrService} from 'ngx-toastr';
 import {
     CanActivate,
     ActivatedRouteSnapshot,
@@ -10,16 +10,13 @@ import {
     Route,
     UrlSegment, CanDeactivate
 } from '@angular/router';
-import { Injectable } from '@angular/core';
-import { AuthService } from './auth.service';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {AuthService} from './auth.service';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<unknown>, CanLoad {
-    constructor(private authService: AuthService,
-        public toastr: ToastrService,
-        private router: Router) {
-    }
+    checkUs
 
     // canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     //   if (!this.authService.isAuthenticated()) {
@@ -32,51 +29,52 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
     //   // this.router.navigateByUrl('/dashboard/dashboard1')
     //
     //   return true
-    // }
-    canActivate(next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        let url: string = state.url;
-        return this.checkUserLogin(next, url);
+
+    constructor(
+        private authService: AuthService,
+        private readonly toastrService: ToastrService,
+        private readonly router: Router
+    ) {
     }
 
-    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot):
-        Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    // }
+    canActivate(
+        next: ActivatedRouteSnapshot,
+        state: RouterStateSnapshot
+    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+        return this.checkUserLogin(next);
+    }
+
+    canActivateChild(
+        childRoute: ActivatedRouteSnapshot,
+        state: RouterStateSnapshot
+    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         return this.canActivate(childRoute, state)
     }
 
-    canDeactivate(component: unknown,
+    canDeactivate(
+        component: unknown,
         currentRoute: ActivatedRouteSnapshot,
         currentState: RouterStateSnapshot,
-        nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+        nextState?: RouterStateSnapshot
+    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         return true;
     }
 
-    canLoad(route: Route,
-        segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
+    canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
         return true;
     }
 
-    checkUs
-
-    // Success Type
-    typeError(message) {
-
-        this.toastr.error(message);
-
-
-    }
-
-    checkUserLogin(route: ActivatedRouteSnapshot, url: any): boolean {
+    checkUserLogin(route: ActivatedRouteSnapshot): boolean {
         if (this.authService.isAuthenticated()) {
             const userRole = this.authService.getRole()
             if (route.data.role && route.data.role.indexOf(userRole) === -1) {
-                // this.router.navigateByUrl('pages/login')
-                this.typeError('Vous n\'avez pas les droit d\'accés à ')
+                this.toastrService.error("Vous n'avez pas les droit d'accès !")
                 return false;
             }
             return true
         }
-        this.typeError('Connectez vous!')
+        this.toastrService.info('Connectez vous !');
         this.router.navigateByUrl('pages/login')
 
         return false;

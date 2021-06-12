@@ -27,6 +27,7 @@ export class ShowbanniereComponent implements OnInit {
   banniere1: any={}
   banniere2: any={}
   banniere: Banniere = new Banniere()
+
   constructor(private bannSer: BanniereService) {
     this.apiUrl = environment.apiImg
     this.idUser = localStorage.getItem(environment.idUser);
@@ -36,25 +37,14 @@ export class ShowbanniereComponent implements OnInit {
     this.getBanniere()
     // this.getcategories()
   }
-  async getBanniere() {
-    return new Promise(resolve => {
-    return  this.bannSer.getAllBannieres().subscribe(async (data: any) => {
-        // console.log(data);
-        
-        this.banniere1 =await data.filter(dataa => dataa.position === 'banniere1')
-        this.banniere2 =await data.filter(dataa => dataa.position === 'banniere2')
-        this.slider1 =await data.filter(dataa => dataa.position === 'slider1')
-        this.slider2 =await data.filter(dataa => dataa.position === 'slider2')
-        this.slider3 =await data.filter(dataa => dataa.position === 'slider3')
-        // console.log(this.slider1);
-        
-        resolve(this.banniere1)
-        resolve(this.banniere2)
-        resolve(this.slider1)
-        resolve(this.slider2)
-        resolve(this.slider3)
+  getBanniere() {
+    return this.bannSer.getAllBannieres().subscribe((data: any) => {
+        this.banniere1 = data.filter(dataa => dataa.position === 'banniere1')
+        this.banniere2 = data.filter(dataa => dataa.position === 'banniere2')
+        this.slider1 = data.filter(dataa => dataa.position === 'slider1')
+        this.slider2 = data.filter(dataa => dataa.position === 'slider2')
+        this.slider3 = data.filter(dataa => dataa.position === 'slider3')
       })
-    })
   }
   // public getbannieres() {
   //   return new Promise(resolve => {
@@ -91,7 +81,6 @@ export class ShowbanniereComponent implements OnInit {
       if (result.value) {
         return this.bannSer.deleteBanniere(id).subscribe((res: any) => {
           this.bannieres = res.data;
-          console.log(this.bannieres);
           this.getBanniere();
 
 
