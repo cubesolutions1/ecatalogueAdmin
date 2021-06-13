@@ -35,7 +35,7 @@ export class AddcategoriesComponent implements OnInit {
     this.activeRoute.params.subscribe((res: any) => {
       if (res) {
         this.idUpdate = res.idEdit;
-        console.log('id' + res)
+        // console.log('id' + res)
       }
     });
   }
@@ -45,7 +45,7 @@ export class AddcategoriesComponent implements OnInit {
       if (res.idEdit) {
         this.idUpdate = res.idEdit;
         this.getcategoriesById();
-        console.log('id' + res)
+        // console.log('id' + res)
       }
     });
   
@@ -57,7 +57,7 @@ export class AddcategoriesComponent implements OnInit {
     if(this.idUpdate)    this.truee = true
 
     this.filesToUpload = <File>event.target.files;
-    console.log(this.filesToUpload);
+    // console.log(this.filesToUpload);
   }
 
   onAddcategories() {
@@ -72,7 +72,7 @@ export class AddcategoriesComponent implements OnInit {
       // fd.append('name', this.categories.name)
       // fd.append('description', this.categories.description)
       // this.apiSer.postData('categories/', fd, {
-      console.log(this.categories);
+      // console.log(this.categories);
     }
     this.apiSer.postData('categories/', fd).subscribe(event => {
       // if (event.type === HttpEventType.UploadProgress) {

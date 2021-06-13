@@ -67,7 +67,7 @@ export class ShowbanniereComponent implements OnInit {
 
 
   deletebanniere(id, event) {
-    console.log(id);
+    // console.log(id);
     
     swal.fire({
       title: 'êtes vous Sûre?',
@@ -91,7 +91,7 @@ export class ShowbanniereComponent implements OnInit {
             'success'
           )
         }, err => {
-          console.log(err);
+          // console.log(err);
           swal.fire("Error!", err.error.message, "error");
 
         })
