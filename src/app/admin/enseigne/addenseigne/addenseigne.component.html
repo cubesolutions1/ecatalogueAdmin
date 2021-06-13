@@ -43,41 +43,40 @@
                   <label class="col-md-3 label-control" for="endHour">Horaire fermeture*</label>
                   <div class="col-md-6">
                     <input type="time" id="endHour" class="form-control" name="endtime"
-                      [(ngModel)]="enseignes.horairefin" [ngModelOptions]="{standalone: true}" />
+                      [(ngModel)]="enseignes.horairefin" />
 
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="address">Addresse* {{formattedAddressAdmin}}</label>
+                  <label class="col-md-3 label-control" for="address">Adresse*</label>
                   <div class="col-md-6">
 
 
-                    <input id="address" class="form-control" type="text" [(ngModel)]="autocompleteInputadresse" #addresstext
-                      style="padding: 12px 20px; border: 1px solid #ccc; width: 400px">
+                    <input id="address" placeholder="Adresse" class="form-control" type="text" [(ngModel)]="formattedAddressAdmin" #addresstext
+                      >
                   </div>
                 </div>
 
+
+<!--                <div class="form-group row">-->
+<!--                  <label class="col-md-3 label-control" for="phoneNumber">Numéro de téléphone*</label>-->
+<!--                  <div class="col-md-6" style="width: 100%;">-->
+<!--&lt;!&ndash;                    <input type="text" id="phoneNumber" ng2TelInput (ng2TelOutput)="getNumber($event)"&ndash;&gt;-->
+<!--&lt;!&ndash;                      (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)"&ndash;&gt;-->
+<!--&lt;!&ndash;                      pattern="^[\s0-9]*$" [required]="emailReq ? false : !null" name="phone" #phone="ngModel"&ndash;&gt;-->
+<!--&lt;!&ndash;                      style="width: 100% !important" [(ngModel)]="enseignes.phone" />&ndash;&gt;-->
+<!--                    <input  type="text" id="phoneNumber" [(ngModel)]="enseignes.phone" />-->
+<!--                  </div>-->
+<!--                </div>-->
 
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="phoneNumber">Numéro de téléphone*</label>
-                  <div class="col-md-6" style="width: 100%;">
-                    <input type="text" id="phoneNumber" ng2TelInput (hasError)="hasError($event)"
-                           [ng2TelInputOptions]="{initialCountry: 'mq'}"
-                      (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)"
-                      pattern="^[\s0-9]*$" [required]="emailReq ? false : !null" name="phone" #phone="ngModel"
-                      style="width: 100% !important" [(ngModel)]="enseignes.phone" />
-
-                  </div>
-                </div>
-
-                <!-- <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput5">Numéro de téléphone*</label>
+                  <label class="col-md-3 label-control" for="phone">Numéro de téléphone*</label>
                   <div class="col-md-6">
-                    <input type="number" id="phone" class="form-control" name="phone"
+                    <input id="phone" class="form-control" name="phone" placeholder="Numéro de téléphone"
                       [(ngModel)]="enseignes.phone" />
-                    
+
                   </div>
-                </div> -->
+                </div>
 
                 <!-- <div class="form-group row">
                   <label class="col-md-3 label-control" for="projectinput5">adresse</label>
@@ -87,9 +86,9 @@
                   </div>
                 </div>  -->
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="webAdress">Adresse web*</label>
+                  <label class="col-md-3 label-control" for="websiteAddress">Adresse web*</label>
                   <div class="col-md-6">
-                    <textarea type="text" id="webAdress" class="form-control" placeholder="Adresse web" name="url"
+                    <textarea type="text" id="websiteAddress" class="form-control" placeholder="Adresse web" name="url"
                       [(ngModel)]="enseignes.url"></textarea>
                   </div>
                 </div>
@@ -241,14 +240,17 @@
 
 
                 <div class="form-group row" >
-                  <label class="col-md-3 label-control" for="phoneNumber">Numéro de téléphone</label>
-                  <div class="col-md-6" style="width: 100%;">
-                    <input id="phoneNumber" type="text" ng2TelInput (hasError)="hasError($event)"
-                    (intlTelInputObject)="telInputObject($event)" 
-                    (countryChange)="onCountryChange($event)" 
-                    pattern="^[\s0-9]*$" [required]="emailReq ? false : !null" 
-                    name="phone" #phone="ngModel" style="width: 100% !important"
-                    [(ngModel)]="enseignes.phone" />
+                  <label class="col-md-3 label-control" for="phone">Numéro de téléphone</label>
+                  <div class="col-md-6">
+<!--                    <input id="phoneNumber" type="text" ng2TelInput (hasError)="hasError($event)"-->
+<!--                    (intlTelInputObject)="telInputObject($event)" [ng2TelInputOptions]="{initialCountry: 'mq'}"-->
+<!--                    (countryChange)="onCountryChange($event)" -->
+<!--                    pattern="^[\s0-9]*$" [required]="emailReq ? false : !null" -->
+<!--                    name="phone" #phone="ngModel" style="width: 100% !important"-->
+<!--                    [(ngModel)]="enseignes.phone" />-->
+
+                    <input id="phone" class="form-control" name="phone"
+                           [(ngModel)]="enseignes.phone" />
                     
                   </div>
                 </div>
@@ -263,9 +265,9 @@
 
 
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="webAddress">Adresse web</label>
+                  <label class="col-md-3 label-control" for="websiteAddress">Adresse web</label>
                   <div class="col-md-6">
-                    <input type="text" id="webAddress" class="form-control" placeholder="Adresse web" name="url"
+                    <input type="text" id="websiteAddress" class="form-control" placeholder="Adresse web" name="url"
                       [(ngModel)]="enseignes.url" />
                   </div>
                 </div>
