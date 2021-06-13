@@ -244,7 +244,7 @@
                   <label class="col-md-3 label-control" for="phoneNumber">Numéro de téléphone</label>
                   <div class="col-md-6" style="width: 100%;">
                     <input id="phoneNumber" type="text" ng2TelInput (hasError)="hasError($event)"
-                    (intlTelInputObject)="telInputObject($event)" 
+                    (intlTelInputObject)="telInputObject($event)" [ng2TelInputOptions]="{initialCountry: 'mq'}"
                     (countryChange)="onCountryChange($event)" 
                     pattern="^[\s0-9]*$" [required]="emailReq ? false : !null" 
                     name="phone" #phone="ngModel" style="width: 100% !important"

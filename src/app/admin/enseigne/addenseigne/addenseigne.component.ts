@@ -39,7 +39,7 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
   establishmentAddress: string;
   latt: any;
   longt: any;
-  prefixPhone:"";
+  prefixPhone: string = '';
   formattedAddressAdmin: string;
   formattedEstablishmentAddress: string;
 
@@ -343,6 +343,10 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
     // }
   }
 
+  telInputObject(e) {
+    // console.log('event', e)
+  }
+
   typeSuccess(message) {
     this.toastr.success(message);
   }
@@ -508,7 +512,7 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
 
   onCountryChange(event) {
  //   alert("prefix Code =" + event.dialCode + "getNumber=" + event.value)
-    console.log("prefix Code =" + event.dialCode)
+ //    console.log("event", event)
     this.prefixPhone= event.dialCode
   }
   getNumber(event) {
