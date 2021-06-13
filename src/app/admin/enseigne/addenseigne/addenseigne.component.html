@@ -18,50 +18,51 @@
               <div class="form-body">
                 <h4 class="form-section"><i class="ft-user"></i> Enseigne</h4>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput1">Nom*</label>
+                  <label class="col-md-3 label-control" for="lastname">Nom*</label>
                   <div class="col-md-6">
-                    <input type="text" id="projectinput1" class="form-control" placeholder="Nom" name="nom"
+                    <input type="text" id="lastname" class="form-control" placeholder="Nom" name="nom"
                       [(ngModel)]="enseignes.name" />
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput5">Description*</label>
+                  <label class="col-md-3 label-control" for="description">Description*</label>
                   <div class="col-md-6">
-                    <input type="text" id="projectinput5" class="form-control" placeholder="Description"
+                    <input type="text" id="description" class="form-control" placeholder="Description"
                       name="description" [(ngModel)]="enseignes.description">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput5">horaire ouverture*</label>
+                  <label class="col-md-3 label-control" for="openHour">horaire ouverture*</label>
                   <div class="col-md-6">
-                    <input type="time" id="timesheetinput5" class="form-control" name="starttime"
+                    <input type="time" id="openHour" class="form-control" name="starttime"
                       [(ngModel)]="enseignes.horairedebut" />
 
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput5">Horaire fermeture*</label>
+                  <label class="col-md-3 label-control" for="endHour">Horaire fermeture*</label>
                   <div class="col-md-6">
-                    <input type="time" id="timesheetinput6" class="form-control" name="endtime"
+                    <input type="time" id="endHour" class="form-control" name="endtime"
                       [(ngModel)]="enseignes.horairefin" [ngModelOptions]="{standalone: true}" />
 
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="description">Addresse* {{formattedAddressAdmin}}</label>
+                  <label class="col-md-3 label-control" for="address">Addresse* {{formattedAddressAdmin}}</label>
                   <div class="col-md-6">
 
 
-                    <input class="form-control" type="text" [(ngModel)]="autocompleteInputadresse" #addresstext
+                    <input id="address" class="form-control" type="text" [(ngModel)]="autocompleteInputadresse" #addresstext
                       style="padding: 12px 20px; border: 1px solid #ccc; width: 400px">
                   </div>
                 </div>
 
 
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput5">Numéro de téléphone*</label>
+                  <label class="col-md-3 label-control" for="phoneNumber">Numéro de téléphone*</label>
                   <div class="col-md-6" style="width: 100%;">
-                    <input type="text" ng2TelInput (hasError)="hasError($event)"
+                    <input type="text" id="phoneNumber" ng2TelInput (hasError)="hasError($event)"
+                           [ng2TelInputOptions]="{initialCountry: 'mq'}"
                       (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)"
                       pattern="^[\s0-9]*$" [required]="emailReq ? false : !null" name="phone" #phone="ngModel"
                       style="width: 100% !important" [(ngModel)]="enseignes.phone" />
@@ -86,9 +87,9 @@
                   </div>
                 </div>  -->
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="url">Adresse web*</label>
+                  <label class="col-md-3 label-control" for="webAdress">Adresse web*</label>
                   <div class="col-md-6">
-                    <textarea type="text" id="url" class="form-control" placeholder="Adresse web" name="url"
+                    <textarea type="text" id="webAdress" class="form-control" placeholder="Adresse web" name="url"
                       [(ngModel)]="enseignes.url"></textarea>
                   </div>
                 </div>
@@ -111,11 +112,11 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput5">Logo* (Dimension demandée 85px X
+                  <label class="col-md-3 label-control" for="logo">Logo* (Dimension demandée 85px X
                     85px) {{ formattedAddress}}</label>
                   <div class="col-md-6">
                     <input type="file" [(ngModel)]="enseignes.photo" ng2FileSelect [uploader]="uploader" name="file"
-                      id="file" (change)="fileChangeEvent($event)" accept="image/x-png,image/gif,image/jpeg" />
+                      id="logo" (change)="fileChangeEvent($event)" accept="image/x-png,image/gif,image/jpeg" />
                     <span class="custom-file-control"></span>
                   </div>
                 </div>
@@ -205,24 +206,24 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput2">Description</label>
+                  <label class="col-md-3 label-control" for="description">Description</label>
                   <div class="col-md-6">
-                    <textarea type="text" id="projectinput5" class="form-control" placeholder="Description"
+                    <textarea type="text" id="description" class="form-control" placeholder="Description"
                       name="description" [(ngModel)]="enseignes.description"></textarea>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput3">horaire ouverture</label>
+                  <label class="col-md-3 label-control" for="openHour">horaire ouverture</label>
                   <div class="col-md-6">
-                    <input type="time" id="timesheetinput5" class="form-control" name="starttime"
+                    <input type="time" id="openHour" class="form-control" name="starttime"
                       [(ngModel)]="enseignes.horairedebut" />
 
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput4">Horaire fermeture</label>
+                  <label class="col-md-3 label-control" for="closeHour">Horaire fermeture</label>
                   <div class="col-md-6">
-                    <input type="time" id="timesheetinput5" class="form-control" name="Endtime"
+                    <input type="time" id="closeHour" class="form-control" name="Endtime"
                       [(ngModel)]="enseignes.horairefin" />
 
                   </div>
@@ -240,9 +241,9 @@
 
 
                 <div class="form-group row" >
-                  <label class="col-md-3 label-control" for="projectinput5">Numéro de téléphone</label>
+                  <label class="col-md-3 label-control" for="phoneNumber">Numéro de téléphone</label>
                   <div class="col-md-6" style="width: 100%;">
-                    <input  type="text" ng2TelInput (hasError)="hasError($event)" 
+                    <input id="phoneNumber" type="text" ng2TelInput (hasError)="hasError($event)"
                     (intlTelInputObject)="telInputObject($event)" 
                     (countryChange)="onCountryChange($event)" 
                     pattern="^[\s0-9]*$" [required]="emailReq ? false : !null" 
@@ -262,9 +263,9 @@
 
 
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="url">Adresse web</label>
+                  <label class="col-md-3 label-control" for="webAddress">Adresse web</label>
                   <div class="col-md-6">
-                    <input type="text" id="url" class="form-control" placeholder="Adresse web" name="url"
+                    <input type="text" id="webAddress" class="form-control" placeholder="Adresse web" name="url"
                       [(ngModel)]="enseignes.url" />
                   </div>
                 </div>
@@ -288,10 +289,10 @@
                 </div>
 
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput5">Logo (Dimension demandée 85px X
+                  <label class="col-md-3 label-control" for="logo">Logo (Dimension demandée 85px X
                     85px)</label>
                   <div class="col-md-6">
-                    <input type="file" ng2FileSelect [uploader]="uploader" name="file" id="file"
+                    <input id="logo" type="file" ng2FileSelect [uploader]="uploader" name="file"
                       (change)="fileChangeEvent($event)" accept="image/x-png,image/gif,image/jpeg" />
                     <span class="custom-file-control"></span>
                   </div>

@@ -2,25 +2,25 @@
   <h4 class="form-section"><i class="ft-user"></i> Point de vente {{i+1}}</h4>
 
   <div class="form-group row">
-    <label class="col-md-3 label-control" for="name">Nom</label>
+    <label class="col-md-3 label-control" [attr.for]="'point-of-sale-' + i + '.name'">Nom</label>
     <div class="col-md-6">
-      <input type="text" id="name" class="form-control" placeholder="Nom" name="nom" [(ngModel)]="data.name" />
+      <input type="text" [attr.id]="'point-of-sale-' + i + '.name'" class="form-control" placeholder="Nom" name="nom" [(ngModel)]="data.name" />
     </div>
   </div>
 
   <div class="form-group row">
-    <label class="col-md-3 label-control" for="description">Description </label>
+    <label class="col-md-3 label-control" [attr.for]="'point-of-sale-' + i + '.description'">Description </label>
     <div class="col-md-6">
-      <textarea type="text" id="description" class="form-control" placeholder="Description" name="description"
+      <textarea type="text" [attr.id]="'point-of-sale-' + i + '.description'" class="form-control" placeholder="Description" name="description"
         [(ngModel)]="data.description"></textarea>
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-md-3 label-control" for="description">Addresse {{formattedAddress}}</label>
+    <label class="col-md-3 label-control" [attr.for]="'point-of-sale-' + i + '.address'">Addresse {{formattedAddress}}</label>
     <div class="col-md-6">
 
 
-      <input class="form-control" type="text" [(ngModel)]="autocompleteInput" #addresstext
+      <input [attr.id]="'point-of-sale-' + i + '.address'" class="form-control" type="text" [(ngModel)]="autocompleteInput" #addresstext
         style="padding: 12px 20px; border: 1px solid #ccc; width: 400px">{{formattedAddress}}
     </div>
   </div>

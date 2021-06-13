@@ -15,7 +15,7 @@ export class H401Interceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError(
         (err, caught) => {
-          console.log(err);
+          // console.log(err);
           
           if (err.status === 401) {
             this.handleAuthError();

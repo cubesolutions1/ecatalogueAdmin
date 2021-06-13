@@ -106,7 +106,7 @@ export class AddbanniereComponent implements OnInit {
   }
   AddbanniereByOne(fd) {
     this.bannSer.addBanniere(fd).subscribe(event => {
-      console.log(event.data.bannieres);
+      // console.log(event.data.bannieres);
 
       // if (event.type === HttpEventType.UploadProgress) {
       //   console.log('Upload Progress: ' + Math.round(event.loaded / event.total) * 100 + '%');
@@ -123,7 +123,7 @@ export class AddbanniereComponent implements OnInit {
       // }
       this.step.push(event.data.bannieres.id)
     }, err => {
-      console.log('err.ts', err);
+      // console.log('err.ts', err);
       // if (err.error.error.code == 11000) { this.typeError('Ce nom existe déjà') }
       // if (err.status == 410) { this.typeError(err.error.message) }
     });
@@ -160,7 +160,7 @@ export class AddbanniereComponent implements OnInit {
         fd.append('name', 'banniere2');
         fd.append('position', 'banniere2');
       }
-      console.log(fd);
+      // console.log(fd);
 
       this.bannSer.editBanniere(this.idUpdate, fd).subscribe(event => {
         // if (event.type === HttpEventType.UploadProgress) {
@@ -172,7 +172,7 @@ export class AddbanniereComponent implements OnInit {
         resolve(true)
         // }
       }, err => {
-        console.log('err.ts', err);
+        // console.log('err.ts', err);
         if (err.error.error.code == 11000) { this.typeError('Ce nom existe déjà') }
         else if (err.status == 410) { this.typeError(err.error.message) }
       });

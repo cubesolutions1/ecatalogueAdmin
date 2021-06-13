@@ -23,15 +23,15 @@
                 <div class="form-group row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label>Nom</label>
-                      <input type="text" class="form-control" placeholder="Nom" name="name" for="field_enfantName" for="field_enfantName"
+                      <label for="lastname">Nom</label>
+                      <input type="text" class="form-control" placeholder="Nom" name="name" id="lastname"
                       formControlName="name" [(ngModel)]="user.name" />
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label>Prénom</label>
-                      <input type="text" class="form-control" placeholder="Prénom" name="prenom"
+                      <label for="firstname">Prénom</label>
+                      <input type="text" id="firstname" class="form-control" placeholder="Prénom" name="prenom"
                         formControlName="prenom" [(ngModel)]="user.prenom"/>
                     </div>
                   </div>
@@ -39,8 +39,8 @@
                 <div class="form-group row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label>E-mail</label>
-                      <input type="text" class="form-control" placeholder="E-mail" name="email"
+                      <label for="email">E-mail</label>
+                      <input id="email" type="text" class="form-control" placeholder="E-mail" name="email"
                         formControlName="email" [(ngModel)]="user.email"/>
                     </div>
                   </div>
@@ -51,15 +51,15 @@
                 <div class="form-group row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="password">fax</label>
-                      <input id="fax" type="number" autocomplete="off" class="form-control" placeholder="fax" name="fax"
+                      <label for="fax">Fax</label>
+                      <input id="fax" autocomplete="off" class="form-control" placeholder="Fax" name="fax"
                         formControlName="fax" [(ngModel)]="fax" />
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="form-group">
-                      <label for="phone">téléphone</label>
-                      <input type="number" id="phone" class="form-control" placeholder="téléphone" name="phone"
+                      <label for="phoneNumber">Téléphone</label>
+                      <input id="phoneNumber" class="form-control" placeholder="Téléphone" name="phone"
                         formControlName="phone" [(ngModel)]="user.phone"/>
                     </div>
                   </div>
@@ -90,8 +90,8 @@
                 <div class="form-group row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label>Adresse</label>
-                      <textarea type="textarea" class="form-control" placeholder="adresse" name="adresse"
+                      <label for="address">Adresse</label>
+                      <textarea id="address" type="textarea" class="form-control" placeholder="Adresse" name="adresse"
                         formControlName="adresse" [(ngModel)]="user.adresse"></textarea>
                     </div>
                   </div>
@@ -192,4 +192,3 @@
   </div>
 </section>
 
-               

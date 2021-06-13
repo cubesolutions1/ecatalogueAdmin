@@ -38,7 +38,7 @@ export class EditorComponent implements OnInit {
         distinctUntilChanged()
       )
       .subscribe(data => {
-        console.log('native fromControl value changes with debounce', data)
+        // console.log('native fromControl value changes with debounce', data)
       });
 
     this.editor
@@ -48,7 +48,7 @@ export class EditorComponent implements OnInit {
         distinctUntilChanged()
       )
       .subscribe(data => {
-        console.log('view child + directly subscription', data)
+        // console.log('view child + directly subscription', data)
       });
   }
 

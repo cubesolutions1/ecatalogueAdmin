@@ -34,16 +34,16 @@ export class ForgotPasswordPageComponent {
         this.router.navigate(['register'], { relativeTo: this.route.parent });
     }
     onForgotPassword() {
-        console.log(this.user);
+        // console.log(this.user);
     
         this.apiSer.post('users/forgotPassword', this.user).subscribe(res => {
-          console.log(res);
+          // console.log(res);
           this.typeSuccess(res.message)
           // this.forgotpass = false;
           // this.resetPass = true;
     
         }, err => {
-          console.log(err);
+          // console.log(err);
           this.typeError(err.error.message)
           // this.getALert(err.error.status, 'danger', err.error.message);
         });

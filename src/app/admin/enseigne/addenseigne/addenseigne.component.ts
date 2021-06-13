@@ -181,7 +181,7 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
       }
     });
 
-    console.log(JSON.stringify(this.enseignes.pointvente) + "******************************************")
+    // console.log(JSON.stringify(this.enseignes.pointvente) + "******************************************")
   }
 
   getAddress(lat: number, lng: number) {

@@ -18,13 +18,13 @@ export class AuthService {
     login(user) {
         // console.log(JSON.stringify(user))
         return this.http.post(environment.apiUrl + 'users/login', user).pipe(map((res: any) => {
-            console.log(res.cookies);
+            // console.log(res.cookies);
             this.setSession(res);
             this.addUser(res.id);
 
             return res;
         }, err => {
-            console.error(err)
+            // console.error(err)
             return this.typeError(err.message)
         }));
     }

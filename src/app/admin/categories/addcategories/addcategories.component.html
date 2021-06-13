@@ -18,25 +18,25 @@
                 <h4 class="form-section"><i class="ft-user"></i> Catégories</h4>
 
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput1">Nom*</label>
+                  <label class="col-md-3 label-control" for="lastname">Nom*</label>
                   <div class="col-md-6">
-                    <input ngModel #nom="ngModel" type="text" id="projectinput1" class="form-control" placeholder="Nom"
-                      name="nom" id="nom" [(ngModel)]="categories.name" />
+                    <input ngModel #nom="ngModel" type="text" id="lastname" class="form-control" placeholder="Nom"
+                      name="nom" [(ngModel)]="categories.name" />
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput5">Description*</label>
+                  <label class="col-md-3 label-control" for="description">Description*</label>
                   <div class="col-md-6">
-                    <textarea ngModel #description="ngModel" type="textarea" id="projectinput5" class="form-control"
+                    <textarea ngModel #description="ngModel" type="textarea" id="description" class="form-control"
                       placeholder="Description" name="description" id="description"
                       [(ngModel)]="categories.description"></textarea>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput5">Photo*</label>
+                  <label class="col-md-3 label-control" for="photo">Photo*</label>
                   <div class="col-md-6">
                     <input type="file"  ng2FileSelect [uploader]="uploader" name="file"
-                      id="file" (change)="fileChangeEvent($event)" accept="image/x-png,image/gif,image/jpeg" />
+                      id="photo" (change)="fileChangeEvent($event)" accept="image/x-png,image/gif,image/jpeg" />
                     <span class="custom-file-control"></span>
                   </div>
                 </div>
@@ -79,29 +79,29 @@
                 <h4 class="form-section"><i class="ft-user"></i> Catégories</h4>
 
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput1">Nom</label>
+                  <label class="col-md-3 label-control" for="lastname">Nom</label>
                   <div class="col-md-6">
-                    <input type="text" id="projectinput1" class="form-control" placeholder="Nom" name="nom"
+                    <input type="text" id="lastname" class="form-control" placeholder="Nom" name="nom"
                       [(ngModel)]="categories.name" />
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-3 label-control" for="projectinput5">Description</label>
+                  <label class="col-md-3 label-control" for="description">Description</label>
                   <div class="col-md-6">
-                    <textarea type="textarea" id="projectinput5" class="form-control" placeholder="Description"
+                    <textarea type="textarea" id="description" class="form-control" placeholder="Description"
                       name="description" [(ngModel)]="categories.description"></textarea>
                   </div>
                 </div>
                 <div class="form-group row">
 
-                  <label class="col-md-3 label-control" for="projectinput5">
+                  <label class="col-md-3 label-control" for="photo">
                     <h4 [hidden]="truee" class="form-section float-center">
                       <img src="{{apiUrl}}/{{categories.photo}}" alt="Card image cap" width="160" />
                     </h4> Photo
                   </label>
                   <div class="col-md-6">
                     <input type="file" [(ngModel)]="categories.photo" ng2FileSelect [uploader]="uploader" name="file"
-                      id="file" (change)="fileChangeEvent($event)" accept="image/x-png,image/gif,image/jpeg" />
+                      id="photo" (change)="fileChangeEvent($event)" accept="image/x-png,image/gif,image/jpeg" />
                     <span class="custom-file-control"></span>
                   </div>
                 </div>
