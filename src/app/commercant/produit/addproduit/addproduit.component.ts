@@ -239,25 +239,25 @@ export class AddproduitComponent implements OnInit {
   }
 
   onItemSelect(item: any) {
-    console.log(item);
+    // console.log(item);
     this.allPvCommercants.push(item._id)
 
 
   }
   onSelectAll(items: any) {
-    console.log(items);
+    // console.log(items);
     this.allPvCommercants.push(items._id)
 
   }
 
   photoChangeEvent(event) {
-    console.log(JSON.stringify(event)+"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+    // console.log(JSON.stringify(event)+"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
     if (this.idUpdate)
      {
         this.truee = true
      }
     this.photoToUpload = <File>event.target.files;
-     console.log(JSON.stringify(this.photoToUpload[0])+"²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²")
+     // console.log(JSON.stringify(this.photoToUpload[0])+"²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²")
 
     
   }
@@ -266,7 +266,7 @@ export class AddproduitComponent implements OnInit {
     // this.produits.pdf = this.filesToUpload[0].name
 
     this.produits.commercant = this.commercants
-    console.log(this.commercants)
+    // console.log(this.commercants)
     const fd = new FormData()
     if (this.photoToUpload) {
       fd.append('photo', this.photoToUpload[0], this.photoToUpload[0].name)
@@ -360,7 +360,7 @@ export class AddproduitComponent implements OnInit {
   public getproduitsById() {
     return new Promise(resolve => {
       this.apiSer.getData('produits/' + this.idUpdate).subscribe((res: any) => {
-        console.log(JSON.stringify(res) + "***************getProduitBy*************")
+        // console.log(JSON.stringify(res) + "***************getProduitBy*************")
         this.produits = res.data
         this.pointventeProduit = res.data.pointvente
         this.datedebutProduit=this.produits.dateDebut.substring(0,10)

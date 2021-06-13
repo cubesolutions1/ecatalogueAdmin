@@ -36,16 +36,18 @@ export class ShowclientComponent implements OnInit {
   public getusers() {
     return new Promise(resolve => {
 
-      console.log('this.idSociete', this.page);
+      // console.log('this.idSociete', this.page);
       // this.users = []
       return this.apiSer.getData('users/?role=client').subscribe((res: any) => {
         this.users = res.data
-        console.log(this.users);
+        // console.log(this.users);
 
 
         resolve(this.users)
 
-      }, err => console.log(err)
+      }, err => {
+        // console.log(err)
+          }
       )
     })
   }
@@ -53,7 +55,7 @@ export class ShowclientComponent implements OnInit {
   // And the listener code which asks the DataSource to filter the data:
 
   onDeleteConfirm(event) {
-    console.log(event);
+    // console.log(event);
     swal.fire({
       title: 'êtes vous Sûre?',
       text: "Vous ne pouvez pas restaurer vos données!",
@@ -65,7 +67,7 @@ export class ShowclientComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         return this.apiSer.delete('users/', event).subscribe((res: any) => {
-          console.log(res);
+          // console.log(res);
 
           this.getusers();
 
@@ -76,7 +78,7 @@ export class ShowclientComponent implements OnInit {
             'success'
           )
         }, err => {
-          console.log(err);
+          // console.log(err);
 
 
         })
@@ -126,14 +128,14 @@ export class ShowclientComponent implements OnInit {
   }
 
   onActiveUser(id) {
-    console.log('id', id);
+    // console.log('id', id);
     this.users = []
     let body = {
       id: id
     }
     return new Promise(resolve => {
       return this.userSer.activeUser(body).subscribe((res: any) => {
-        console.log(res);
+        // console.log(res);
         this.getusers();
         this.typeSuccess(res.status);
         resolve(true)

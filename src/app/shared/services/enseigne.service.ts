@@ -15,7 +15,7 @@ export class EnseigneService {
       // console.log(res);
       return res
     }, err => {
-      console.log(err);
+      // console.log(err);
     }
     ));
   }

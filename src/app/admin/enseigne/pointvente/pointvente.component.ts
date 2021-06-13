@@ -45,7 +45,7 @@ export class PointventeComponent implements OnInit {
       const place = autocomplete.getPlace();
       var latt = place.geometry.location.lat();
       var longt = place.geometry.location.lng();
-      console.log(latt,longt);
+      // console.log(latt,longt);
       
       // this.getAddrComponent(place)
       this.invokeEvent(place);
@@ -56,12 +56,12 @@ export class PointventeComponent implements OnInit {
   }
   getAddrComponent(place, componentTemplate) {
     let result;
-  console.log(    place.address_components.length);
+  // console.log(    place.address_components.length);
     for (let i = 0; i < place.address_components.length; i++) {
       const addressType = place.address_components[i].types[0];
       if (componentTemplate[addressType]) {
         result = place.address_components[i][componentTemplate[addressType]];
-        console.log('result',result);
+        // console.log('result',result);
         
         return result;
       }
@@ -75,7 +75,7 @@ export class PointventeComponent implements OnInit {
     this.formattedAddress = place['formatted_address'];
    return this.zone.run((res: any) => {
       return this.formattedAddress = place['formatted_address'];
-      console.log('res',res);
+      // console.log('res',res);
     })
   }
   invokeEvent(place: Object) {

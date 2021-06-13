@@ -136,7 +136,7 @@ export class AddcatlogueComponent implements OnInit {
     } else {
       this.typeError('Veuillez ajouter une photo')
     }
-    console.log(this.commercants)
+    // console.log(this.commercants)
     if (this.catalogues.name || this.catalogues.description || this.catalogues.categories
       || this.catalogues.dateDebut || this.catalogues.dateFin) {
       fd.append('name', this.catalogues.name)
@@ -279,7 +279,7 @@ export class AddcatlogueComponent implements OnInit {
       this.commercants = ''
       this.apiSer.getData('commercants/getCommercantByIdUser').subscribe((res: any) => {
         //
-        console.log(JSON.stringify(res)+"***************************************")
+        // console.log(JSON.stringify(res)+"***************************************")
         this.commercants = res.data[0]._id
         this.enseigne = res.data[0].enseigne._id
         resolve(this.commercants)
