@@ -21,7 +21,7 @@ export class CommercantService {
       // console.log(res);
       return res
     }, err => {
-      console.log(err);
+      // console.log(err);
     }
     ));
   }
@@ -32,7 +32,7 @@ export class CommercantService {
       // console.log(res);
       return res
     }, err => {
-      console.log(err);
+      // console.log(err);
     }
     ));
   }
@@ -43,7 +43,7 @@ export class CommercantService {
       // console.log(res);
       return res
     }, err => {
-      console.log(err);
+      // console.log(err);
     }
     ));
   }
@@ -60,7 +60,7 @@ export class CommercantService {
       // console.log(res);
       return res
     }, err => {
-      console.log(err);
+      // console.log(err);
     }
     ));
   }

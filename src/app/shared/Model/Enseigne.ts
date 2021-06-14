@@ -11,6 +11,7 @@ export class Enseigne {
   public type:string;
   public jours: [];
   public activeUrl: string;
+  startLocation: { address: string, coordinates: number[], type: 'Point' }
   
   // public startLocation:{
   //   address:string,

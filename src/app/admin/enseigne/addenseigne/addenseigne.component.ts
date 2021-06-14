@@ -39,14 +39,15 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
   establishmentAddress: string;
   latt: any;
   longt: any;
-  prefixPhone:"";
+  prefixPhone: string = '';
+  phone: string
   formattedAddressAdmin: string;
   formattedEstablishmentAddress: string;
 
   //phone: string;
   @Output() indexpointvente: EventEmitter<number> = new EventEmitter<number>();
 
-  @Input('item') data: PointVente;
+  @Input('item') data: PointVente = {} as PointVente;
   @Input('index') i: number;
   @Input() adressType: string;
   @Output() setAddress: EventEmitter<any> = new EventEmitter();
@@ -63,7 +64,6 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
   formattedAddress: string;
   formattedEstablishmentAddresse: string;
 
-  phone: string;
   adresseEnseigne = ""
   adresse: ""
   teeeeeeeeeeest: [] = [];
@@ -96,7 +96,8 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
   nameFile: string;
   adress: string = "";
   adressAdmin: string = "";
-  url = ""
+  url = "";
+  hasError: boolean;
   constructor(
     public zone: NgZone,
     private apiSer: ApiService,
@@ -181,7 +182,7 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
       }
     });
 
-    console.log(JSON.stringify(this.enseignes.pointvente) + "******************************************")
+    // console.log(JSON.stringify(this.enseignes.pointvente) + "******************************************")
   }
 
   getAddress(lat: number, lng: number) {
@@ -200,7 +201,7 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
           if (result != null) {
             this.adress = result.formatted_address;
           } else {
-            alert('No address available!');
+            this.typeError('Adresse incorrecte !');
           }
         }
       });
@@ -231,7 +232,6 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
   }
 
   onAddEnseigne() {
-
     const fd = new FormData();
     for (let i = 0; i < this.enseignes.pointvente.length; i++) {
 
@@ -249,7 +249,7 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
     fd.append('description', this.enseignes.description);
     fd.append('horairedebut', this.enseignes.horairedebut);
     fd.append('horairefin', this.enseignes.horairefin);
-    fd.append('phone', this.enseignes.phone);
+    fd.append('phone', this.prefixPhone+this.enseignes.phone);
     fd.append('adresse', this.formattedAddressAdmin);
     fd.append('url', this.enseignes.url);
     fd.append('type', this.enseignes.type);
@@ -263,7 +263,7 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
       this.route.navigateByUrl('/enseignes/show');
 
     }, err => {
-      console.error(err.error.message);
+      // console.error(err.error.message);
       if (err.error.error) {
 
 
@@ -288,7 +288,6 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
       coordinates: [this.latt, this.longt]
     };
 
-    // console.log(this.enseignes)
     fd.append('name', this.enseignes.name);
     fd.append('url', this.enseignes.url);
     fd.append('activeUrl', this.enseignes.activeUrl);
@@ -296,15 +295,14 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
     fd.append('horairedebut', this.enseignes.horairedebut);
     fd.append('horairefin', this.enseignes.horairefin);
     fd.append('phone', this.enseignes.phone);
-    fd.append('type', this.enseignes.type);
-    fd.append('startLocation.coordinates[1]', this.lng);
-    fd.append('startLocation.coordinates[0]', this.lat);
+    fd.append('startLocation.coordinates[1]', this.lng || this.enseignes.startLocation.coordinates[1]);
+    fd.append('startLocation.coordinates[0]', this.lat || this.enseignes.startLocation.coordinates[0]);
     fd.append('startLocation.address', this.formattedAddressAdmin);
 
     /*  const fd = new FormData();
      for (let i = 0; i < this.enseignes.pointvente.length; i++) {
- 
- 
+
+
        fd.append(`pointvente[nbpointvente]`, this.enseignes.pointvente.length.toString());
      //  fd.append(`pointvente[name][${i}]`, this.pointventes[i].name);
      //  fd.append(`pointvente[description][${i}]`, this.pointventes[i].description);
@@ -313,8 +311,8 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
     //   fd.append(`pointvente[startLocation][address][${i}]`, this.pointventes[i].adresse);
      }
      if (this.filesToUpload) { fd.append('photo', this.filesToUpload[0], this.filesToUpload[0].name); }
- 
- 
+
+
      const locations = {
        address: this.adress,
        coordinates: [this.lat, this.lng]
@@ -506,18 +504,8 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
     return phone;
   }
 
-
-  onCountryChange(event) {
- //   alert("prefix Code =" + event.dialCode + "getNumber=" + event.value)
-    console.log("prefix Code =" + event.dialCode)
-    this.prefixPhone= event.dialCode
-  }
-  getNumber(event) {
-  //  alert("getNumber=" + event.value)
-  }
-  hasError: boolean;
   onError(obj) {
     this.hasError = obj;
-    console.log('hasError: ', obj);
+    // console.log('hasError: ', obj);
   }
 }

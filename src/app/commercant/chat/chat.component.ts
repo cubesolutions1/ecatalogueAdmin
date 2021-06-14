@@ -42,7 +42,9 @@ export class ChatComponent implements OnInit {
 
     this.messages$ = this.messageService.messageSubject;
     this.userMessages$ = this.messageService.userMessageSubject;
-     this.messageService.messageSubject.subscribe(data=>console.log(data))
+     this.messageService.messageSubject.subscribe(data=>{
+       // console.log(data)
+     })
   }
 
 

@@ -105,7 +105,6 @@ export class AddproduitComponent implements OnInit {
     this.getcategories();
     this.getCommercantByidUser();
 
-    //console.log(this.apiUrl+"Categories"+"/"+this.photProduct)
 
     this.dropdownSettings = {
       singleSelection: false,
@@ -126,7 +125,7 @@ export class AddproduitComponent implements OnInit {
       heureDebut: ['', Validators.required],
       heureFin: ['', Validators.required],
       description: ['', Validators.required],
-      enseigne: [{}, Validators.required],
+      enseigne: ['', Validators.required],
       photo: ['', Validators.required],
       etat: ['', Validators.required],
       name: ['', Validators.required],
@@ -137,9 +136,6 @@ export class AddproduitComponent implements OnInit {
       pointvente: [[], Validators.required],
 
     })
-    
-
-    
   }
 
 
@@ -147,32 +143,29 @@ export class AddproduitComponent implements OnInit {
 
 
   onSubmit(customContent) {
- 
 
     this.produits.commercant = this.commercants
     if (!this.idUpdate) {
 
       if (this.photoToUpload) {
         var data = {
-          "photo":this.photoToUpload[0].name,
-          "name": this.formDetailsGroup.value.name,
-          "description": this.formDetailsGroup.value.description,
           "categories": this.formDetailsGroup.value.categories,
-          "commercant": this.produits.commercant,
-          "prix": this.formDetailsGroup.value.prix,
-          "prixNv": this.produits.prixNv.toString(),
-          "reduction": this.formDetailsGroup.value.reduction,
+          "commercant": this.commercants,
           "dateDebut": this.formDetailsGroup.value.dateDebut + 'T' + this.formDetailsGroup.value.heureDebut + 'Z',
-          "typecompagne": this.formDetailsGroup.value.typecompagne.name,
-          "enseigne":this.enseignes,
           "dateFin": this.formDetailsGroup.value.dateFin + 'T' + this.formDetailsGroup.value.heureFin + 'Z',
           //  "heureDebut":this.formDetailsGroup.value.heureDebut,
           //  "heureFin":this.formDetailsGroup.value.heureFin, 
-         
+          "description": this.formDetailsGroup.value.description,
          // "enseigne": this.idUser,
           //"photo": this.photoToUpload[0].name,
-          
+          "photo":this.photoToUpload[0].name,
           "etat": "todo",
+          "name": this.formDetailsGroup.value.name,
+          "prix": this.formDetailsGroup.value.prix,
+          "prixNv": this.produits.prixNv.toString(),
+          "reduction": this.formDetailsGroup.value.reduction,
+          "typecompagne": this.formDetailsGroup.value.typecompagne.name,
+          "enseigne":this.enseignes,
           "pointvente": this.allPvCommercants
         }
 
@@ -222,7 +215,6 @@ export class AddproduitComponent implements OnInit {
       } 
       
 
-
       this.apiSer.patchData('produits/', dataEditProduit, this.idUpdate).subscribe(data => {
         this.getproduitById(data.data.data._id)
         this.openModal(customContent)
@@ -245,25 +237,25 @@ export class AddproduitComponent implements OnInit {
   }
 
   onItemSelect(item: any) {
-    console.log(item);
+    // console.log(item);
     this.allPvCommercants.push(item._id)
 
 
   }
   onSelectAll(items: any) {
-    console.log(items);
+    // console.log(items);
     this.allPvCommercants.push(items._id)
 
   }
 
   photoChangeEvent(event) {
-    console.log(JSON.stringify(event)+"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+    // console.log(JSON.stringify(event)+"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
     if (this.idUpdate)
      {
         this.truee = true
      }
     this.photoToUpload = <File>event.target.files;
-     console.log(JSON.stringify(this.photoToUpload[0])+"²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²")
+     // console.log(JSON.stringify(this.photoToUpload[0])+"²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²")
 
     
   }
@@ -272,7 +264,7 @@ export class AddproduitComponent implements OnInit {
     // this.produits.pdf = this.filesToUpload[0].name
 
     this.produits.commercant = this.commercants
-    console.log(this.commercants)
+    // console.log(this.commercants)
     const fd = new FormData()
     if (this.photoToUpload) {
       fd.append('photo', this.photoToUpload[0], this.photoToUpload[0].name)
@@ -366,11 +358,8 @@ export class AddproduitComponent implements OnInit {
   public getproduitsById() {
     return new Promise(resolve => {
       this.apiSer.getData('produits/' + this.idUpdate).subscribe((res: any) => {
-        console.log(JSON.stringify(res) + "***************getProduitBy*************")
-        console.log( this.photProduct + "***************photoProduct*************")
+        // console.log(JSON.stringify(res) + "***************getProduitBy*************")
         this.produits = res.data
-        this.photProduct=JSON.stringify(res.data.photo)
-        console.log(this.apiUrl+"Categories"+"/"+this.photProduct)
         this.pointventeProduit = res.data.pointvente
         this.datedebutProduit=this.produits.dateDebut.substring(0,10)
         this.datefinProduit=this.produits.dateFin.substring(0,10)
@@ -408,7 +397,6 @@ export class AddproduitComponent implements OnInit {
         console.log(res.data[0]._id)
         this.commercants = res.data[0]._id
         this.enseignes = res.data[0].enseigne
-          console.log(JSON.stringify(this.enseignes) + "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
         resolve(this.commercants)
         resolve(this.enseignes)
 

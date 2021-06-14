@@ -59,10 +59,12 @@ export class UserProfilePageComponent implements OnInit {
         return new Promise(resolve => {
 
             this.apiSer.patchData('users/', this.users, idEdit).subscribe((res: any) => {
-                console.log(res.data);
+                // console.log(res.data);
                 resolve(true)
                 this.route.navigateByUrl('pages/profile')
-            }, err => { console.log(err); }
+            }, err => {
+                // console.log(err);
+            }
             )
         })
     }
@@ -75,10 +77,12 @@ export class UserProfilePageComponent implements OnInit {
             }
 
             this.apiSer.patch('users/updateMyPassword', body).subscribe((res: any) => {
-                console.log(res.data);
+                // console.log(res.data);
                 this.authSer.logout();
                 resolve(true)
-            }, err => { console.log(err); }
+            }, err => {
+                // console.log(err);
+            }
             )
         })
     }

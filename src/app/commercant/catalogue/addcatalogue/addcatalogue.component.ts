@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Catalogue } from 'app/shared/Model/Catalogue';
 import { ApiService } from 'app/shared/services/Api.service';
 import { environment } from 'environments/environment';
@@ -32,12 +32,9 @@ export class AddcatlogueComponent implements OnInit {
   // pour activer button confirmer et modifier
   good = false
   idUpdate: number = null
-  idUser = '';
-  formDetailsGroup: FormGroup;
+  idUser = ''
   hasBaseDropZoneOver = false;
   hasAnotherDropZoneOver = false;
-  allPvCommercants: any = [];
-  pointventeComm: any;
   pdfsToUpload = null
   photosToUpload = null
   nameFile: string
@@ -55,8 +52,7 @@ export class AddcatlogueComponent implements OnInit {
     private auth: AuthService,
     private modalService: NgbModal,
     private activeRoute: ActivatedRoute,
-    private toastr: ToastrService,
-    private fb: FormBuilder,) {
+    private toastr: ToastrService) {
 
     this.activeRoute.params.subscribe((res: any) => {
       if (res) {
@@ -80,24 +76,6 @@ export class AddcatlogueComponent implements OnInit {
     this.getcategories();
     this.getCommercantByidUser();
     //
-  
-    
-    this.formDetailsGroup = this.fb.group({
-      photo: ['', Validators.required],
-      pdf: ['', [Validators.required]],
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      categories: ['', Validators.required],
-      heureDebut: ['', Validators.required],
-      heureFin: ['', Validators.required],
-      commercant: ['', Validators.required],
-      enseigne: [{}, Validators.required],
-      dateDebut: ['', Validators.required],
-      dateFin: ['', Validators.required],
-      pointvente: [[], Validators.required],
-
-    })
-    
   }
   public onSelect(item) {
 
@@ -131,19 +109,6 @@ export class AddcatlogueComponent implements OnInit {
   onchange() {
 
   }
-
-  onItemSelect(item: any) {
-    console.log(item);
-    this.allPvCommercants.push(item._id)
-
-
-  }
-  onSelectAll(items: any) {
-    console.log(items);
-    this.allPvCommercants.push(items._id)
-
-  }
-
   pdfChangeEvent(event) {
     //
     this.pdfsToUpload = null
@@ -157,48 +122,6 @@ export class AddcatlogueComponent implements OnInit {
     //
   }
   // Ajouter un catalogue
-/* 
-  onSubmit(customContent){
-    this.isLoading = true
-    this.catalogues.tags = this.items
-    this.catalogues.commercant = this.commercants;
-
-
-    var data = {
-     "photo":this.photosToUpload[0].name,
-      "pdf": this.pdfsToUpload[0].name,
-      "name": this.formDetailsGroup.value.name,
-      "description": this.formDetailsGroup.value.description,
-      "categories": this.formDetailsGroup.value.categories,
-      "heureDebut": this.formDetailsGroup.value.heureDebut,
-      "heureFin": this.formDetailsGroup.value.heureFin,
-      "commercant": this.idUser,
-      "enseigne": this.enseigne,
-      "dateDebut": this.formDetailsGroup.value.dateDebut + 'T' + this.formDetailsGroup.value.heureDebut + 'Z',
-      "dateFin": this.formDetailsGroup.value.dateFin + 'T' + this.formDetailsGroup.value.heureFin + 'Z',
-      "pointvente":this.pointventeComm,
-
-    }
-  
-    this.apiSer.postData('catalogues/', data).subscribe(event => {
-
-      this.model = true
-      this.getcatalogueById(event.Catalogue._id)
-      this.typeSuccess(event.status)
-      this.isLoading = false
-       this.openModal(customContent)
-    }, err => {
-      this.isLoading = false
-      if (err.error) { this.typeError(err.error.message) }
-      if (err.error.error) {
-
-        if (err.error.error.code == 11000) {
-          this.typeError('Ce nom existe déjà!')
-        } else if (err.error.error.errors.name = '"ValidatorError"') {
-           this.typeError(err.error.message.split('failed:')[1]) }
-      } else if (err.status == 404) { this.typeError(err.error.message) }
-    });
-  } */
   onAddcatalogues(customContent) {
 
     this.isLoading = true
@@ -212,7 +135,7 @@ export class AddcatlogueComponent implements OnInit {
     } else {
       this.typeError('Veuillez ajouter une photo')
     }
-    console.log(this.commercants)
+    // console.log(this.commercants)
     if (this.catalogues.name || this.catalogues.description || this.catalogues.categories
       || this.catalogues.dateDebut || this.catalogues.dateFin) {
       fd.append('name', this.catalogues.name)
@@ -223,7 +146,6 @@ export class AddcatlogueComponent implements OnInit {
       fd.append('enseigne', this.enseigne)
       fd.append('dateDebut', this.catalogues.dateDebut + 'T' + this.catalogues.heureDebut)
       fd.append('dateFin', this.catalogues.dateFin + 'T' + this.catalogues.heureFin)
-    //  fd.append('pointvente', this.catalogues.pointvente )
     }
     this.apiSer.postData('catalogues/', fd).subscribe(event => {
 
@@ -246,7 +168,6 @@ export class AddcatlogueComponent implements OnInit {
   }
   // Modifier une catalogue
   onEditcatalogues() {
-    this.isLoading = true
     //
     this.catalogues.tags = this.items
 
@@ -270,7 +191,7 @@ export class AddcatlogueComponent implements OnInit {
     // } else {
     fd.append('name', this.catalogues.name)
     fd.append('description', this.catalogues.description)
-    fd.append('commercant', this.idUser)
+    fd.append('commercant', this.catalogues.commercant)
     //
     //
     // }
@@ -279,10 +200,10 @@ export class AddcatlogueComponent implements OnInit {
       this.model = true
       this.getcatalogueById(event.data.data._id)
       this.typeSuccess(event.status)
-        this.openModal(this.catalogues)
-        this.isLoading = false
+      //  this.openModal(this.catalogues)
+
     }, err => {
-      this.isLoading = false
+
       this.typeError(err.error.message)
     });
   }
@@ -355,8 +276,7 @@ export class AddcatlogueComponent implements OnInit {
       this.commercants = ''
       this.apiSer.getData('commercants/getCommercantByIdUser').subscribe((res: any) => {
         //
-        console.log(JSON.stringify(res)+"***************************************")
-        this.pointventeComm = res.data[0].pointvente
+        // console.log(JSON.stringify(res)+"***************************************")
         this.commercants = res.data[0]._id
         this.enseigne = res.data[0].enseigne._id
         resolve(this.commercants)
@@ -383,7 +303,6 @@ export class AddcatlogueComponent implements OnInit {
     if (!this.good) {
       this.typeError('Veuillez prévisualiser vos insertions avant de confirmer')
     } else {
-      this.getcataloguesById()
       this.route.navigateByUrl('/catalogues/show')
     }
   }

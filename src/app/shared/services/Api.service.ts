@@ -37,7 +37,7 @@ export class ApiService {
 
                 return res.data;
             }, err => {
-                console.log(err.error.message);
+                // console.log(err.error.message);
 
             }));
     }
@@ -55,7 +55,7 @@ export class ApiService {
             .pipe(map((res: any) => {
                 return res.data;
             }, err => {
-                console.log(err);
+                // console.log(err);
 
             }));
     }
@@ -65,7 +65,7 @@ export class ApiService {
             .pipe(map((res: any) => {
                 return res;
             }, err => {
-                console.log(err);
+                // console.log(err);
 
             }));
     }
@@ -76,13 +76,13 @@ export class ApiService {
  */
 
     patch(url: string, entities: any) {
-        console.log(entities);
+        // console.log(entities);
 
         return this.http.patch(environment.apiUrl + url, entities)
             .pipe(map((res: any) => {
                 return res;
             }, err => {
-                console.log(err);
+                // console.log(err);
 
             }));
     }
@@ -99,7 +99,7 @@ export class ApiService {
 
                 return res;
             }, err => {
-                console.log(err);
+                // console.log(err);
 
             }));
     }
@@ -111,7 +111,7 @@ export class ApiService {
      */
 
     post(url, entity) {
-        console.log(entity);
+        // console.log(entity);
 
         return this.http.post(environment.apiUrl + url, entity).pipe(map((res: any) => {
             return res;
@@ -125,7 +125,7 @@ export class ApiService {
                 return res;
             }, err => {
 
-                console.log(err.name);
+                // console.log(err.name);
 
             }));
     }

@@ -50,7 +50,7 @@ export class ShowcategoriesComponent implements OnInit {
   onItemDrop(e: any) {
     // Get the dropped data here
     // this.droppedItems.push(e.dragData);
-    console.log(e)
+    // console.log(e)
 }
   public getcategories() {
     return new Promise(resolve => {
