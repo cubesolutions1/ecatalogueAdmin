@@ -64,7 +64,7 @@ export class AddproduitComponent implements OnInit {
   dropdownSettings = {};
   datedebutProduit="";
   datefinProduit="";
-  mmmmmmmm= "promo";
+  photProduct="";
   heuredebutProduit="";
   heurefinProduit="";
   listTypeProduit = [{ name: "promo" }, { name: "ventflash" }, { name: "normal" }];
@@ -105,6 +105,7 @@ export class AddproduitComponent implements OnInit {
     this.getcategories();
     this.getCommercantByidUser();
 
+    //console.log(this.apiUrl+"Categories"+"/"+this.photProduct)
 
     this.dropdownSettings = {
       singleSelection: false,
@@ -125,7 +126,7 @@ export class AddproduitComponent implements OnInit {
       heureDebut: ['', Validators.required],
       heureFin: ['', Validators.required],
       description: ['', Validators.required],
-      enseigne: ['', Validators.required],
+      enseigne: [{}, Validators.required],
       photo: ['', Validators.required],
       etat: ['', Validators.required],
       name: ['', Validators.required],
@@ -136,7 +137,9 @@ export class AddproduitComponent implements OnInit {
       pointvente: [[], Validators.required],
 
     })
+    
 
+    
   }
 
 
@@ -144,30 +147,32 @@ export class AddproduitComponent implements OnInit {
 
 
   onSubmit(customContent) {
-
+ 
 
     this.produits.commercant = this.commercants
     if (!this.idUpdate) {
 
       if (this.photoToUpload) {
         var data = {
-          "categories": this.formDetailsGroup.value.categories,
-          "commercant": this.commercants,
-          "dateDebut": this.formDetailsGroup.value.dateDebut + 'T' + this.formDetailsGroup.value.heureDebut + 'Z',
-          "dateFin": this.formDetailsGroup.value.dateFin + 'T' + this.formDetailsGroup.value.heureFin + 'Z',
-          //  "heureDebut":this.formDetailsGroup.value.heureDebut,
-          //  "heureFin":this.formDetailsGroup.value.heureFin, 
-          "description": this.formDetailsGroup.value.description,
-         // "enseigne": this.idUser,
-          //"photo": this.photoToUpload[0].name,
           "photo":this.photoToUpload[0].name,
-          "etat": "todo",
           "name": this.formDetailsGroup.value.name,
+          "description": this.formDetailsGroup.value.description,
+          "categories": this.formDetailsGroup.value.categories,
+          "commercant": this.produits.commercant,
           "prix": this.formDetailsGroup.value.prix,
           "prixNv": this.produits.prixNv.toString(),
           "reduction": this.formDetailsGroup.value.reduction,
+          "dateDebut": this.formDetailsGroup.value.dateDebut + 'T' + this.formDetailsGroup.value.heureDebut + 'Z',
           "typecompagne": this.formDetailsGroup.value.typecompagne.name,
           "enseigne":this.enseignes,
+          "dateFin": this.formDetailsGroup.value.dateFin + 'T' + this.formDetailsGroup.value.heureFin + 'Z',
+          //  "heureDebut":this.formDetailsGroup.value.heureDebut,
+          //  "heureFin":this.formDetailsGroup.value.heureFin, 
+         
+         // "enseigne": this.idUser,
+          //"photo": this.photoToUpload[0].name,
+          
+          "etat": "todo",
           "pointvente": this.allPvCommercants
         }
 
@@ -216,6 +221,7 @@ export class AddproduitComponent implements OnInit {
         
       } 
       
+
 
       this.apiSer.patchData('produits/', dataEditProduit, this.idUpdate).subscribe(data => {
         this.getproduitById(data.data.data._id)
@@ -361,7 +367,10 @@ export class AddproduitComponent implements OnInit {
     return new Promise(resolve => {
       this.apiSer.getData('produits/' + this.idUpdate).subscribe((res: any) => {
         console.log(JSON.stringify(res) + "***************getProduitBy*************")
+        console.log( this.photProduct + "***************photoProduct*************")
         this.produits = res.data
+        this.photProduct=JSON.stringify(res.data.photo)
+        console.log(this.apiUrl+"Categories"+"/"+this.photProduct)
         this.pointventeProduit = res.data.pointvente
         this.datedebutProduit=this.produits.dateDebut.substring(0,10)
         this.datefinProduit=this.produits.dateFin.substring(0,10)
@@ -399,6 +408,7 @@ export class AddproduitComponent implements OnInit {
         console.log(res.data[0]._id)
         this.commercants = res.data[0]._id
         this.enseignes = res.data[0].enseigne
+          console.log(JSON.stringify(this.enseignes) + "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
         resolve(this.commercants)
         resolve(this.enseignes)
 

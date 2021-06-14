@@ -249,7 +249,7 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
     fd.append('description', this.enseignes.description);
     fd.append('horairedebut', this.enseignes.horairedebut);
     fd.append('horairefin', this.enseignes.horairefin);
-    fd.append('phone', this.prefixPhone+this.enseignes.phone);
+    fd.append('phone', this.enseignes.phone);
     fd.append('adresse', this.formattedAddressAdmin);
     fd.append('url', this.enseignes.url);
     fd.append('type', this.enseignes.type);
@@ -296,6 +296,7 @@ export class AddenseigneComponent implements OnInit, AfterViewInit {
     fd.append('horairedebut', this.enseignes.horairedebut);
     fd.append('horairefin', this.enseignes.horairefin);
     fd.append('phone', this.enseignes.phone);
+    fd.append('type', this.enseignes.type);
     fd.append('startLocation.coordinates[1]', this.lng);
     fd.append('startLocation.coordinates[0]', this.lat);
     fd.append('startLocation.address', this.formattedAddressAdmin);

@@ -15,6 +15,7 @@ export class Catalogue {
     photo:string;
     etat:string;
     tags:any;
+    pointvente: any; 
     constructor(){}
     // public set $commercant(x: Commercant) {
     //     this.commercant = x
