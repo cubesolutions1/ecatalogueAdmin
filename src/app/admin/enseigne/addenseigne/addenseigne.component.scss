@@ -1,3 +1,31 @@
 agm-map {
   height: 300px;
 }
+
+/* 
+.btnPv{
+  padding: 10px 0px 0px 400px;
+}
+.btnPvEdit{
+  padding: 10px 0px 0px 315px;
+}
+.btnAdd{
+  display: grid;
+}
+.btnEdit{
+  display: grid;
+}
+.btnDelete{
+  display: grid;
+} */
+
+.btnPvEdit{
+  padding: 15px 0px 0px 0px;
+  .btnDelete{
+    display: grid;
+
+  }
+  .btnAdd{
+    display: grid;
+  }
+}

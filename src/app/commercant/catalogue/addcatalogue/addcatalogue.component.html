@@ -180,6 +180,8 @@
                 </div>
               </div>
 
+
+             
               <div class="form-actions">
                 <button type="button" routerLink="/catalogues/show" class="btn btn-raised btn-danger mr-1">
                   <i class="ft-x"></i> Annuler
@@ -247,6 +249,26 @@
                     </p> 
                   </div>
                 </div>
+
+
+
+                <div class="form-group row">
+                  <label class="col-md-2 label-control" for="typeproduit">Points de vente</label>
+                  <div class="col-md-6">
+                    <ng-select [items]="pointventeComm" name="typeproduit"  [multiple]="true" 
+                      placeholder="Choisissez"  >
+                      <ng-template ng-label-tmp let-item="item">
+                        <b style="color: black"> {{ item.name }}</b>
+                      </ng-template>
+                      <ng-template ng-option-tmp let-item="item" let-index="index">
+                        <b style="color: black"> {{ item.name }}</b>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+
+
+                
                 <div class="form-group row">
                   <label class="col-md-2 label-control" for="typecompagne">Type de compagne</label>
                   <div class="col-md-6">
@@ -412,7 +434,7 @@
                         <div class="card-content">
                           <img
                             class="card-img-top img-fluid" style="width:450px;height:520px;"
-                            src="{{ apiUrl }}Catalogues/{{ catalogues.photo }}"  (error)="img.src = '../../../../assets/img/attente.jpg'" #img
+                            src="{{ apiUrl }}/Catalogues/{{ catalogues.photo }}"  (error)="img.src = '../../../../assets/img/attente.jpg'" #img
                             alt="Card image cap"                          />
                           <div class="card-body">
                             <h4 class="card-title">{{ catalogues.name }}</h4>

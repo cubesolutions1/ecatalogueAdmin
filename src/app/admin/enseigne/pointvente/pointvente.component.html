@@ -1,4 +1,4 @@
-<div class="form-body">
+<div class="form-body" *ngIf="!data.id">
   <h4 class="form-section"><i class="ft-user"></i> Point de vente {{i+1}}</h4>
 
   <div class="form-group row">
@@ -21,8 +21,58 @@
 
 
       <input [attr.id]="'point-of-sale-' + i + '.address'" class="form-control" type="text" [(ngModel)]="autocompleteInput" #addresstext
-        style="padding: 12px 20px; border: 1px solid #ccc; width: 400px">{{formattedAddress}}
+        style="padding: 12px 20px; border: 1px solid #ccc; width: 100%">
+        <div> {{address}}</div>
     </div>
+  </div> 
+
+</div>
+
+
+
+
+<div class="form-body" *ngIf="data.id">
+  <h4 class="form-section"><i class="ft-user"></i> Point de vente {{i+1}}</h4>
+
+  <div class="form-group row">
+    <label class="col-md-3 label-control" [attr.for]="'point-of-sale-' + i + '.name'">Nom</label>
+    <div class="col-md-6">
+      <input type="text" [attr.id]="'point-of-sale-' + i + '.name'" class="form-control" placeholder="Nom" name="nom" [(ngModel)]="data.name" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-md-3 label-control" [attr.for]="'point-of-sale-' + i + '.description'">Description </label>
+    <div class="col-md-6">
+      <textarea type="text" [attr.id]="'point-of-sale-' + i + '.description'" class="form-control" placeholder="Description" name="description"
+        [(ngModel)]="data.description"></textarea>
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-md-3 label-control" [attr.for]="'point-of-sale-' + i + '.address'">Addresse {{formattedAddress}}</label>
+    <div class="col-md-6">
+      <input [attr.id]="'point-of-sale-' + i + '.address'" class="form-control" type="text" [(ngModel)]="autocompleteInput" #addresstext
+        style="padding: 12px 20px; border: 1px solid #ccc; width: 100%">
+        <label style="color: red;">L'adresse actuelle de {{data.name}}  est : {{data.startLocation.address}}</label>
+      </div>
+     
+  </div>
+
+
+  <div class="form-actions">
+   
+    <button type="button" class="btn btn-raised btn-primary" (click)="onEditPoinvtVenteEnseigne(data)">
+      <i class="fa fa-edit"></i> Modifier la Point de Vente {{data.name}}
+    </button>
+    <!-- <button type="button" class="btn btn-raised btn-warning mr-1" (click)="deletePVByIdEnseigne(data)" >
+      <i class="ft-x"></i> Supprimer la Point de Vente {{data.name}}
+    </button> -->
+
+    <button type="button" class="btn btn-raised btn-danger" (click)="deleteEnseigne(data)">
+      <i class="ft-x"></i> Supprimer un Point de vente
+    </button>
   </div>
 
 </div>

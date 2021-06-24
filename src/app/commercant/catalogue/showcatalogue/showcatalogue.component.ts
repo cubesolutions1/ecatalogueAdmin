@@ -39,10 +39,12 @@ export class ShowcatalogueComponent implements OnInit {
   ngOnInit() {
     this.getcategories();
     this.id = localStorage.getItem('id')
-  //  console.log(this.id)
+    console.log(JSON.stringify(this.idUser)+"*********************************************")
 
     this.getCatalogues();
     this.getCommercantByidUser()
+    //console.log(JSON.stringify(this.catalogues)+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
   }
 
   public getCommercantByidUser() {
@@ -55,7 +57,12 @@ export class ShowcatalogueComponent implements OnInit {
        // console.log(res)
        // res.length>0 ?  this.commercant = res.data[0]._id:[]
         // 
-        this.commercant = res.data[0]._id
+        
+        this.commercant = res.data[0]
+        console.log(JSON.stringify(this.commercant)+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        if (res.data.length < this.limit) {
+          this.disable = true
+        }
         resolve(this.commercant)
 
       }, err => {
@@ -97,9 +104,11 @@ export class ShowcatalogueComponent implements OnInit {
       this.catalogues = []
       this.getCommercantByidUser().then(res => {
         // 
-        return this.apiSer.getData('catalogues/etat?commercant=' + this.commercant + '&page=' + page + '&limit=' + this.limit).subscribe((res: any) => {
+        return this.apiSer.getData('catalogues/etat?commercant=' + this.idUser + '&page=' + page + '&limit=' + this.limit).subscribe((res: any) => {
           this.catalogues = res.data
           // 
+                   console.log(JSON.stringify(res.data)+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
           if (res.data.length < this.limit) {
             this.disable = true
           }
@@ -194,6 +203,7 @@ export class ShowcatalogueComponent implements OnInit {
             // 
 
             this.catalogues = res.data
+           // console.log(JSON.stringify(res.data)+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             // 
             resolve(this.catalogues)
           }, err => {
@@ -212,6 +222,7 @@ export class ShowcatalogueComponent implements OnInit {
       return this.apiSer.getData('categories/').subscribe((res: any) => {
         this.categories = res.data
         // 
+         // console.log(JSON.stringify(res.data)+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
         resolve(this.categories)
 

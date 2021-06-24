@@ -11,12 +11,12 @@ export class Enseigne {
   public type:string;
   public jours: [];
   public activeUrl: string;
-  startLocation: { address: string, coordinates: number[], type: 'Point' }
+  public startLocation: { address: string, coordinates: number[], type: 'Point' };
   
-  // public startLocation:{
-  //   address:string,
-  //   coordinates: []
-  // }
+  /*  public startLocation:{
+     address:string,
+     coordinates: []
+  } */
   public photo: string;
   public pointvente: PointVente[]
   constructor(_id: number,
@@ -25,7 +25,8 @@ export class Enseigne {
     photo: string,
     phone:string,
     type:string,
-    pointvente: PointVente[]) {
+    pointvente: PointVente[]
+    ) {
     this._id = _id;
     this.name = name;
     this.description = description;

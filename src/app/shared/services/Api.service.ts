@@ -33,7 +33,7 @@ export class ApiService {
 
         return this.http.get(environment.apiUrl + entities)
             .pipe(map((res: any) => {
-                // console.log(res);
+                 console.log(res,"fffffffffffffffffffffffffffffffffffffffffff");
 
                 return res.data;
             }, err => {
@@ -70,6 +70,17 @@ export class ApiService {
             }));
     }
 
+
+    updatePointVenteEnseigne(url: string, entities: any, id: number) {
+
+        return this.http.patch(environment.apiUrl + url + id, entities)
+           /*  .pipe(map((res: any) => {
+                return res;
+            }, err => {
+
+            })); */
+    }
+
     /* updateProject(url: string,id:number,project:Object):Observable<Object>{
         return this.http.put('commercants/updateCommercant/',+ id,project, {responseType: 'text'});
       }
@@ -92,6 +103,21 @@ export class ApiService {
      * @param url string
      */
     delete(url: string, id: string,) {
+
+        return this.http.delete(environment.apiUrl + url + id)
+            .pipe(map((res: any) => {
+                // console.log(res);
+
+                return res;
+            }, err => {
+                // console.log(err);
+
+            }));
+    }
+
+
+
+    deletePointVenteById(url: string, id: string,) {
 
         return this.http.delete(environment.apiUrl + url + id)
             .pipe(map((res: any) => {
